@@ -130,7 +130,7 @@ export default class editingFields extends Component {
 
                         {/* checkbox responsible for defining if the created field must be filled in when submitting a document */}
                         < div className="check-box--required" >
-                            <input type="checkbox" onChange={this.updateRequiredStatusFormForm} /> <label>Exigir preenchimento obrigatório</label>
+                              <input type="checkbox" onChange={this.updateRequiredStatusFormForm} /><label>Exigir preenchimento obrigatório</label>
                         </div >
                         {/* button responsible for saving the entered data */}
                         < div className="btn--save-field" >
