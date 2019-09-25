@@ -1,3 +1,6 @@
+.btn--add-new-field{
+    width: 65%;
+}
 .btn--add-new-field button{
     color:#ffffff;
     border: none;
@@ -73,11 +76,30 @@
     color: #8C8C8C;
 }
 .fields-document{
-    background-color: #F6F6F6;
     width: 100%;
     height: 100%;
     position: absolute;
-}   
+    display: flex;
+    flex-direction: column;
+}
+.field-value{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: 10vh;
+    justify-content: space-around;
+}
+.field-value label{
+    color: #8C8C8C;
+}
+.field-value input{
+    width: 97%;
+    height: 4vh;
+    border: #DDDDDD solid 1px;
+    box-shadow: 0 0px 5px 0px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+    font-size: 1.2em;
+    color: rgb(71, 71, 71);
+}
 .field-types{
     display: flex;
     flex-direction: column;
@@ -119,6 +141,7 @@
 input[type=radio]:checked + img {
     filter: drop-shadow(0px 0px 2px #1d0088)
   }
+
 .radio--field-types{
     background-color: white;
     height: 17vh;
@@ -157,6 +180,35 @@ input[type=radio]:checked + img {
 textarea:focus, input:focus, select:focus, button:focus {
     outline: 0;
 }
+
+
+.container-list {
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+ .table-fields{
+     width: 60%;
+ }
+.table-fields li {
+      border-radius: 3px;
+      padding: 25px 30px;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 25px;
+    }
+    .table-header {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .table-row {
+      background-color: #ffffff;
+      box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
+    }
+    
 
 @media screen and (max-width: 1460px){
     .radio--field-types label{
@@ -203,6 +255,49 @@ textarea:focus, input:focus, select:focus, button:focus {
     .form--add-field{
         width: 100%;
         height: 90%;
+    }
+}
+@media screen and (max-width:925px){
+    .form--add-field{
+        width: 45%;
+        height: 100%;
+    }
+}
+@media screen and (max-width:815px){
+    .form--add-field{
+        width: 50%;
+        height: 100%;
+    }
+}
+@media screen and (max-width:735px){
+    .form--add-field{
+        width: 55%;
+        height: 100%;
+    }
+}
+@media screen and (max-width:670px)
+{
+    .form--add-field{
+        width: 60%;
+        height: 100%;
+    }
+}
+@media screen and (max-width:610px){
+    .form--add-field{
+        width: 65%;
+        height: 100%;
+    }
+}
+@media screen and (max-width:570px){
+    .form--add-field{
+        width: 70%;
+        height: 100%;
+    }
+}
+@media screen and (max-width:520px){
+    .form--add-field{
+        width: 80%;
+        height: 100%;
     }
 }
 
