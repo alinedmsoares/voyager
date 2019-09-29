@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import '../../Assets/css/editingFields.css'
 import Menu from '../../components/menu/menu'
 import Header from '../../components/header/header'
+import Swal from 'sweetalert2'
+
 
 
 export default class editingFields extends Component {
@@ -17,41 +19,42 @@ export default class editingFields extends Component {
             values: [], //field value set if required
             list: [], //list with all fields registered
         }
+
         //field state updates
         this.updateStateFieldNameForm = this.updateStateFieldNameForm.bind(this);
         this.updateStateFieldTypeForm = this.updateStateFieldTypeForm.bind(this);
         this.updateStateRequiredForm = this.updateStateRequiredForm.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.searchForId = this.searchForId.bind(this);
 
     }
+
     //update name state when registering
     updateStateFieldNameForm(event) {
         this.setState({ name: event.target.value })
     }
+
     //update field type state when registering
     updateStateFieldTypeForm(event) {
         this.setState({ fieldType: event.target.value }, () => {
             console.log(this.state.fieldType)
         })
     }
+
     //update required state when registering
     updateStateRequiredForm(event) {
         this.setState({ required: event.target.value })
     }
-    //update field value state when registering
-    // updateStateFieldValueForm(event) {
-    //     this.setState({ fieldValue: event.target.value })
-    // }
+
     //method responsible for modifying the visibility of the submenu responsible for creating new fields
     toggleHiddenForm() {
         this.setState({
             isHiddenForm: !this.state.isHiddenForm
         })
     }
+
     //method responsible for viewing input value input if field type is list or multiple selection
     toggleHiddenValue(fieldType) {
-        if (fieldType.target.id == "list" || fieldType.target.id == "multiple-selection") {
+        if (fieldType.target.id === "list" || fieldType.target.id === "multiple-selection") {
             this.setState({
                 isHiddenField: this.state.isHiddenField = false
             })
@@ -62,6 +65,7 @@ export default class editingFields extends Component {
         }
 
     }
+
     //search all fields registered
     searchFields() {
         fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document', {
@@ -73,41 +77,39 @@ export default class editingFields extends Component {
             .then(data => this.setState({ list: data }))
             .catch(error => console.log(error))
     }
-    // appendValue() {
-    //     let newValue = `value-${this.state.fieldValue.lenght}`;
-    //     this.setState(prevState => ({ fieldValue: prevState.fieldValue.concat([newValue]) }));
-    // }
     componentDidMount() {
         this.searchFields();
     }
 
-    createUI() {
+    // method responsible for generating new inputs to add values ​​to fields
+    createInput() {
         return this.state.values.map((el, i) =>
-            <div key={i} className="field-value">           
-                <input type="text" value={el || ''} placeholder="Valor do Campo*" onChange={this.handleChange.bind(this, i)} />
-                <div type='button' value='remove' onClick={this.removeClick.bind(this, i)}> </div>
+            <div key={i} className="field-value-input">
+                <input type="text" required value={el || ''} placeholder="Valor do Campo*" onChange={this.handleChange.bind(this, i)} />
+                <div type='button' className="remove-value" value='remove' onClick={this.removeClick.bind(this, i)}> </div>
             </div>
         )
     }
 
+    //add entered values ​​to field
     handleChange(i, event) {
         let values = [...this.state.values];
         values[i] = event.target.value;
         this.setState({ values });
     }
 
+    //add input by clicking the button
     addClick() {
         this.setState(prevState => ({ values: [...prevState.values, ''] }))
     }
 
+    //remove input by clicking the button
     removeClick(i) {
         let values = [...this.state.values];
         values.splice(i, 1);
         this.setState({ values });
     }
-    handleSubmit(event) {
-        event.preventDefault();
-    }
+
     //method responsible for sending the registered data to the API
     registerField(event) {
         event.preventDefault();
@@ -124,24 +126,37 @@ export default class editingFields extends Component {
                 'Content-Type': 'application/json'
             }
         })
+            .then(this.AlertSucess())
             .then(response => response)
             .then(this.searchFields.bind(this))
             .catch(error => console.log(error))
     }
-    searchForId(event){
+
+    //search fields by id
+    searchForId(event) {
         event.preventDefault();
         console.log('https://5d8289a9c9e3410014070b11.mockapi.io/document/' + event.target.getAttribute('id'));
-        fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document/' + event.target.getAttribute('id'),{
-            headers:{
-                'Content-Type' : 'application/json'
+        fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document/' + event.target.getAttribute('id'), {
+            headers: {
+                'Content-Type': 'application/json'
             }
         })
-        .then(response => response.json())
-        .then(data => this.setState({ 
-            name: data.name,
-            fieldType: data.fieldType,
-            required: data.required}))
-        .catch(erro => console.log(erro))
+            .then(response => response.json())
+            .then(data => this.setState({
+                name: data.name,
+                fieldType: data.fieldType,
+                required: data.required
+            }))
+            .catch(erro => console.log(erro))
+    }
+
+    //shows a success message when registering a new field
+    AlertSucess() {
+        Swal.fire(
+            'Campo cadastrado!',
+            '',
+            'success'
+        )
     }
 
     //rendering the HTML
@@ -149,8 +164,12 @@ export default class editingFields extends Component {
         const root = this;
         return (
             <div className="fields-document">
+
+                {/* page header */}
                 <Header />
+                {/* menu header */}
                 <Menu />
+
                 {/* Button responsible for activating the visibility of the submenu */}
                 {!this.state.isHiddenForm && <div className="register-fields">
                     {/* Section responsible for registering or editing a field*/}
@@ -162,11 +181,12 @@ export default class editingFields extends Component {
                         {/*Input responsible for the name of a field*/}
                         <div className="field-name">
                             <label>Nome do Campo*</label>
-                            <input type="text" value={this.state.name || ''} onChange={this.updateStateFieldNameForm} />
+                            <input required maxlength="20" type="text" value={this.state.name || ''} onChange={this.updateStateFieldNameForm} />
                         </div>
 
                         {/*Section responsible for selecting field types*/}
                         < section className="field-types" >
+
                             <label>Tipo*</label>
 
                             {/* Div containing each field type option */}
@@ -224,26 +244,35 @@ export default class editingFields extends Component {
                             </div>
 
                         </section >
-                        {/* section responsible for entering a value in the field if type list or multiple selection */}
-                        {!this.state.isHiddenField &&
-                            <div className="field-value">
-                            <div className="field-value--container">
-                                    {this.createUI()}
-                            </div>
-                                    <div class="add-value"onClick={this.addClick.bind(this)}></div>
-                            </div>
-                        }
 
-                        {/* checkbox responsible for defining if the created field must be filled in when submitting a document */}
-                        < div className="check-box--required" >
-                            <input type="checkbox" onChange={this.updateStateRequiredForm} /><label>Exigir preenchimento obrigatório</label>
-                        </div >
-                        {/* button responsible for saving the entered data */}
-                        < div className="btn--save-field" >
-                            <button type="submit">Salvar</button>
-                        </div >
+                        <div className="field-value">
+                            {/* section responsible for entering a value in the field if type list or multiple selection */}
+                            {!this.state.isHiddenField &&
+                                <div className="field-value--container">
+                                    {/* button responsible for adding a new input */}
+                                    <button className="add-value" onClick={this.addClick.bind(this)}>Adicionar valor</button>
+                                    {this.createInput()}
+                                </div>
+                            }
+                            {/* checkbox responsible for defining if the created field must be filled in when submitting a document */}
+                            < div className="check-box--required" >
+                                <input type="checkbox" onChange={this.updateStateRequiredForm} />
+                                <label>Exigir preenchimento obrigatório</label>
+                            </div >
+
+                            {/* button responsible for saving the entered data */}
+                            < div className="btn--save-field" >
+                                <button type="submit">Salvar</button>
+                            </div >
+
+
+                        </div>
+
+
+
 
                     </form >
+
                 </div >}
                 {/*button responsible for enabling or disabling the visibility of the field registration submenu*/}
                 <div className="btn--add-new-field">

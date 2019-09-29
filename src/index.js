@@ -7,7 +7,7 @@ import * as serviceWorker from './serviceWorker';
 import {usuarioAutenticado} from './services/auth';
 import {Route, BrowserRouter as Router, Switch, Redirect} from 'react-router-dom';
 
-const Permissao = ({component : Component}) => (
+const Permission = ({component : Component}) => (
     <Route 
         render = {props => usuarioAutenticado() ?
         (<Component {...props} />) :

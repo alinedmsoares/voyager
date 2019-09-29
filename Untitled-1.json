@@ -1,0 +1,98 @@
+[{
+    "Id": "1",
+    "Titulo": "Erro no Login",
+    "EUEmail": "exemplo_cosmos@hotmail.com",
+    "Descricao": "Nao consigo logar no sistema X com o meu e-mail e senha",
+    "Versao": "1.0.3",
+    "Plataforma": "Mobile",
+    "Data": "10/09/2019",
+    "Status": {
+        "Id": "3",
+        "Nome": "Pending"
+    },
+    "UserInCharge": {
+        "Id": "1",
+        "Nome": "Vinicius",
+        "Email": "vini.voyager@hotmmail.com",
+        "Empresa": "SpaceNeedle"
+    },
+    "Updates": {
+        "Id": "1",
+        "Email": "vini.voyager@hotmmail.com",
+        "Data": "10/09/2019",
+        "DescricaoUpdate": "Boa Tarde. Vimos o seu Document e ja estamos trabalhando para resolve-lo"
+    }
+},
+{
+    "Id": "3",
+    "Titulo": "Bug na pagina",
+    "EUEmail": "exemplo2_cosmos@hotmail.com",
+    "Status": "Pendent",
+    "Descricao": "Há um bug na pagina inicial do site X",
+    "DocumentIMG": "(url da imagem)",
+    "Plataforma": "Web",
+    "Data": "10/09/2019",
+    "UserInCharge": {
+        "Id": "2",
+        "Nome": "Gustavo",
+        "Email": "gustavo.voyager@hotmmail.com",
+        "Empresa": "SpaceNeedle"
+    },
+    "Updates": [{
+        "Id": "2",
+        "Email": "gustavo.voyager@hotmmail.com",
+        "Data": "10/09/2019",
+        "DescricaoUpdate": "Boa Tarde. Vimos o seu Document e ja estamos trabalhando para resolve-lo"
+    }]
+},
+{
+    "Id": "4",
+    "Titulo": "Link Fantasma",
+    "EUEmail": "exemplo3_cosmos@hotmail.com",
+    "Data": "10/09/2019",
+    "Descricao": "Um dos links da página Home nao leva a lugar nenhum",
+    "DocumentIMG": "(url da imagem)",
+    "Plataforma": "Web",
+    "Status": {
+        "Id": "5",
+        "Nome": "Solved"
+    },
+    "UserInCharge": {
+        "Id": "2",
+        "Nome": "Gustavo",
+        "Email": "gustavo.voyager@hotmmail.com",
+        "Empresa": "SpaceNeedle"
+    },
+    "Updates": [{
+            "Id": "3",
+            "UserInCharge": {
+                "Nome": "Gustavo",
+                "Email": "gustavo.voyager@hotmmail.com",
+                "Empresa": "SpaceNeedle"
+            },
+            "Data": "11/09/2019",
+            "DescricaoUpdate": "Boa Tarde. Vimos o seu Document e ja estamos trabalhando para resolve-lo"
+        },
+        {
+            "Id": "4",
+            "Email": "exemplo3_cosmos@hotmail.com",
+            "Data": "11/09/2019",
+            "DescricaoUpdate": "Boa Tarde. Estou no aguardo de novas respostas"
+        },
+        {
+            "Id": "5",
+            "UserInCharge": {
+                "Nome": "Gustavo",
+                "Email": "gustavo.voyager@hotmmail.com",
+                "Empresa": "SpaceNeedle"
+            },
+            "Data": "12/09/2019",
+            "DescricaoUpdate": "Boa Tarde. Conseguimos resolver com sucesso o problema que você nos enviou. Agradecemos pelo seu contato",
+            "StatusDoc": {
+                "Id": "5",
+                "Nome": "Solved"
+            }
+        }
+    ]
+}
+]

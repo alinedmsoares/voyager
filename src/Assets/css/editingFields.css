@@ -3,17 +3,21 @@
     padding: 0;
 }
 .add-value {
-    background-image: url(https://image.flaticon.com/icons/svg/1665/1665578.svg);
-    width: 20%;
-    background-size: 40% 100%;
-    background-repeat: no-repeat;
-    height: 3vh;
+    color:#ffffff;
+    border: none;
+    font-size: 1em;
+    background-color: #120055;
+    padding: 2%;
+    width: 85%;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px 4px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
 }
 .btn--add-new-field{
-    width: 48%;
+    width: 50%;
     display: flex;
     justify-content: center;
-    margin-top: 2%;
+    margin-top: 6%;
 
 }
 .btn--add-new-field button{
@@ -27,9 +31,11 @@
     box-shadow: 0 2px 5px 4px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
 }
 .btn--save-field{
-    width: 90%;
+    width: 93%;
     display: flex;
     justify-content: flex-end;
+    height: 15vh;
+    margin-bottom: 15%;
 }
 .btn--save-field button{
     color:#ffffff;
@@ -45,24 +51,25 @@
 }
 .check-box--required{
     display: flex;
-    flex-direction: row;
-    width: 88%;
-    height: 6vh;
+    width: 90%;
+    height: 7vh;
     align-items: center;
+    padding: 2%;
 }
 .check-box--required input{
-    height: 45%;
+    height: 3vh;
+    width: 5.5%;
     -webkit-appearance: none; 
-    width: 5%;
     border: #DDDDDD 1px solid;
-    background-color: #FFFFFF
+    background-color: #FFFFFF;
 }
 .check-box--required input:checked{
     background-image: url("https://image.flaticon.com/icons/svg/109/109554.svg")
 }
 .check-box--required label{
+    margin-left: 1%;
     color: #8C8C8C;
-    font-size: 1.2em;
+    font-size: 1.1em;
 }
 .close--add-field{
     width: 92%;
@@ -72,6 +79,13 @@
     width: 6%;
     cursor: pointer;
 }
+.container-list {
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 .field-name{
     display: flex;
     flex-direction: column;
@@ -89,32 +103,6 @@
 }
 .field-name label{
     color: #8C8C8C;
-}
-
-.fields-document{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-}
-.field-value{
-    display: flex;
-    width: 90%;
-    height: 10vh;
-    justify-content: space-around;
-}
-.field-value--container{
-    width: 100%;
-}
-.field-value input {
-    width: 76%;
-    height: 3vh;
-    border: #DDDDDD solid 1px;
-    box-shadow: 0 0px 5px 0px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
-    font-size: 1em;
-    padding: 1%;
-    color: rgb(71, 71, 71);
 }
 .field-types{
     display: flex;
@@ -138,14 +126,53 @@
 .field-types label{
     color: #8C8C8C;
 }
+.field-value{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    height: 5vh;
+    align-items: center;
+}
+.field-value-input {
+    width: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 8vh;
+}
+.field-value-input input {
+    width: 65%;
+    height: 3vh;
+    border: #DDDDDD solid 1px;
+    box-shadow: 0 0px 5px 0px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+    font-size: 1em;
+    padding: 1%;
+    color: rgb(71, 71, 71);
+}
+.field-value--container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.fields-document{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+}
 .form--add-field{
     width: 30%;
     background-color: #F3F3F3;
     display: flex;
     flex-direction: column;
+    margin-top: 4%;
     align-items: center;
     height: 100%;
     z-index: 1;
+    overflow: scroll;
+    overflow-x: hidden;
     position: fixed;
     box-shadow:0 2px 5px 4px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
 }
@@ -172,6 +199,9 @@ input[type=radio]:checked + img {
     cursor: pointer;
     opacity: 0;
 }
+.radio--field-types img{
+    width: 50%;
+}
 .radio--field-types label{
     color: black;
     display: flex;
@@ -184,77 +214,147 @@ input[type=radio]:checked + img {
     cursor: pointer;
 
 }
-.radio--field-types img{
-    width: 50%;
-}
 .register-fields{
     display: flex;
     flex-direction: column;
     align-items: flex-end;
 }
+.remove-value {
+    background-image: url(https://image.flaticon.com/icons/svg/32/32178.svg);
+    width: 20%;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    height: 3vh;
+}
+.row-actions{
+    width: 10%;
+    display: flex;
+}
+.row-edit{
+    height: 4vh;
+    background-image: url("https://image.flaticon.com/icons/svg/61/61456.svg");
+    width: 50%;    
+    background-size: 40% 100%;
+    background-repeat:no-repeat;
+    opacity: 0.5;
+}
+.row-delete{
+    height: 4vh;
+    background-image: url("https://image.flaticon.com/icons/svg/60/60761.svg");
+    width: 50%;    
+    background-size: 40% 100%;
+    background-repeat:no-repeat;
+    opacity: 0.5;
+
+}
+.table-fields{
+    width: 65%;
+}
+.table-fields li {
+    border-radius: 3px;
+    padding: 17px 30px;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+.table-header {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    width: 65%;
+
+}
+.table-row {
+    background-color: #ffffff;
+    box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.2);
+}
 textarea:focus, input:focus, select:focus, button:focus {
     outline: 0;
 }
 
+/* media queries */
 
-.container-list {
-    padding-left: 10px;
-    padding-right: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
- .table-fields{
-     width: 65%;
- }
-.table-fields li {
-      border-radius: 3px;
-      padding: 17px 30px;
-      display: flex;
-      justify-content: space-around;
-      margin-bottom: 10px;
-    }
-    .table-header {
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-      width: 65%;
-
-    }
-    .table-row {
-      background-color: #ffffff;
-      box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.2);
-    }
-    .row-actions{
-        width: 10%;
-        display: flex;
-    }
-    .row-edit{
-        height: 4vh;
-        background-image: url("https://image.flaticon.com/icons/svg/61/61456.svg");
-        width: 50%;    
-        background-size: 40% 100%;
-        background-repeat:no-repeat;
-        opacity: 0.5;
-    }
-    .row-delete{
-        height: 4vh;
-        background-image: url("https://image.flaticon.com/icons/svg/60/60761.svg");
-        width: 50%;    
-        background-size: 40% 100%;
-        background-repeat:no-repeat;
-        opacity: 0.5;
-
-    }
-    
-
-@media screen and (max-width: 1460px){
-    .radio--field-types label{
-        color: black;
-        width: 90%;
-        font-size: 0.8em;
+@media screen and (max-width:450px){
+    .form--add-field{
+        width: 100%;
+        height: 90%;
+        margin-top: 4%;
     }
 }
+
+@media screen and (max-width:520px){
+    .form--add-field{
+        width: 80%;
+        height: 100%;
+        margin-top: 4%;
+    }
+}
+
+@media screen and (max-width:570px){
+    .form--add-field{
+        width: 70%;
+        height: 100%;
+        margin-top: 4%;
+    }
+}
+
+@media screen and (max-width:610px){
+    .form--add-field{
+        width: 65%;
+        height: 100%;
+        margin-top: 4%;
+    }
+}
+
+@media screen and (max-width:670px)
+{
+    .form--add-field{
+        width: 60%;
+        height: 100%;
+        margin-top: 4%;
+    }
+}
+
+@media screen and (max-width:735px){
+    .form--add-field{
+        width: 55%;
+        height: 100%;
+        margin-top: 4%;
+    }
+}
+
+@media screen and (max-width:815px){
+    .form--add-field{
+        width: 50%;
+        height: 100%;
+        margin-top: 4%;
+    }
+}
+
+@media screen and (max-width:925px){
+    .form--add-field{
+        width: 45%;
+        height: 100%;
+        margin-top: 4%;
+    }
+}
+
+@media screen and (max-width:1050px){
+    .form--add-field{
+        width: 40%;
+        margin-top: 4%;
+        height: 100%;
+    }
+}
+
+@media screen and (max-width:1220px){
+    .form--add-field{
+        width: 35%;
+        height: 100%;
+        margin-top: 4%;
+    }
+}
+
 @media screen and (max-width:1300px){
     .radio--field-types{
         height: 15vh;
@@ -270,72 +370,22 @@ textarea:focus, input:focus, select:focus, button:focus {
         font-size: 0.7em;
     }
 }
-@media screen and (max-width:1220px){
+
+@media screen and (max-width: 1460px){
+    .radio--field-types label{
+        color: black;
+        width: 90%;
+        font-size: 0.8em;
+    }
     .form--add-field{
-        width: 35%;
+        width: 32%;
+        margin-top: 4%;
         height: 100%;
     }
 }
-@media screen and (max-width:1050px){
-    .form--add-field{
-        width: 40%;
-        height: 100%;
-    }
-}
-@media screen and(max-width:500px)
-{
-    .form--add-field{
-        width: 100%;
-        height: 90%;
-    }
-}
-@media screen and (max-width:500px){
-    .form--add-field{
-        width: 100%;
-        height: 90%;
-    }
-}
-@media screen and (max-width:925px){
-    .form--add-field{
-        width: 45%;
-        height: 100%;
-    }
-}
-@media screen and (max-width:815px){
-    .form--add-field{
-        width: 50%;
-        height: 100%;
-    }
-}
-@media screen and (max-width:735px){
-    .form--add-field{
-        width: 55%;
-        height: 100%;
-    }
-}
-@media screen and (max-width:670px)
-{
-    .form--add-field{
-        width: 60%;
-        height: 100%;
-    }
-}
-@media screen and (max-width:610px){
-    .form--add-field{
-        width: 65%;
-        height: 100%;
-    }
-}
-@media screen and (max-width:570px){
-    .form--add-field{
-        width: 70%;
-        height: 100%;
-    }
-}
-@media screen and (max-width:520px){
-    .form--add-field{
-        width: 80%;
-        height: 100%;
-    }
-}
+
+
+
+
+
 
