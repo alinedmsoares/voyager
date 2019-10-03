@@ -9,5 +9,10 @@
     height: 100%;
     background: #120055;
     box-shadow: 0 2px 5px 4px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+}
 
+@media screen and (max-width:800px){
+    .menu{
+        visibility: hidden;
+    }
 }

@@ -14,7 +14,7 @@
     box-shadow: 0 2px 5px 4px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
 }
 .btn--add-new-field{
-    width: 50%;
+    width: 48%;
     display: flex;
     justify-content: center;
     margin-top: 6%;
@@ -176,6 +176,15 @@
     position: fixed;
     box-shadow:0 2px 5px 4px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
 }
+.header-id{
+    width: 8%;
+}
+.header-name{
+    width: 50%;
+}
+.header-type{
+    width: 14%;
+}
 .input--field-name{
     width: 50%;
     border: solid #DDDDDD 1px;
@@ -218,6 +227,10 @@ input[type=radio]:checked + img {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    -webkit-transition: 0.3s linear; 
+    -moz-transition: 0.3s linear; 
+    -o-transition: 0.3s linear;
+    transition: 0.3s linear
 }
 .remove-value {
     background-image: url(https://image.flaticon.com/icons/svg/32/32178.svg);
@@ -247,6 +260,15 @@ input[type=radio]:checked + img {
     opacity: 0.5;
 
 }
+.row-id{
+    width: 3%;
+}
+.row-name{
+    width: 16%;
+}
+.row-type{
+    width: 14%;
+}
 .table-fields{
     width: 65%;
 }
@@ -271,6 +293,16 @@ input[type=radio]:checked + img {
 textarea:focus, input:focus, select:focus, button:focus {
     outline: 0;
 }
+.requiredFalse{
+    visibility: hidden;
+}
+.requiredTrue{
+    background: #AD113D;
+    color: white;
+    font-size: 0.8em;
+    padding: 1%;
+    border-radius: 7px;
+}
 
 /* media queries */
 
@@ -280,6 +312,13 @@ textarea:focus, input:focus, select:focus, button:focus {
         height: 90%;
         margin-top: 4%;
     }
+    .table-fields {
+        width: 100%;
+    }
+    .row-actions{
+        width: 20%;
+        display: flex;
+    }
 }
 
 @media screen and (max-width:520px){
@@ -287,6 +326,13 @@ textarea:focus, input:focus, select:focus, button:focus {
         width: 80%;
         height: 100%;
         margin-top: 4%;
+    }
+    .table-fields {
+        width: 100%;
+    }
+    .row-actions{
+        width: 20%;
+        display: flex;
     }
 }
 
@@ -296,6 +342,13 @@ textarea:focus, input:focus, select:focus, button:focus {
         height: 100%;
         margin-top: 4%;
     }
+    .table-fields {
+        width: 100%;
+    }
+    .row-actions{
+        width: 20%;
+        display: flex;
+    }
 }
 
 @media screen and (max-width:610px){
@@ -303,6 +356,13 @@ textarea:focus, input:focus, select:focus, button:focus {
         width: 65%;
         height: 100%;
         margin-top: 4%;
+    }
+    .table-fields {
+        width: 100%;
+    }
+    .row-actions{
+        width: 20%;
+        display: flex;
     }
 }
 
@@ -313,6 +373,13 @@ textarea:focus, input:focus, select:focus, button:focus {
         height: 100%;
         margin-top: 4%;
     }
+    .table-fields {
+        width: 100%;
+    }
+    .row-actions{
+        width: 20%;
+        display: flex;
+    }
 }
 
 @media screen and (max-width:735px){
@@ -320,6 +387,13 @@ textarea:focus, input:focus, select:focus, button:focus {
         width: 55%;
         height: 100%;
         margin-top: 4%;
+    }
+    .table-fields {
+        width: 100%;
+    }
+    .row-actions{
+        width: 15%;
+        display: flex;
     }
 }
 
@@ -329,6 +403,13 @@ textarea:focus, input:focus, select:focus, button:focus {
         height: 100%;
         margin-top: 4%;
     }
+    .table-fields {
+        width: 100%;
+    }
+    .row-actions{
+        width: 15%;
+        display: flex;
+    }
 }
 
 @media screen and (max-width:925px){
@@ -336,6 +417,10 @@ textarea:focus, input:focus, select:focus, button:focus {
         width: 45%;
         height: 100%;
         margin-top: 4%;
+    }
+    .row-actions{
+        width: 15%;
+        display: flex;
     }
 }
 
