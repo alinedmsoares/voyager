@@ -19,6 +19,7 @@ export default class editingFields extends Component {
             required: false, //required field
             values: [], //field value set if required
             list: [], //list with all fields registered
+            status: false
         }
 
         //field state updates
@@ -103,7 +104,24 @@ export default class editingFields extends Component {
     addClick() {
         this.setState(prevState => ({ values: [...prevState.values, ''] }))
     }
-
+    editStatus = (event) => {
+        event.preventDefault();
+        if (window.confirm("Deseja excluir esse campo?")) {
+            fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document/' + event.target.getAttribute('id'), {
+                method: 'PUT',
+                body: JSON.stringify({
+                    status: (event.target.getAttribute('status') === 'statusTrue' ? false : true)
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    this.searchFields()
+                })
+                .catch(erro => console.log(erro))
+        }
+    }
     //remove input by clicking the button
     removeClick(i) {
         let values = [...this.state.values];
@@ -130,7 +148,7 @@ export default class editingFields extends Component {
                 this.setState({ id: '' })
                 this.searchFields();
             })
-            .then(this.AlertSucessEdition())
+                .then(this.AlertSucessEdition())
 
         }
         else {
@@ -147,10 +165,10 @@ export default class editingFields extends Component {
                     'Content-Type': 'application/json'
                 }
             })
-            .then(this.AlertSucessRegister())
-            .then(response => response)
-            .then(this.searchFields.bind(this))
-            .catch(error => console.log(error))
+                .then(this.AlertSucessRegister())
+                .then(response => response)
+                .then(this.searchFields.bind(this))
+                .catch(error => console.log(error))
         }
     }
 
@@ -286,7 +304,7 @@ export default class editingFields extends Component {
                             }
                             {/* checkbox responsible for defining if the created field must be filled in when submitting a document */}
                             < div className="check-box--required" >
-                                <input type="checkbox"onChange={this.updateStateRequiredForm} />
+                                <input type="checkbox" onChange={this.updateStateRequiredForm} />
                                 <label>Exigir preenchimento obrigatório</label>
                             </div >
 
@@ -315,18 +333,21 @@ export default class editingFields extends Component {
                         </li>
                         {
                             this.state.list.map(function (document) {
-                                return (
-                                    <li className="table-row">
-                                        <div className="row-id" data-label="header-id">{document.id}</div>
-                                        <div className="row-name" data-label="header-name">{document.name}</div>
-                                        <div className={document.required ? "requiredTrue" : "requiredFalse"} data-label="header-required">Obrigatório</div>
-                                        <div className="row-type" data-label="header-type">{document.fieldType}</div>
-                                        <div className="row-actions">
-                                            <div className="row-edit" id={document.id} onClick={root.searchForId}></div>
-                                            <div className="row-delete"></div>
-                                        </div>
-                                    </li>
-                                );
+                                if (document.status == false) {
+                                    return (
+                                        <li className="table-row">
+                                            <div className="row-id" data-label="header-id">{document.id}</div>
+                                            <div className="row-name" data-label="header-name">{document.name}</div>
+                                            <div className={document.required ? "requiredTrue" : "requiredFalse"} data-label="header-required">Obrigatório</div>
+                                            <div className="row-type" data-label="header-type">{document.fieldType}</div>
+                                            <div className="row-actions">
+                                                <div className="row-edit" id={document.id} onClick={root.searchForId}></div>
+                                                <div id={document.id} className="row-delete" onClick={root.editStatus}>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    );
+                                }
                             })
                         }
                     </ul>

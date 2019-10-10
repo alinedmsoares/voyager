@@ -468,4 +468,10 @@ textarea:focus, input:focus, select:focus, button:focus {
 
 
 
-
+.table-row{
+    display: block;
+}
+.statusFalse{
+    visibility: hidden;
+    display: none;
+}
