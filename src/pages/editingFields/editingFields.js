@@ -16,6 +16,7 @@ export default class editingFields extends Component {
             name: '', //field name
             isHiddenField: true, //field value input preview
             fieldType: '', //defined field type
+            values:'',
             required: false, //required field
             values: [], //field value set if required
             list: [], //list with all fields registered
@@ -139,7 +140,8 @@ export default class editingFields extends Component {
                     id: this.state.id,
                     name: this.state.name,
                     fieldType: this.state.fieldType,
-                    required: this.state.required
+                    values:this.state.values,
+                    required: (this.state.required === 'on' ? true : false)
                 }),
                 headers: {
                     'Content-Type': 'application/json'
@@ -186,6 +188,7 @@ export default class editingFields extends Component {
                 id: data.id,
                 name: data.name,
                 fieldType: data.fieldType,
+                values: data.values,
                 required: data.required,
                 isHiddenForm: !this.state.isHiddenForm
             }))
@@ -360,3 +363,5 @@ export default class editingFields extends Component {
 
     }
 }
+
+

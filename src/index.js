@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import editingFields from './pages/editingFields/editingFields';
+import sendDocuments from './pages/sendDocuments/sendDocuments'
 import notFound from './pages/notFound/notFound';
 import * as serviceWorker from './serviceWorker';
 import {usuarioAutenticado} from './services/auth';
@@ -20,7 +21,7 @@ const rotas = (
     <Router>
         <div>
             <Switch>
-                <Route exact path="/" component={editingFields} />
+                <Route exact path="/" component={sendDocuments} />
                 <Route component={notFound} /> 
             </Switch>
         </div>
