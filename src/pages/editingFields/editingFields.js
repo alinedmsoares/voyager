@@ -246,7 +246,7 @@ export default class editingFields extends Component {
                                 <div className="radio--field-types">
                                     <label for="list">
                                         <input type="radio" name="field-types"
-                                            value="Lista" checked={this.state.fieldType === 'Lista'} id="list" onChange={this.updateStateFieldTypeForm} onClick={this.toggleHiddenValue.bind(this)} />
+                                            value="list" checked={this.state.fieldType === 'list'} id="list" onChange={this.updateStateFieldTypeForm} onClick={this.toggleHiddenValue.bind(this)} />
                                         <img src="https://image.flaticon.com/icons/svg/482/482559.svg" />Lista</label>
 
                                 </div>
@@ -255,7 +255,7 @@ export default class editingFields extends Component {
                                 <div className="radio--field-types">
                                     <label for="multiple-selection">
                                         <input type="radio" name="field-types"
-                                            value="Seleção Múltipla" checked={this.state.fieldType === 'Seleção Múltipla'} id="multiple-selection" onChange={this.updateStateFieldTypeForm} onClick={this.toggleHiddenValue.bind(this)} />
+                                            value="multiple-selection" checked={this.state.fieldType === 'multiple-selection'} id="multiple-selection" onChange={this.updateStateFieldTypeForm} onClick={this.toggleHiddenValue.bind(this)} />
                                         <img src="https://image.flaticon.com/icons/svg/2087/2087812.svg" />Seleção Múltipla</label>
                                 </div>
 
@@ -263,7 +263,7 @@ export default class editingFields extends Component {
                                 <div className="radio--field-types">
                                     <label for="numeric">
                                         <input type="radio" name="field-types"
-                                            value="Numérico" checked={this.state.fieldType === 'Numérico'} id="numeric" onChange={this.updateStateFieldTypeForm} onClick={this.toggleHiddenValue.bind(this)} />
+                                            value="number" checked={this.state.fieldType === 'number'} id="numeric" onChange={this.updateStateFieldTypeForm} onClick={this.toggleHiddenValue.bind(this)} />
                                         <img src="https://image.flaticon.com/icons/svg/56/56632.svg" />Numérico</label>
                                 </div>
 
@@ -275,21 +275,21 @@ export default class editingFields extends Component {
                                 <div className="radio--field-types">
                                     <label for="text">
                                         <input type="radio"
-                                            name="field-types" value="Texto" checked={this.state.fieldType === 'Texto'} id="text" onChange={this.updateStateFieldTypeForm} onClick={this.toggleHiddenValue.bind(this)} />
+                                            name="field-types" value="text" checked={this.state.fieldType === 'text'} id="text" onChange={this.updateStateFieldTypeForm} onClick={this.toggleHiddenValue.bind(this)} />
                                         <img src="https://image.flaticon.com/icons/svg/2087/2087728.svg" />Texto</label>
                                 </div>
 
                                 {/* field type:date */}
                                 <div className="radio--field-types">
                                     <label for="date">
-                                        <input type="radio" name="field-types" value="Data" checked={this.state.fieldType === 'Data'} id="date" onChange={this.updateStateFieldTypeForm} onClick={this.toggleHiddenValue.bind(this)} />
+                                        <input type="radio" name="field-types" value="date" checked={this.state.fieldType === 'date'} id="date" onChange={this.updateStateFieldTypeForm} onClick={this.toggleHiddenValue.bind(this)} />
                                         <img src="https://image.flaticon.com/icons/svg/481/481787.svg" />Data</label>
                                 </div>
 
                                 {/* field type:check-box */}
                                 <div className="radio--field-types">
                                     <label for="check-box">
-                                        <input type="radio" name="field-types" value="Caixa de Seleção" checked={this.state.fieldType === 'Caixa de Seleção'} id="check-box" onChange={this.updateStateFieldTypeForm} onClick={this.toggleHiddenValue.bind(this)} />
+                                        <input type="radio" name="field-types" value="checkbox" checked={this.state.fieldType === 'checkbox'} id="check-box" onChange={this.updateStateFieldTypeForm} onClick={this.toggleHiddenValue.bind(this)} />
                                         <img src="https://image.flaticon.com/icons/svg/2089/2089626.svg" />Caixa de Seleção</label>
                                 </div>
                             </div>

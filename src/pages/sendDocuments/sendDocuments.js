@@ -47,26 +47,15 @@ export default class sendDocument extends Component {
             <div>
                 {
                     this.state.list.map(function (document) {
-                        if (document.status == false) {
-                            return (
+                        return (
+                            <li>
                                 <label>{document.name}</label>
-                                <ul>
-                                    {
-                                        this.state.list.map(function (document) {
-                                            if (document.fieldType == "texto") {
-                                                return (
-                                                    <input type="text" />
-                                                );
-                                            }
-                                        }
-                                    )
-                                    }
-                                </ul>
-                            )
+                                <input type={document.fieldType} />
+                            </li>
+                        )
 
-                        }
                     }
-                )
+                    )
                 }
 
             </div>
