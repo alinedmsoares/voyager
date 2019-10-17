@@ -8,17 +8,26 @@ export default class sendDocument extends Component {
         super();
         this.state = {
             id: '',
-            title: '',
-            list: [{ id: '', name: '', fieldType: '', status: false, required: false, values: [] }],
-            inputType: "",
-            status: "new"
+            list: [{ id: '', name: '', fieldType: '', status: false, required: false, values: [], response: '' }],
+            file: ''
         }
 
-        this.updateState = this.updateState.bind(this)
+        // this.updateState = this.updateState.bind(this)
+        this.updateStateFile = this.updateStateFile.bind(this)
+        this.updateStateResponse = this.updateStateResponse.bind(this)
 
     }
-    updateState(event) {
-        this.setState({ [event.target.name]: event.target.value })
+    handleChange(selectorFiles) {
+        console.log(selectorFiles)
+    }
+    // updateState(event) {
+    //     this.setState({ [event.target.name]: event.target.value })
+    // }
+    updateStateResponse(event){
+        this.setState({response: event.target.value})
+    }
+    updateStateFile(event){
+        this.setState({file:event.target.value})
     }
 
     searchFields() {
@@ -31,34 +40,47 @@ export default class sendDocument extends Component {
             .then(data => this.setState({ list: data }))
             .catch(error => console.log(error))
     }
+    registerDocument(event) {
+        event.preventDefault();
+        fetch('http://5da89906e44c790014cd4f76.mockapi.io/documents', {
+            method: 'POST',
+            body: JSON.stringify({
+                file: this.state.file,
+                response: this.state.response
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response)
+            .then(this.searchFields.bind(this))
+            .catch(error => console.log(error))
+    }
     componentDidMount() {
         this.searchFields();
     }
-    setFieldType(event) {
-        if (event.fieldType == "texto") {
-            event.inputType = "text"
-        } else if (event.fieldType == "data") {
-            event.inputType = "datetime"
-        }
-    }
+
     render() {
         const root = this;
         return (
             <div>
+                <form onSubmit={this.registerDocument.bind(this)}>
                 {
                     this.state.list.map(function (document) {
                         return (
                             <li>
                                 <label>{document.name}</label>
-                                <input type={document.fieldType} />
+                                <input type={document.fieldType} onChange={this.updateStateResponse} name="response"/>
                             </li>
                         )
 
                     }
                     )
                 }
-
-            </div>
+                <input type="file" onChange={(e) => this.handleChange(e.target.files)} onChange={this.updateStateFile} />
+                <button type="submit">Salvar</button>
+           </form>
+            </div >
 
         )
     }
