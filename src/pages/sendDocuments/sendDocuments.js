@@ -2,19 +2,25 @@ import React, { Component } from 'react'
 import Menu from '../../components/menu/menu'
 import Header from '../../components/header/header'
 import Swal from 'sweetalert2'
+import '../../Assets/css/sendDocuments.css'
+
 
 export default class sendDocument extends Component {
     constructor() {
         super();
         this.state = {
             id: '',
-            list: [{ id: '', name: '', fieldType: '', status: false, required: false, values: [], response: '' }],
-            file: ''
+            listField: [{ id: '', fieldName: '', fieldType: '', answer:'', status: false, required: false, values: []}],
+            file: '',
+            // listAnswer:[{id:'', fieldName:'',answer:''}]
+            
         }
 
         // this.updateState = this.updateState.bind(this)
         this.updateStateFile = this.updateStateFile.bind(this)
-        this.updateStateResponse = this.updateStateResponse.bind(this)
+        // this.searchFields = this.searchFields.bind(this)
+        // this.updateStateAwnser = this.updateStateAwnser.bind(this)
+
 
     }
     handleChange(selectorFiles) {
@@ -23,11 +29,11 @@ export default class sendDocument extends Component {
     // updateState(event) {
     //     this.setState({ [event.target.name]: event.target.value })
     // }
-    updateStateResponse(event){
-        this.setState({response: event.target.value})
+    updateStateFile(event) {
+        this.setState({ file: event.target.value })
     }
-    updateStateFile(event){
-        this.setState({file:event.target.value})
+    updateStateAwnser(event) {
+        this.setState({ answer: event.target.value })
     }
 
     searchFields() {
@@ -37,7 +43,7 @@ export default class sendDocument extends Component {
             }
         })
             .then(response => response.json())
-            .then(data => this.setState({ list: data }))
+            .then(data => this.setState({ listField: data }))
             .catch(error => console.log(error))
     }
     registerDocument(event) {
@@ -46,7 +52,7 @@ export default class sendDocument extends Component {
             method: 'POST',
             body: JSON.stringify({
                 file: this.state.file,
-                response: this.state.response
+                answer:this.state.file
             }),
             headers: {
                 'Content-Type': 'application/json'
@@ -56,6 +62,7 @@ export default class sendDocument extends Component {
             .then(this.searchFields.bind(this))
             .catch(error => console.log(error))
     }
+    
     componentDidMount() {
         this.searchFields();
     }
@@ -63,24 +70,38 @@ export default class sendDocument extends Component {
     render() {
         const root = this;
         return (
-            <div>
-                <form onSubmit={this.registerDocument.bind(this)}>
-                {
-                    this.state.list.map(function (document) {
-                        return (
-                            <li>
-                                <label>{document.name}</label>
-                                <input type={document.fieldType} onChange={this.updateStateResponse} name="response"/>
-                            </li>
+            <div className="all">
+                <Header />
+                <Menu />
+                <form onSubmit={this.registerDocument.bind(this)} className="form">
+                    <div className="inputFixo">
+                    <input placeholder="Nome do Campo*" className="nomeCampo"/>
+                        <textarea placeholder="Descrição..." className="descricao"/>
+                        
+                    </div>
+                    {
+                        this.state.listField.map(function (document) {
+                            return (
+                                <div className="inputMovel">
+                                    <div>
+                                        <li className="lista">
+                                        <label>{document.fieldName}</label>
+                                            <input placeholder={document.fieldName}  type={document.fieldType} className={document.fieldType} />
+                                        </li>
+                                    </div>
+                                </div>
+                            );
+                        }
+                        
                         )
-
                     }
-                    )
-                }
-                <input type="file" onChange={(e) => this.handleChange(e.target.files)} onChange={this.updateStateFile} />
-                <button type="submit">Salvar</button>
-           </form>
-            </div >
+                    <input type="file" onChange={(e) => this.handleChange(e.target.files)} onChange={this.updateStateFile} />
+                    <div className="buttons">
+                        <button className="cancel">Cancelar</button>
+                        <button type="submit" className="send">Cadastrar</button>
+                    </div>
+                </form>
+            </div>
 
         )
     }

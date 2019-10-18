@@ -471,7 +471,7 @@ textarea:focus, input:focus, select:focus, button:focus {
 .table-row{
     display: block;
 }
-.statusFalse{
+.visibleFalse{
     visibility: hidden;
     display: none;
 }

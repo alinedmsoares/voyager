@@ -21,7 +21,7 @@ const rotas = (
     <Router>
         <div>
             <Switch>
-            {/* <Route exact path="/" component={editingFields} /> */}
+            <Route exact path="/" component={editingFields} />
                 <Route exact path="/" component={sendDocuments} />
                 <Route component={notFound} /> 
             </Switch>
