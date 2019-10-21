@@ -10,32 +10,21 @@ export default class sendDocument extends Component {
         super();
         this.state = {
             id: '',
-            listField: [{ id: '', fieldName: '', fieldType: '', answer:'', status: false, required: false, values: []}],
+            list: [{ id: '', FieldName: '', fieldType: '', status: false, required: false, values: [], answer:[]}],
             file: '',
-            // listAnswer:[{id:'', fieldName:'',answer:''}]
-            
+            Answers:[,]            
         }
 
-        // this.updateState = this.updateState.bind(this)
-        this.updateStateFile = this.updateStateFile.bind(this)
-        // this.searchFields = this.searchFields.bind(this)
-        // this.updateStateAwnser = this.updateStateAwnser.bind(this)
-
-
+        this.updateState = this.updateState.bind(this)
+        
     }
     handleChange(selectorFiles) {
         console.log(selectorFiles)
     }
-    // updateState(event) {
-    //     this.setState({ [event.target.name]: event.target.value })
-    // }
-    updateStateFile(event) {
-        this.setState({ file: event.target.value })
+    updateState(event) {
+        this.setState({ [event.target.name]: event.target.value })
     }
-    updateStateAwnser(event) {
-        this.setState({ answer: event.target.value })
-    }
-
+    
     searchFields() {
         fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document', {
             headers: {
@@ -43,7 +32,7 @@ export default class sendDocument extends Component {
             }
         })
             .then(response => response.json())
-            .then(data => this.setState({ listField: data }))
+            .then(data => this.setState({ list: data }))
             .catch(error => console.log(error))
     }
     registerDocument(event) {
@@ -52,15 +41,16 @@ export default class sendDocument extends Component {
             method: 'POST',
             body: JSON.stringify({
                 file: this.state.file,
-                answer:this.state.file
+                Answers:[]
             }),
             headers: {
                 'Content-Type': 'application/json'
             }
         })
-            .then(response => response)
-            .then(this.searchFields.bind(this))
-            .catch(error => console.log(error))
+        .then(response => response)
+        .then(this.searchFields.bind(this))
+        .catch(error => console.log(error))
+        console.log(event.target.name);
     }
     
     componentDidMount() {
@@ -80,12 +70,12 @@ export default class sendDocument extends Component {
                         
                     </div>
                     {
-                        this.state.listField.map(function (document) {
+                        this.state.list.map(function (document) {
                             return (
                                 <div className="inputMovel">
                                     <div>
                                         <li className="lista">
-                                            <input placeholder={document.fieldName}  type={document.fieldType} className={document.fieldType} />
+                                            <input placeholder={document.FieldName} name={document.FieldName} type={document.fieldType} className={document.fieldType} onChange={document.updateState} />
                                         </li>
                                     </div>
                                 </div>
@@ -94,7 +84,7 @@ export default class sendDocument extends Component {
                         
                         )
                     }
-                    <input type="file" onChange={(e) => this.handleChange(e.target.files)} onChange={this.updateStateFile} />
+                    <input type="file" name="file" onChange={(e)  => this.handleChange(e.target.files)} onChange={this.updateState} />
                     <div className="buttons">
                         <button className="cancel">Cancelar</button>
                         <button type="submit" className="send">Cadastrar</button>
