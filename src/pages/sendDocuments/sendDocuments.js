@@ -85,7 +85,6 @@ export default class sendDocument extends Component {
                                 <div className="inputMovel">
                                     <div>
                                         <li className="lista">
-                                        <label>{document.fieldName}</label>
                                             <input placeholder={document.fieldName}  type={document.fieldType} className={document.fieldType} />
                                         </li>
                                     </div>
