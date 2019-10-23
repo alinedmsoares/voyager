@@ -13,14 +13,13 @@ export default class editingFields extends Component {
         this.state = {
             id: '',
             isHiddenForm: true, //form preview
-            name: '', //field name
+            fieldName: '', //field fieldName
             isHiddenField: true, //field value input preview
             fieldType: '', //defined field type
-            values:'',
             required: false, //required field
             values: [], //field value set if required
             list: [], //list with all fields registered
-            status: false
+            visible: true
         }
 
         //field state updates
@@ -31,9 +30,9 @@ export default class editingFields extends Component {
 
     }
 
-    //update name state when registering
+    //update fieldName state when registering
     updateStateFieldNameForm(event) {
-        this.setState({ name: event.target.value })
+        this.setState({ fieldName: event.target.value })
     }
 
     //update field type state when registering
@@ -45,7 +44,7 @@ export default class editingFields extends Component {
 
     //update required state when registering
     updateStateRequiredForm(event) {
-        this.setState({ required: event.target.value })
+        this.setState({ required: event.target.checked })
     }
 
     //method responsible for modifying the visibility of the submenu responsible for creating new fields
@@ -68,7 +67,16 @@ export default class editingFields extends Component {
         }
 
     }
-
+    clearForm() {
+        this.setState({
+            id: '',
+            fieldName: '',
+            fieldType: '',
+            values: [],
+            required: false,
+            isHiddenForm: true
+        })
+    }
     //search all fields registered
     searchFields() {
         fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document', {
@@ -108,10 +116,10 @@ export default class editingFields extends Component {
     editStatus = (event) => {
         event.preventDefault();
         if (window.confirm("Deseja excluir esse campo?")) {
-            fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document/' + event.target.getAttribute('id'), {
+            fetch('http://192.168.4.53:5000/api/field/' + event.target.getAttribute('id'), {
                 method: 'PUT',
                 body: JSON.stringify({
-                    status: (event.target.getAttribute('status') === 'statusTrue' ? false : true)
+                    visible: (event.target.getAttribute('visible') === 'visibleFalse' ? false : false)
                 }),
                 headers: {
                     'Content-Type': 'application/json'
@@ -134,14 +142,14 @@ export default class editingFields extends Component {
     registerField(event) {
         event.preventDefault();
         if (this.state.id != '') {
-            fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document/' + this.state.id, {
+            fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document' + this.state.id, {
                 method: 'PUT',
                 body: JSON.stringify({
                     id: this.state.id,
-                    name: this.state.name,
+                    fieldName: this.state.fieldName,
                     fieldType: this.state.fieldType,
-                    values:this.state.values,
-                    required: (this.state.required === 'on' ? true : false)
+                    values: this.state.values,
+                    required: this.state.required
                 }),
                 headers: {
                     'Content-Type': 'application/json'
@@ -149,6 +157,7 @@ export default class editingFields extends Component {
             }).then(() => {
                 this.setState({ id: '' })
                 this.searchFields();
+                this.clearForm();
             })
                 .then(this.AlertSucessEdition())
 
@@ -157,10 +166,11 @@ export default class editingFields extends Component {
             fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document', {
                 method: 'POST',
                 body: JSON.stringify({
-                    name: this.state.name,
+                    fieldName: this.state.fieldName,
                     fieldType: this.state.fieldType,
                     values: this.state.values,
-                    required: (this.state.required === 'on' ? true : false)
+                    required: this.state.required,
+                    visible: this.state.visible
                 }),
                 headers: {
 
@@ -169,16 +179,17 @@ export default class editingFields extends Component {
             })
                 .then(this.AlertSucessRegister())
                 .then(response => response)
-                .then(this.searchFields.bind(this))
-                .catch(error => console.log(error))
+                .then(this.searchFields())
+                .then(this.clearForm())
+                .catch (error => console.log(error))
         }
     }
 
     //search fields by id
     searchForId(event) {
         event.preventDefault();
-        console.log('https://5d8289a9c9e3410014070b11.mockapi.io/document/' + event.target.getAttribute('id'));
-        fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document/' + event.target.getAttribute('id'), {
+        console.log('f' + event.target.getAttribute('id'));
+        fetch('http://192.168.4.53:5000/api/field/' + event.target.getAttribute('id'), {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -186,7 +197,7 @@ export default class editingFields extends Component {
             .then(response => response.json())
             .then(data => this.setState({
                 id: data.id,
-                name: data.name,
+                fieldName: data.fieldName,
                 fieldType: data.fieldType,
                 values: data.values,
                 required: data.required,
@@ -229,10 +240,10 @@ export default class editingFields extends Component {
                             <img src="https://image.flaticon.com/icons/svg/118/118773.svg" onClick={this.toggleHiddenForm.bind(this)} />
                         </div>
 
-                        {/*Input responsible for the name of a field*/}
+                        {/*Input responsible for the fieldName of a field*/}
                         <div className="field-name">
                             <label>Nome do Campo*</label>
-                            <input required maxlength="35" type="text" value={this.state.name || ''} onChange={this.updateStateFieldNameForm} />
+                            <input required maxlength="35" type="text" value={this.state.fieldName || ''} onChange={this.updateStateFieldNameForm} />
                         </div>
 
                         {/*Section responsible for selecting field types*/}
@@ -289,7 +300,7 @@ export default class editingFields extends Component {
                                 {/* field type:check-box */}
                                 <div className="radio--field-types">
                                     <label for="check-box">
-                                        <input type="radio" name="field-types" value="checkbox" checked={this.state.fieldType === 'checkbox'} id="check-box" onChange={this.updateStateFieldTypeForm} onClick={this.toggleHiddenValue.bind(this)} />
+                                        <input type="radio" required="required" name="field-types" value="checkbox" checked={this.state.fieldType === 'checkbox'} id="check-box" onChange={this.updateStateFieldTypeForm} onClick={this.toggleHiddenValue.bind(this)} />
                                         <img src="https://image.flaticon.com/icons/svg/2089/2089626.svg" />Caixa de Seleção</label>
                                 </div>
                             </div>
@@ -307,7 +318,7 @@ export default class editingFields extends Component {
                             }
                             {/* checkbox responsible for defining if the created field must be filled in when submitting a document */}
                             < div className="check-box--required" >
-                                <input type="checkbox" onChange={this.updateStateRequiredForm} />
+                                <input type="checkbox" checked={this.state.required} onChange={this.updateStateRequiredForm} />
                                 <label>Exigir preenchimento obrigatório</label>
                             </div >
 
@@ -336,11 +347,11 @@ export default class editingFields extends Component {
                         </li>
                         {
                             this.state.list.map(function (document) {
-                                if (document.status == false) {
+                                if (document.visible == true) {
                                     return (
                                         <li className="table-row">
                                             <div className="row-id" data-label="header-id">{document.id}</div>
-                                            <div className="row-name" data-label="header-name">{document.name}</div>
+                                            <div className="row-name" data-label="header-name">{document.fieldName}</div>
                                             <div className={document.required ? "requiredTrue" : "requiredFalse"} data-label="header-required">Obrigatório</div>
                                             <div className="row-type" data-label="header-type">{document.fieldType}</div>
                                             <div className="row-actions">
@@ -363,5 +374,3 @@ export default class editingFields extends Component {
 
     }
 }
-
-

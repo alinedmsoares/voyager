@@ -6,7 +6,7 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "^3.1.2",
+    "react-scripts": "^3.2.0",
     "sweetalert": "^2.1.2",
     "sweetalert2": "^8.17.6"
   },

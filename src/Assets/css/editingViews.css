@@ -1,0 +1,119 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.all {
+    display: flex;
+
+}
+.formView {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+}
+.divtitulo {
+    width: 700px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 8em;
+    margin-left: 10em;
+}
+.divtitulo label {
+    align-self: baseline;
+}
+
+.tituloView {
+    width: 639px;
+    height: 48px;
+    margin-top: 1em;
+    background: #F9F9F9;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
+    border: none;
+}
+.condicoesView {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 6em;
+    /* width: 640px; */
+    width: 1115px;
+    
+}
+.condicoesView label {
+    align-self: baseline;
+    margin-top: 1em;
+    margin-left: 240px;
+}
+.itensView {
+    display: flex;
+    justify-content: space-between;
+    width: 639px;
+    height: 48px;
+    margin-top: 1em;
+    margin: auto;
+}
+.item {
+    margin-top: 1em;
+    width: 146px;
+    height: 48px;
+    background: #F9F9F9;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+}
+.divadd {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 700px;
+    margin-right: 3.8em;
+    margin-top: 2em;
+
+}
+.add {
+    transition: all 0.5s;
+    width: 136px;
+    height: 44px;
+    background: #242C91;
+    border-radius: 6px;
+    border: none;
+    align-self: flex-end;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+.add:hover {
+    background-color: rgb(74, 83, 202);
+
+}
+.save {
+    margin-top: 1em;
+    transition: all 0.5s;
+    width: 136px;
+    height: 44px;
+    background: #AD1130;
+    border-radius: 6px;
+    border: none;
+    align-self: flex-end;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+.save:hover {
+    background-color: rgb(202, 74, 74);
+}
+.listView {
+
+    height: 800px;
+    width: 700px;
+    margin-left: 40px;
+    background: #F6F6F6;
+    box-shadow: 1px 0px 9px rgba(0, 0, 0, 0.39);
+}
