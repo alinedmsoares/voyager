@@ -6,6 +6,7 @@
 .form {
     display: flex;
     flex-direction: column;
+    width: 100%;
 
 }
 .inputFixo {
@@ -18,34 +19,34 @@
 }
 .nomeCampo {
     padding: 1em;
-    width: 639px;
+    width: 690px;
     height: 48px;
     margin-top: 8em;
     top: 154px;
     border: none;
     background: #F9F9F9;
-    box-shadow: 0 2px 5px 4px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+    box-shadow: 0 2px 5px 0px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
     border-radius: 3px;
 }
 .descricao {
     padding: 1em;
-    width: 639px;
+    width: 690px;
     height: 129px;
     margin-top: 2em;
     top: 261px;
     background: #F9F9F9;
-    box-shadow: 0 2px 5px 4px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+    box-shadow: 0 2px 5px 0px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
     border-radius: 3px;
     resize: none;
     border: none;
 }
 .list {
-    width: 639px;
+    width: 690px;
     height: 48px;
     left: 385px;
     top: 154px;
     background: #F9F9F9;
-    box-shadow: 0 2px 5px 4px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+    box-shadow: 0 2px 5px 0px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
     border-radius: 3px;
     border: none;
     padding: 1em;
@@ -57,7 +58,7 @@
     left: 385px;
     top: 154px;
     background: #F9F9F9;
-    box-shadow: 0 2px 5px 4px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+    box-shadow: 0 2px 5px 0px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
     border-radius: 3px;
     border: none;
     padding: 1em;
@@ -68,18 +69,22 @@
     left: 385px;
     top: 154px;
     background: #F9F9F9;
-    box-shadow: 0 2px 5px 4px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+    box-shadow: 0 2px 5px 0px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
     border-radius: 3px;
     border: none;
     padding: 1em;
 }
+.input-file{
+    margin: auto;
+    padding: 2%;
+}
 .text {
-    width: 639px;
+    width: 690px;
     height: 48px;
     left: 385px;
     top: 154px;
     background: #F9F9F9;
-    box-shadow: 0 2px 5px 4px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+    box-shadow: 0 2px 5px 0px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
     border-radius: 3px;
     border: none;
     padding: 1em;
@@ -90,7 +95,7 @@
     left: 385px;
     top: 154px;
     background: #F9F9F9;
-    box-shadow: 0 2px 5px 4px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+    box-shadow: 0 2px 5px 0px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
     border-radius: 3px;
     border: none;
     padding: 1em;
@@ -116,7 +121,7 @@
     box-sizing: border-box;
     border-radius: 6px;
     cursor: pointer;
-    box-shadow: 0 2px 5px 4px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+    box-shadow: 0 2px 5px 0px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
 }
 .send {
     transition: all 0.5s;
@@ -130,7 +135,7 @@
     box-sizing: border-box;
     border-radius: 6px;
     cursor: pointer;
-    box-shadow: 0 2px 5px 4px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+    box-shadow: 0 2px 5px 0px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
 }
 .send:hover {
     background-color: rgb(74, 83, 202);
