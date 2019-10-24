@@ -18,17 +18,19 @@ export default class editingFields extends Component {
 
     createCondition() {
         return this.state.condition.map((el, i) =>
-            <div key={i} className="itensView">
-                <select className="item">
-                    <option value="" disabled selected>Status</option>
-                </select>
-                <select className="item">
-                    <option value="" disabled selected>É</option>
-                </select>
-                <select className="item">
-                    <option value="" disabled selected>Novo</option>
-                </select>
-                <div type='button' className="remove-value" value='remove' onClick={this.removeClick.bind(this, i)}> </div>
+            <div className="geral">
+                <div key={i} className="itensViewextra">
+                    <select className="itemextra">
+                        <option value="" disabled selected>Status</option>
+                    </select>
+                    <select className="itemextra">
+                        <option value="" disabled selected>É</option>
+                    </select>
+                    <select className="itemextra">
+                        <option value="" disabled selected>Novo</option>
+                    </select>
+                    <div type='button' className="remove-value" value='remove' onClick={this.removeClick.bind(this, i)}> </div>
+                </div>
             </div>
         )
     }
@@ -71,9 +73,9 @@ export default class editingFields extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="listView">
+                {/* <div className="listView">
 
-                </div>
+                </div> */}
             </div>
         )
     }
