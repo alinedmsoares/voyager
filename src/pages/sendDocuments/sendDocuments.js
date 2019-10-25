@@ -34,7 +34,7 @@ export default class sendDocument extends Component {
     }
     updateStateFile(event) {
         this.setState({
-            files:event.target.value
+            files: event.target.value
         })
 
     }
@@ -54,7 +54,7 @@ export default class sendDocument extends Component {
             }
         })
             .then(response => response.json())
-            .then(data =>{ 
+            .then(data => {
                 this.setState({ field: data })
                 console.log(this.state)
             })
@@ -97,10 +97,6 @@ export default class sendDocument extends Component {
                 <Header />
                 <Menu />
                 <form onSubmit={this.registerDocument.bind(this)} className="form">
-                    <div className="inputFixo">
-                        <input placeholder="Título*" required value={this.state.title} onChange={this.updateState} name="title" className="nomeCampo" />
-                        <textarea placeholder="Descrição*" required value={this.state.description} onChange={this.updateState} name="description" className="descricao" /><input type="file" name="files" className="input-file" multiple onChange={(e) => this.handleChange(e.target.files)} onChange={this.updateStateFile} />
-                    </div>
 
                     {
                         this.state.field.map((document) => {
@@ -124,27 +120,27 @@ export default class sendDocument extends Component {
                                             </div>
                                         </div>
                                     )
-                                } else if (document.fieldType == "list") {
+                                } else if (document.fieldType === "list") {
+                                    if(document.fieldName != "Status"){
                                     return (
                                         <div className="inputMovel">
                                             <div>
                                                 <li className="lista">
-                                                <label>{document.fieldName}</label>
+                                                    <label>{document.fieldName}</label>
                                                     <select placeholder={document.fieldName} name={document.fieldName} type={document.fieldType} className="text" onChange={this.updateState}>
-                                                    
+
                                                         {
                                                             this.state.field.map((value) => {
-                                                                if(document.fieldName === value.fieldName)
-                                                                {
-                                                                    return(
-                                                                        value.values.map((value2)=>{
-                                                                            return(                                                        
+                                                                if (document.fieldName === value.fieldName) {
+                                                                    return (
+                                                                        value.values.map((value2) => {
+                                                                            return (
                                                                                 <option selected="selected">{value2}</option>
                                                                             )
                                                                         }))
                                                                 }
-                                                                
-                                                                
+
+
                                                             })
                                                         }
                                                     </select>
@@ -152,6 +148,7 @@ export default class sendDocument extends Component {
                                             </div>
                                         </div>
                                     )
+                                }
                                 }
                                 else {
                                     return (
@@ -170,7 +167,7 @@ export default class sendDocument extends Component {
                         )
                     }
 
-
+                    <input type="file" name="files" className="input-file" multiple onChange={(e) => this.handleChange(e.target.files)} onChange={this.updateStateFile} />
                     <div className="buttons">
                         <button type="reset" className="cancel">Cancelar</button>
                         <button type="submit" className="send">Enviar</button>
