@@ -54,7 +54,10 @@ export default class sendDocument extends Component {
             }
         })
             .then(response => response.json())
-            .then(data => this.setState({ field: data }))
+            .then(data =>{ 
+                this.setState({ field: data })
+                console.log(this.state)
+            })
             .catch(error => console.log(error))
     }
     registerDocument(event) {
@@ -126,12 +129,22 @@ export default class sendDocument extends Component {
                                         <div className="inputMovel">
                                             <div>
                                                 <li className="lista">
+                                                <label>{document.fieldName}</label>
                                                     <select placeholder={document.fieldName} name={document.fieldName} type={document.fieldType} className="text" onChange={this.updateState}>
+                                                    
                                                         {
                                                             this.state.field.map((value) => {
-                                                                return (
-                                                                    <option>{value.values}</option>
-                                                                )
+                                                                if(document.fieldName === value.fieldName)
+                                                                {
+                                                                    return(
+                                                                        value.values.map((value2)=>{
+                                                                            return(                                                        
+                                                                                <option selected="selected">{value2}</option>
+                                                                            )
+                                                                        }))
+                                                                }
+                                                                
+                                                                
                                                             })
                                                         }
                                                     </select>

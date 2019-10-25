@@ -14,10 +14,12 @@ export default class editingFields extends Component {
             id: '',
             condition: [],
             field: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: [] }],
+            answer: { title: '', description: '' },
         }
     }
     componentDidMount() {
         this.searchFields();
+        this.searchAnswers();
     }
 
     createCondition() {
@@ -46,6 +48,16 @@ export default class editingFields extends Component {
     }
     searchFields() {
         fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document', {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => this.setState({ field: data }))
+            .catch(error => console.log(error))
+    }
+    searchAnswers(){
+        fetch('https://5d8289a9c9e3410014070b11.mockapi.io/respostaDocument', {
             headers: {
                 'Content-Type': 'application/json'
             }
