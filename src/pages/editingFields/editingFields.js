@@ -113,13 +113,13 @@ export default class editingFields extends Component {
     addClick() {
         this.setState(prevState => ({ values: [...prevState.values, ''] }))
     }
-    editStatus = (event) => {
+    editVisible = (event) => {
         event.preventDefault();
         if (window.confirm("Deseja excluir esse campo?")) {
-            fetch('http://192.168.4.53:5000/api/field/' + event.target.getAttribute('id'), {
+            fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document/' + event.target.getAttribute('id'), {
                 method: 'PUT',
                 body: JSON.stringify({
-                    visible: (event.target.getAttribute('visible') === 'visibleFalse' ? false : false)
+                    visible: (event.target.getAttribute('visible') === 'visibleTrue' ? true : false)
                 }),
                 headers: {
                     'Content-Type': 'application/json'
@@ -142,7 +142,7 @@ export default class editingFields extends Component {
     registerField(event) {
         event.preventDefault();
         if (this.state.id != '') {
-            fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document' + this.state.id, {
+            fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document/' + this.state.id, {
                 method: 'PUT',
                 body: JSON.stringify({
                     id: this.state.id,
@@ -179,8 +179,10 @@ export default class editingFields extends Component {
             })
                 .then(this.AlertSucessRegister())
                 .then(response => response)
-                .then(this.searchFields())
-                .then(this.clearForm())
+                .then(()=>{
+                    (this.searchFields())
+                    (this.clearForm())
+                })
                 .catch(error => console.log(error))
         }
     }
@@ -189,7 +191,7 @@ export default class editingFields extends Component {
     searchForId(event) {
         event.preventDefault();
         console.log('f' + event.target.getAttribute('id'));
-        fetch('http://192.168.4.53:5000/api/field/' + event.target.getAttribute('id'), {
+        fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document/' + event.target.getAttribute('id'), {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -380,7 +382,7 @@ export default class editingFields extends Component {
                                             <div className="row-type" data-label="header-type">{document.fieldType}</div>
                                             <div className="row-actions">
                                                 <div className="row-edit" id={document.id} onClick={root.searchForId}></div>
-                                                <div id={document.id} className="row-delete" onClick={root.editStatus}>
+                                                <div id={document.id} className="row-delete" onClick={root.editVisible}>
                                                 </div>
                                             </div>
                                         </li>

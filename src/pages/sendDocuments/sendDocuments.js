@@ -12,7 +12,7 @@ export default class sendDocument extends Component {
             id: '',
             field: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: [] }],
             files: [],
-            answer: { title: '', description: '', fieldName: '' },
+            answer: { title: '', description: '' },
         }
 
         this.updateState = this.updateState.bind(this);
@@ -26,6 +26,7 @@ export default class sendDocument extends Component {
     updateState = (event) => {
         this.setState({
             answer: {
+                ...this.state.answer,
                 [event.target.name]: event.target.value
             }
         })
@@ -33,7 +34,7 @@ export default class sendDocument extends Component {
     }
     updateStateFile(event) {
         this.setState({
-            files: event.target.value
+            files:event.target.value
         })
 
     }
@@ -68,7 +69,7 @@ export default class sendDocument extends Component {
                 'Content-Type': 'application/json'
             }
         })
-        .then(this.AlertSucessRegister())
+            .then(this.AlertSucessRegister())
             .then(response => response)
             .then(this.searchFields())
             .catch(error => console.log(error))
@@ -100,58 +101,62 @@ export default class sendDocument extends Component {
 
                     {
                         this.state.field.map((document) => {
-                            if (document.fieldType == "multiple-selection") {
-                                return (
-                                    <div className="inputMovel">
-                                        <div>
-                                            <li className="lista">
-                                                <label>{document.fieldName}</label>
-                                                {
-                                                    this.state.field.map((value) => {
-                                                        return (
-                                                            <div>
-                                                                <input placeholder={document.fieldName} name={document.fieldName} type="checkbox" onChange={this.updateState} /><label>{value.values}</label></div>
-                                                        )
-                                                    })
-                                                }
-                                            </li>
-                                        </div>
-                                    </div>
-                                )
-                            } else if (document.fieldType == "list") {
-                                return (
-                                    <div className="inputMovel">
-                                        <div>
-                                            <li className="lista">
-                                                <select placeholder={document.fieldName} name={document.fieldName} type={document.fieldType} className="text" onChange={this.updateState}>
+                            if (document.visible == true) {
+
+                                if (document.fieldType == "multiple-selection") {
+                                    return (
+                                        <div className="inputMovel">
+                                            <div>
+                                                <li className="lista">
+                                                    <label>{document.fieldName}</label>
                                                     {
                                                         this.state.field.map((value) => {
                                                             return (
-                                                                <option>{value.values}</option>
+                                                                <div>
+                                                                    <input placeholder={document.fieldName} name={document.fieldName} type="checkbox" onChange={this.updateState} /><label>{value.values}</label></div>
                                                             )
                                                         })
                                                     }
-                                                </select>
-                                            </li>
+                                                </li>
+                                            </div>
                                         </div>
-                                    </div>
-                                )
-                            }
-                            else {
-                                return (
-                                    <div className="inputMovel">
-                                        <div>
-                                            <li className="lista">
-                                                <input placeholder={document.fieldName} required={document.required ? "required" : ""} name={document.fieldName} type={document.fieldType} className="text" onChange={this.updateState} />
-                                            </li>
+                                    )
+                                } else if (document.fieldType == "list") {
+                                    return (
+                                        <div className="inputMovel">
+                                            <div>
+                                                <li className="lista">
+                                                    <select placeholder={document.fieldName} name={document.fieldName} type={document.fieldType} className="text" onChange={this.updateState}>
+                                                        {
+                                                            this.state.field.map((value) => {
+                                                                return (
+                                                                    <option>{value.values}</option>
+                                                                )
+                                                            })
+                                                        }
+                                                    </select>
+                                                </li>
+                                            </div>
                                         </div>
-                                    </div>
-                                );
+                                    )
+                                }
+                                else {
+                                    return (
+                                        <div className="inputMovel">
+                                            <div>
+                                                <li className="lista">
+                                                    <input placeholder={document.fieldName} required={document.required ? "required" : ""} name={document.fieldName} type={document.fieldType} className="text" onChange={this.updateState} />
+                                                </li>
+                                            </div>
+                                        </div>
+                                    );
+                                }
                             }
                         }
 
                         )
                     }
+
 
                     <div className="buttons">
                         <button type="reset" className="cancel">Cancelar</button>

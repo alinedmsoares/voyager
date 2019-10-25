@@ -76,12 +76,13 @@ export default class editingFields extends Component {
                     <div className="conditionsView">
                         <label>Condições</label>
                         <div className="itensView">
-                            <select className="itemExtra">
+                            <select className="item">
                                 {
                                     this.state.field.map((field) => {
+                                        if (field.visible == true) {
                                         return (
                                             <option value={field.fieldName}>{field.fieldName}</option>
-                                        )
+                                        )}
                                     })
                                 }
                             </select>
@@ -99,8 +100,7 @@ export default class editingFields extends Component {
                         </div>
                     </div>
                 </div>
-                {/* <div className="listView">
-                </div> */}
+
             </div>
         )
     }
