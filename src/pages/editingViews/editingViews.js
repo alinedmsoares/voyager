@@ -12,27 +12,47 @@ export default class editingFields extends Component {
         super();
         this.state = {
             id: '',
-            condition: []
+            condition: [],
+            field: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: [] }],
         }
+    }
+    componentDidMount() {
+        this.searchFields();
     }
 
     createCondition() {
         return this.state.condition.map((el, i) =>
-            <div className="geral">
-                <div key={i} className="itensViewextra">
-                    <select className="itemextra">
-                        <option value="" disabled selected>Status</option>
+            <div className="general">
+                <div key={i} className="itensView-extra">
+                    <select className="itemExtra">
+                        {
+                            this.state.field.map((field) => {
+                                return (
+                                    <option value="">{field.fieldName}</option>
+                                )
+                            })
+                        }
                     </select>
-                    <select className="itemextra">
+                    <select className="itemExtra">
                         <option value="" disabled selected>É</option>
                     </select>
-                    <select className="itemextra">
+                    <select className="itemExtra">
                         <option value="" disabled selected>Novo</option>
                     </select>
-                    <div type='button' className="remove-value" value='remove' onClick={this.removeClick.bind(this, i)}> </div>
                 </div>
+                <div type='button' className="remove-value" value='remove' onClick={this.removeClick.bind(this, i)}> </div>
             </div>
         )
+    }
+    searchFields() {
+        fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document', {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => this.setState({ field: data }))
+            .catch(error => console.log(error))
     }
     addClick() {
         this.setState(prevState => ({ condition: [...prevState.condition, ''] }))
@@ -49,15 +69,21 @@ export default class editingFields extends Component {
                 <Header />
                 <Menu />
                 <div className="formView">
-                    <div className="divtitulo">
+                    <div className="divTitle">
                         <label>Título da View</label>
-                        <input className="tituloView" />
+                        <input className="viewTitle" />
                     </div>
-                    <div className="condicoesView">
+                    <div className="conditionsView">
                         <label>Condições</label>
                         <div className="itensView">
-                            <select className="item">
-                                <option value="" disabled selected>Status</option>
+                            <select className="itemExtra">
+                                {
+                                    this.state.field.map((field) => {
+                                        return (
+                                            <option value={field.fieldName}>{field.fieldName}</option>
+                                        )
+                                    })
+                                }
                             </select>
                             <select className="item">
                                 <option value="" disabled selected>É</option>
@@ -66,15 +92,14 @@ export default class editingFields extends Component {
                                 <option value="" disabled selected>Novo</option>
                             </select>
                         </div>
-                            {this.createCondition()}
-                        <div className="divadd">
+                        {this.createCondition()}
+                        <div className="divAdd">
                             <button className="add" onClick={this.addClick.bind(this)}>Adicionar</button>
                             <button className="save">Salvar</button>
                         </div>
                     </div>
                 </div>
                 {/* <div className="listView">
-
                 </div> */}
             </div>
         )

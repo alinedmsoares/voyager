@@ -64,7 +64,8 @@
     background-color: #FFFFFF;
 }
 .check-box--required input:checked{
-    background-image: url("https://image.flaticon.com/icons/svg/109/109554.svg")
+    background-image: url("https://image.flaticon.com/icons/svg/109/109554.svg");
+    background-repeat: no-repeat;
 }
 .check-box--required label{
     margin-left: 1%;
@@ -251,6 +252,13 @@ input[type=radio]:checked + img {
     background-repeat:no-repeat;
     opacity: 0.5;
 }
+.row-edit-none{
+    height: 4vh;
+    width: 50%;    
+    background-size: 40% 100%;
+    background-repeat:no-repeat;
+    opacity: 0.5;
+}
 .row-delete{
     height: 4vh;
     background-image: url("https://image.flaticon.com/icons/svg/60/60761.svg");
@@ -258,7 +266,13 @@ input[type=radio]:checked + img {
     background-size: 40% 100%;
     background-repeat:no-repeat;
     opacity: 0.5;
-
+}
+.row-delete-none{
+    height: 4vh;
+    width: 50%;    
+    background-size: 40% 100%;
+    background-repeat:no-repeat;
+    opacity: 0.5;
 }
 .row-id{
     width: 3%;

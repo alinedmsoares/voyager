@@ -75,8 +75,19 @@
     padding: 1em;
 }
 .input-file{
-    margin: auto;
-    padding: 2%;
+    padding: 2% 0;
+    -webkit-appearance: none; 
+}
+.input-file::-webkit-file-upload-button:hover{
+    background:rgb(89, 97, 207);
+}
+.input-file::-webkit-file-upload-button{
+    background-color: #242C91;
+    border: none;
+    color: #ffffff;
+    height: 5vh;
+    border-radius: 5px;
+    cursor: pointer;
 }
 .text {
     width: 690px;
@@ -123,6 +134,7 @@
     cursor: pointer;
     box-shadow: 0 2px 5px 0px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
 }
+
 .send {
     transition: all 0.5s;
     color: white;

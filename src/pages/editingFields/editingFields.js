@@ -181,7 +181,7 @@ export default class editingFields extends Component {
                 .then(response => response)
                 .then(this.searchFields())
                 .then(this.clearForm())
-                .catch (error => console.log(error))
+                .catch(error => console.log(error))
         }
     }
 
@@ -345,6 +345,30 @@ export default class editingFields extends Component {
                             <div className="header-name">Nome</div>
                             <div field="header-type">Tipo</div>
                         </li>
+                        <li className="table-row">
+                                            <div className="row-id" data-label="header-id"></div>
+                                            <div className="row-name" data-label="header-name">Título</div>
+                                            <div className="requiredTrue" data-label="header-required">Obrigatório</div>
+                                            <div className="row-type" data-label="header-type">text</div>
+                                            <div className="row-actions">
+                                                <div className="row-edit-none"></div>
+                                                <div className="row-delete-none">
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li className="table-row">
+                                            <div className="row-id" data-label="header-id"></div>
+                                            <div className="row-name" data-label="header-name">Descrição</div>
+                                            <div className="requiredTrue" data-label="header-required">Obrigatório</div>
+                                            <div className="row-type" data-label="header-type">text</div>
+                                            <div className="row-actions">
+                                                <div className="row-edit-none"></div>
+                                                <div className="row-delete-none">
+                                                </div>
+                                            </div>
+                                        </li>
+
+
                         {
                             this.state.list.map(function (document) {
                                 if (document.visible == true) {
