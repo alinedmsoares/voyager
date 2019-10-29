@@ -372,7 +372,7 @@ export default class editingFields extends Component {
                                             <div className={document.required ? "requiredTrue" : "requiredFalse"} data-label="header-required">Obrigatório</div>
                                             <div className="row-type" data-label="header-type">{document.fieldType}</div>
                                             <div className="row-actions">
-                                                <div className="row-edit" id={document.id} onClick={root.searchForId}></div>
+                                                <div className="row-edit-none" id={document.id}></div>
                                                 <div id={document.id} className="row-delete-none">
                                                 </div>
                                             </div>
