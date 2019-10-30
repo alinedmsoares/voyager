@@ -16,22 +16,19 @@ export default class editingFields extends Component {
             option: { equal: 'é', different: 'não é', bigger: 'maior que', smaller: 'menor que' },
             field: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: [] }],
             answer: { title: '', description: '' },
-            select: { fieldNameSelected: '', optionSelected: '', answerSelected: '' }
+            select: ''
         }
-        this.updateStateFieldName = this.updateStateFieldName.bind(this)
+        this.onChangeFieldName = this.onChangeFieldName.bind(this)
     }
     componentDidMount() {
         this.searchFields();
         this.searchAnswers();
     }
 
-    updateStateFieldName = (event) => {
-        this.setState({
-            select: this.state.select,
-                [event.target.name]: event.target.value
-            
-        })
-        console.log(this.state)
+    onChangeFieldName(event) {
+        this.setState({[event.target.name]: event.target.value}, () => {
+                console.log(this.state.field)
+            })
     }
 
     createCondition() {
@@ -75,7 +72,7 @@ export default class editingFields extends Component {
             }
         })
             .then(response => response.json())
-            .then(data => this.setState({ field: data }))
+            .then(data => this.setState({ answer: data }))
             .catch(error => console.log(error))
     }
     addClick() {
@@ -100,15 +97,13 @@ export default class editingFields extends Component {
                     <div className="conditionsView">
                         <label>Condições</label>
                         <form className="itensView">
-                            <select className="item" name={this.state.select.fieldNameSelected} options={this.state.select.fieldNameSelected} 
-                                onChange={this.updateStateFieldName}>
+                            <select className="item">
                                 {
-                                    this.state.field.map((field) => {
-                                        if (field.visible == true) {
-                                            return (
-                                                <option value={field.fieldName}>{field.fieldName}</option>
-                                            )
-                                        }
+                                    this.state.field.map((field, i) => {
+                                        return (
+                                            <option value={field.fieldName} onChange={this.onChangeFieldName.bind(this)}>{field.fieldName}</option>
+                                        )
+
                                     })
                                 }
                             </select>
@@ -116,7 +111,7 @@ export default class editingFields extends Component {
                                 {
                                     this.state.field.map((field) => {
                                         return (
-                                            <option value={field.fieldType === "text" ? 'caiu aqui' : 'caiu aqui 2'}>{field.fieldType === "text" ? 'caiu aqui' : 'caiu aqui 2'}</option>
+                                            <option value={field.fieldName === "text" ? 'caiu aqui' : 'caiu aqui 2'}>{field.fieldType === "text" ? 'caiu aqui' : 'caiu aqui 2'}</option>
                                         )
                                     }
                                     )
