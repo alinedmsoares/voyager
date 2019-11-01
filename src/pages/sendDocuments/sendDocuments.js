@@ -12,7 +12,7 @@ export default class sendDocument extends Component {
             id: '',
             field: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: [] }],
             files: [],
-            answer: { title: '', description: '' },
+            answer: {},
         }
 
         this.updateState = this.updateState.bind(this);
@@ -100,9 +100,9 @@ export default class sendDocument extends Component {
 
                     {
                         this.state.field.map((document) => {
-                            if (document.visible == true) {
+                            if (document.visible === true) {
 
-                                if (document.fieldType == "multiple-selection") {
+                                if (document.fieldType === "multiple-selection") {
                                     return (
                                         <div className="inputMovel">
                                             <div>
@@ -121,34 +121,34 @@ export default class sendDocument extends Component {
                                         </div>
                                     )
                                 } else if (document.fieldType === "list") {
-                                    if(document.fieldName != "Status"){
-                                    return (
-                                        <div className="inputMovel">
-                                            <div>
-                                                <li className="lista">
-                                                    <label>{document.fieldName}</label>
-                                                    <select  name={document.fieldName} type={document.fieldType} className="text" onChange={this.updateState}>
+                                    if (document.fieldName !== "Status") {
+                                        return (
+                                            <div className="inputMovel">
+                                                <div>
+                                                    <li className="lista">
+                                                        <label>{document.fieldName}</label>
+                                                        <select name={document.fieldName} type={document.fieldType} className="text" onChange={this.updateState}>
 
-                                                        {
-                                                            this.state.field.map((value) => {
-                                                                if (document.fieldName === value.fieldName) {
-                                                                    return (
-                                                                        value.values.map((value2) => {
-                                                                            return (
-                                                                                <option selected="selected">{value2}</option>
-                                                                            )
-                                                                        }))
-                                                                }
+                                                            {
+                                                                this.state.field.map((field) => {
+                                                                    if (document.fieldName === field.fieldName) {
+                                                                        return (
+                                                                            field.values.map((values) => {
+                                                                                return (
+                                                                                    <option selected="selected">{values}</option>
+                                                                                )
+                                                                            }))
+                                                                    }
 
 
-                                                            })
-                                                        }
-                                                    </select>
-                                                </li>
+                                                                })
+                                                            }
+                                                        </select>
+                                                    </li>
+                                                </div>
                                             </div>
-                                        </div>
-                                    )
-                                }
+                                        )
+                                    }
                                 }
                                 else {
                                     return (
