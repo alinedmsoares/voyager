@@ -127,7 +127,7 @@ export default class sendDocument extends Component {
                                             <div>
                                                 <li className="lista">
                                                     <label>{document.fieldName}</label>
-                                                    <select placeholder={document.fieldName} name={document.fieldName} type={document.fieldType} className="text" onChange={this.updateState}>
+                                                    <select  name={document.fieldName} type={document.fieldType} className="text" onChange={this.updateState}>
 
                                                         {
                                                             this.state.field.map((value) => {

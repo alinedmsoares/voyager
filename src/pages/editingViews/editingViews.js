@@ -14,9 +14,12 @@ export default class editingFields extends Component {
             id: '',
             condition: [],
             option: [],
-            field: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: [] }],
-            answer: { title: '', description: '' },
             selected: '',
+            document: [{
+                field: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: [] }],
+                answer: { title: '', description: '' }
+            }],
+            field: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: [] }],
 
         }
         this.onChangeFieldName = this.onChangeFieldName.bind(this)
@@ -28,17 +31,28 @@ export default class editingFields extends Component {
         this.searchAnswers();
     }
 
-    onChangeFieldName(event) {
+    onChangeFieldName = (event) => {
 
         const fieldSelected = this.state.field.filter(Element => Element.fieldName === event.target.value)
-
         this.setState({
             [event.target.name]: event.target.value,
-            selected:fieldSelected
+            selected: fieldSelected
         }, () => {
             console.log(this.state.selected[0].fieldType)
         })
     }
+    // onChangeFieldName = (event) => {
+
+    //     const fieldSelected = this.state.document.map(Element => Element.field.filter(Element2 => Element2.fieldName === event.target.value))
+    //     console.log(event.target.value)
+    //     this.setState({
+    //         [event.target.name]: event.target.value,
+    //         selected: fieldSelected
+    //     }, () => {
+    //         console.log(fieldSelected)
+    //         console.log(this.state.selected[0].fieldType)
+    //     })
+    // }
     onChangeCondition(event) {
         this.setState({
             [event.target.name]: event.target.value,
@@ -47,13 +61,15 @@ export default class editingFields extends Component {
             console.log(this.state.option)
         })
     }
-    onChangeAnswer(event) {
+    onChangeAnswer = (event) => {
 
         this.setState({
-            [event.target.name]: event.target.value,
-            answer: event.target.value
-        }, () => {
+            answer: {
+                ...this.state.answer,
+                [event.target.name]: event.target.value
+            }
         })
+        console.log(this.state.answer)
     }
 
     createCondition() {
@@ -125,28 +141,56 @@ export default class editingFields extends Component {
 
                             <select className="item" onChange={this.onChangeFieldName.bind(this)}>
                                 {
-                                    this.state.field.map((field, i) => {
+                                    this.state.field.map((fields) => {
                                         return (
-                                            <option value={field.fieldName}>{field.fieldName}</option>
-                                        )
-
+                                            <option value={fields.fieldName}>{fields.fieldName}</option>)
                                     })
-                                }
+                                })
+                            }
                             </select>
+                            {/* <select className="item" onChange={this.onChangeFieldName.bind(this)}>
+                                {
+                                    this.state.document.map((documents) => {
+                                        return (
+                                            documents.field.map((fields) => {
+                                                return (
+                                                    <option value={fields.fieldName}>{fields.fieldName}</option>)
+                                                })
+                                                )
+                                                
+                                            })
+                                        }
+                            </select> */}
 
                             <select className="item" onChange={this.onChangeCondition.bind(this)}>
-                                {this.state.selected.length != 0 ? (
-                                    
-                                <option value= {this.state.selected[0].fieldType === "text" ? "É" : this.state.selected[0].fieldType === "list" ? "É" : ""}>{this.state.selected[0].fieldType === "text" ? "É" : "não é text"}</option>
+                                <option value="É">É</option>
+                                <option value="Não é">Não é</option>
+                                {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "number" && (
+                                    <option value="Maior que">Maior que</option>) : ''}
+                                {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "date" && (
+                                    <option value="Maior que">Maior que</option>) : ''}
+                                {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "number" && (
+                                    <option value="Maior que">Menor que</option>) : ''}
+                                {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "date" && (
+                                    <option value="Maior que">Menor que</option>) : ''}
 
-                                ) : ''}
-                                
-                                {/* <option value={this.state.selected[0].fieldType === "text" ? "é text" : "não é text"}>teste1</option> */}
                             </select>
 
                             <select className="item" onChange={this.onChangeAnswer.bind(this)}>
-                                <option value={this.state.selected.fieldType === "text" ? "é text" : "não é text"}>teste1</option>
-                                <option value={this.state.selected.fieldType === "text" ? "é text" : "não é text"}>teste1</option>
+                                {
+                                    this.state.document.map((document) => {
+                                        if (this.state.selected.length != 0) {
+                                            if (this.state.selected[0].fieldName === document.answer.fieldName) {
+                                                return (
+
+                                                    <option selected="selected">{document}</option>
+
+                                                )
+
+                                            }
+                                        }
+                                    })
+                                }
                             </select>
                         </form>
 
