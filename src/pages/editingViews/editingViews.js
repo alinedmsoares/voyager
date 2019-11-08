@@ -12,7 +12,7 @@ export default class editingFields extends Component {
             id: '',
             titleView: '',
             condition: [],
-            option:[],
+            line:[],
             column: [],
             ordenation: [],
             selected: '',
@@ -61,14 +61,10 @@ export default class editingFields extends Component {
         const condition = [];
         condition.push(event.target.value);
 
-        //const ordenation = [];
-        //ordenation.push(event.target.value)
-
         this.setState({
             [event.target.name]: event.target.value,
             selected: fieldSelected,
-            condition: condition,
-            //ordenation : ordenation
+            condition: condition
         }, () => {
             console.log(this.state)
         })
@@ -86,6 +82,22 @@ export default class editingFields extends Component {
         const uniqueAnswers = [...new Set(listFields.map(item => item))];
         this.setState({ answerFilters: uniqueAnswers }, () => {
         });
+    }
+
+    onChangeFieldName2 = (event) => {
+        const listFields = [];
+        const fieldSelected = this.state.field.filter(Element => Element.fieldName === event.target.value)
+        
+        const ordenation = [];
+        ordenation.push(event.target.value);
+
+        this.setState({
+            [event.target.name]: event.target.value,
+            selected: fieldSelected,
+            ordenation : ordenation
+        }, () => {
+            console.log(this.state)
+        })
     }
 
     registerView(event) {
@@ -142,7 +154,9 @@ export default class editingFields extends Component {
             .then(data => this.setState({
                 id: data.id,
                 titleView: data.titleView,
-                //column: data.column
+                column: data.column,
+                condition: data.condition,
+                ordenation: data.ordenation
             }))
             .catch(erro => console.log(erro))
     }
@@ -159,29 +173,31 @@ export default class editingFields extends Component {
     }
 
     onChangeCondition(event) {
-
         const condition = this.state.condition;
         condition.push(event.target.value);
-
-        //const ordenation = this.state.ordenation;
-        //ordenation.push(event.target.value);
 
         this.setState({
             [event.target.name]: event.target.value,
             option: event.target.value,
-            condition: condition,
-            //ordenation : ordenation
+            condition : condition
         }, () => {
             console.log(this.state.condition.option)
         })
     }
+    
     onChangeOption(event) {
+        const ordenation = this.state.ordenation;
+        ordenation.push(event.target.value);
 
         this.setState({
             [event.target.name]: event.target.value,
+            option: event.target.value,
+            ordenation : ordenation
         }, () => {
+            console.log(this.state.ordenation.option)
         })
     }
+
     onChangeAnswer = (event) => {
         const condition = this.state.condition;
         condition.push(event.target.value);
@@ -199,7 +215,7 @@ export default class editingFields extends Component {
         return this.state.line.map((el, i) =>
             <div className="general">
                 <div key={i} className="itensView-extra">
-                    <select className="itemExtra" name='lista_dos_campos' onChange={this.onChangeFieldName.bind(this)}>
+                    <select className="item" name='lista_dos_campos' onChange={this.onChangeFieldName.bind(this)}>
                         {
                             this.state.field.map((fields) => {
                                 return (
@@ -209,7 +225,7 @@ export default class editingFields extends Component {
                     }
                     </select>
 
-                    <select className="itemExtra" name='lista_dos_campos' onChange={this.onChangeCondition.bind(this)}>
+                    <select className="item"  name='lista_dos_campos' onChange={this.onChangeCondition.bind(this)}>
                         <option value="É">É</option>
                         <option value="Não é">Não é</option>
                         {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "number" && (
@@ -222,15 +238,15 @@ export default class editingFields extends Component {
                             <option value="Maior que">Menor que</option>) : ''}
                     </select>
 
-                    <select className="itemExtra" name='lista_dos_campos' onChange={this.onChangeAnswer.bind(this)}>
+                    <select className="item"  name='lista_dos_campos' onChange={this.onChangeAnswer.bind(this)}>
                         {
                             this.state.answerFilters.map((answer) => {
                                 return (
                                     <option>{answer}</option>
                                 )
                             })
-
                         })
+
                     {
                             this.state.field.map((field) => {
                                 if (field.visible === true) {
@@ -251,6 +267,38 @@ export default class editingFields extends Component {
                     </select>
                 </div>
                 <div type='button' className="remove-value" value='remove' onClick={this.removeClick.bind(this, i)}> </div>
+            </div>
+        )
+    }
+
+    createCondition2() {
+        return this.state.condition.map((el, i) =>
+            <div className="general">
+                <div key={i} className="itensView-extra">
+                    <select className="item" name='camposlista' onChange={this.onChangeFieldName.bind(this)}>
+                        {
+                            this.state.field.map((fields) => {
+                                return (
+                                    <option value={fields.fieldName}>{fields.fieldName}</option>)
+                            })
+                        })
+                    }
+                    </select>
+
+                    <select className="item"  name='valoreslista' onChange={this.onChangeOption.bind(this)}>
+                        <option value="É">É</option>
+                        <option value="Não é">Não é</option>
+                        {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "number" && (
+                            <option value="Maior que">Maior que</option>) : ''}
+                        {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "date" && (
+                            <option value="Maior que">Maior que</option>) : ''}
+                        {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "number" && (
+                            <option value="Maior que">Menor que</option>) : ''}
+                        {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "date" && (
+                            <option value="Maior que">Menor que</option>) : ''}
+                    </select>
+
+                </div>
             </div>
         )
     }
@@ -324,18 +372,18 @@ export default class editingFields extends Component {
                                 }
                         </select>
 
-                                <select className="item" name='lista_dos_campos' onChange={this.onChangeOption.bind(this)}>
-                                    <option value="É">É</option>
-                                    <option value="Não é">Não é</option>
-                                    {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "number" && (
-                                        <option value="Maior que">Maior que</option>) : ''}
-                                    {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "date" && (
-                                        <option value="Maior que">Maior que</option>) : ''}
-                                    {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "number" && (
-                                        <option value="Maior que">Menor que</option>) : ''}
-                                    {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "date" && (
-                                        <option value="Maior que">Menor que</option>) : ''}
-                                </select>
+                               <select className="item"  name='lista_dos_campos' onChange={this.onChangeCondition.bind(this)}>
+                                <option value="É">É</option>
+                                <option value="Não é">Não é</option>
+                            {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "number" && (
+                                <option value="Maior que">Maior que</option>) : ''}
+                            {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "date" && (
+                                <option value="Maior que">Maior que</option>) : ''}
+                            {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "number" && (
+                                <option value="Maior que">Menor que</option>) : ''}
+                            {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "date" && (
+                                <option value="Maior que">Menor que</option>) : ''}
+                        </select>
 
                                 <select className="item" name='answer' onChange={this.onChangeAnswer.bind(this)}>
                                     {
@@ -395,38 +443,38 @@ export default class editingFields extends Component {
                                     }
                                 </div>
                             </div>
-                            <div className="orderGeral">
-                                <label>Ordenação</label>
-                                <select className="item" name="camposlista" onChange={this.onChangeFieldName.bind(this)}>
-                                    {
-                                        this.state.field.map((fields) => {
-                                            if (fields.visible === true) {
-                                                return (
-                                                    <option value={fields.fieldName}> {fields.visible} {fields.fieldName}</option>
-                                                )
-                                            }
+                    <div className="orderGeral">
+                        <label>Ordenação</label>
+                        <select className="item" name="camposlista" onChange={this.onChangeFieldName2.bind(this)}>
+                                {
+                                    this.state.field.map((fields) => {
+                                        if (fields.visible === true) {
+                                            return (
+                                                <option value={fields.fieldName}> {fields.visible} {fields.fieldName}</option>
+                                            )}
                                         }
-                                        )
-                                    }
-                                </select>
-
-                                <select className="item" name="valoreslista" onChange={this.onChangeOption.bind(this)}>
-                                    <option value="A-Z">A-Z</option>
-                                    <option value="Z-A">Z-A</option>
-                                    {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "number" && (
-                                        <option value="Crescente">Crescente</option>) : ''}
-                                    {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "date" && (
-                                        <option value="Crescente">Crescente</option>) : ''}
-                                    {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "number" && (
-                                        <option value="Decrescente">Decrescente</option>) : ''}
-                                    {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "date" && (
-                                        <option value="Decrescente">Decrescente</option>) : ''}
-                                </select>
+                                    )
+                                }
+                        </select>
+    
+                        <select className="item" name="valoreslista" onChange={this.onChangeOption.bind(this)}>
+                            <option value="A-Z">A-Z</option>
+                            <option value="Z-A">Z-A</option>
+                            {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "number" && (
+                                <option value="Crescente">Crescente</option>) : ''}
+                            {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "date" && (
+                                <option value="Crescente">Crescente</option>) : ''}
+                            {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "number" && (
+                                <option value="Decrescente">Decrescente</option>) : ''}
+                            {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "date" && (
+                                <option value="Decrescente">Decrescente</option>) : ''}
+                        </select>
                             </div>
 
 
 
                         </div>
+                <button className="save" type="submit">Salvar</button>
                     </form>
                 </div>
                 <div className="listaView">
@@ -441,7 +489,6 @@ export default class editingFields extends Component {
                         })
                     }
                 </div>
-                <button className="save">Salvar</button>
             </div >
         )
     }

@@ -79,7 +79,7 @@ export default class editingFields extends Component {
     }
     //search all fields registered
     searchFields() {
-        fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document', {
+        fetch('https://192.168.6.210:5000/api/field', {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -116,7 +116,7 @@ export default class editingFields extends Component {
     editVisible = (event) => {
         event.preventDefault();
         if (window.confirm("Deseja excluir esse campo?")) {
-            fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document/' + event.target.getAttribute('id'), {
+            fetch('https://192.168.6.210:5000/api/field/' + event.target.getAttribute('id'), {
                 method: 'PUT',
                 body: JSON.stringify({
                     visible: (event.target.getAttribute('visible') === 'visibleTrue' ? true : false)
@@ -142,7 +142,7 @@ export default class editingFields extends Component {
     registerField(event) {
         event.preventDefault();
         if (this.state.id != '') {
-            fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document/' + this.state.id, {
+            fetch('https://192.168.6.210:5000/api/field/' + this.state.id, {
                 method: 'PUT',
                 body: JSON.stringify({
                     id: this.state.id,
@@ -163,7 +163,7 @@ export default class editingFields extends Component {
 
         }
         else {
-            fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document', {
+            fetch('https://192.168.6.210:5000/api/field', {
                 method: 'POST',
                 body: JSON.stringify({
                     fieldName: this.state.fieldName,
@@ -191,7 +191,7 @@ export default class editingFields extends Component {
     searchForId(event) {
         event.preventDefault();
         console.log('f' + event.target.getAttribute('id'));
-        fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document/' + event.target.getAttribute('id'), {
+        fetch('https://192.168.6.210:5000/api/field/' + event.target.getAttribute('id'), {
             headers: {
                 'Content-Type': 'application/json'
             }
