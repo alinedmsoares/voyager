@@ -103,23 +103,32 @@ export default class sendDocument extends Component {
                             if (document.visible === true) {
 
                                 if (document.fieldType === "multiple-selection") {
-                                    return (
-                                        <div className="inputMovel">
-                                            <div>
-                                                <li className="lista">
-                                                    <label>{document.fieldName}</label>
-                                                    {
-                                                        this.state.field.map((value) => {
-                                                            return (
-                                                                <div>
-                                                                    <input placeholder={document.fieldName} name={document.fieldName} type="checkbox" onChange={this.updateState} /><label>{value.values}</label></div>
-                                                            )
-                                                        })
-                                                    }
-                                                </li>
+                                    if (document.fieldName !== "Status") {
+                                        return (
+                                            <div className="inputMovel">
+                                                <div>
+                                                    <li className="lista">
+                                                        <label>{document.fieldName}</label>
+
+                                                            {
+                                                                this.state.field.map((field) => {
+                                                                    if (document.fieldName === field.fieldName) {
+                                                                        return (
+                                                                            field.values.map((values) => {
+                                                                                return (
+                                                                                    <label>{values}<input type="checkbox"/></label>
+                                                                                )
+                                                                            }))
+                                                                    }
+
+
+                                                                })
+                                                            }
+                                                    </li>
+                                                </div>
                                             </div>
-                                        </div>
-                                    )
+                                        )
+                                    }
                                 } else if (document.fieldType === "list") {
                                     if (document.fieldName !== "Status") {
                                         return (
