@@ -10,24 +10,21 @@ export default class listViews extends Component {
         this.state = {
 
             id: '',
-            titleView: '',
-            condition: [],
             line: [],
-            column: [],
-            ordenation: [],
             selected: '',
             line: [],
             answerFilters: [],
             document: [{
                 field: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: [] }],
-                answers: {}
+                answers: { title: '', description: '' }
             }],
             field: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: [] }],
             listaView: [],
+            currentView: '',
+            currentColumns: [],
+            documentView:[]
         }
     }
-
-
 
     componentDidMount() {
         this.searchFields();
@@ -68,27 +65,66 @@ export default class listViews extends Component {
             .then(data => this.setState({ answer: data }))
             .catch(error => console.log(error))
     }
-    render() {
-        // const fields = this.state.field.map(field=> field.fieldName)
-        // const data = [{title:fields}]
+    selectView = (view) => {
+        this.setState({ currentView: view })
 
-        const fields = this.state.field.map(field => field.fieldName)
-        console.log(fields[1])
-        const documents = this.state.document.map(documents => documents.answers)
-        const data = [{ field: documents }];
-        const columns = [
-            {
-                name: fields[1],
-                selector: "field",
-                sortable: true,
-            },
-        ];
+        let result = [];
+        this.state.listaView.map(element => {
+            if (element.titleView === this.state.currentView) {
+                element.column.map(element1 => {
+                    // console.log(element1[0].fieldName)
+                    result.push({ name: element1[0].fieldName, selector: element1[0].fieldName })
+                })
+
+            }
+        })
+
+
+        this.setState({ currentColumns: result })
+
+
+        const listFields = [];
+        this.state.answer.map((answer) => {
+            const fields = Object.keys(answer.answer)
+            fields.map((field) => {
+                listFields.push(answer.answer[field]);
+
+            })
+        })
+        const uniqueAnswers = [...new Set(listFields.map(item => item))];
+        this.setState({ answerFilters: uniqueAnswers }, () => {
+        });
+        let answer = [];
+        this.state.answerFilters.map(answer => {
+            // if(answer)
+            console.log(answer)
+        })
+        this.setState({ answerFilters: answer })
+
+    }
+
+
+    render() {
+        const data = [{currentColumns: "answer"}]
         return (
-            <DataTable
-                title="Arnold Movies"
-                columns={columns}
-                data={data}
-            />
+            <div>
+                <div className="listaView">
+                    {
+                        this.state.listaView.map((view, index) => {
+                            return (
+                                <li key={index}>
+                                    <button onClick={() => this.selectView(view.titleView)}>{view.titleView}</button>
+                                </li>
+                            )
+                        })
+                    }
+                </div>
+                <DataTable
+                    title="Views"
+                    columns={this.state.currentColumns}
+                    data={data}
+                />
+            </div>
         )
     }
 };
