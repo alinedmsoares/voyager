@@ -20,12 +20,15 @@ export default class listViews extends Component {
             answerFilters: [],
             document: [{
                 field: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: [] }],
-                answers: { title: '', description: '' }
+                answers: {}
             }],
             field: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: [] }],
             listaView: [],
         }
     }
+
+
+
     componentDidMount() {
         this.searchFields();
         this.searchAnswers();
@@ -66,25 +69,49 @@ export default class listViews extends Component {
             .catch(error => console.log(error))
     }
     render() {
-        let columns = [
+        // const fields = this.state.field.map(field=> field.fieldName)
+        // const data = [{title:fields}]
 
-            this.state.field.map((field) => {
-                return (field.fieldName)
-
-            })
-
-
-        ]
-        console.log(columns)
+        const fields = this.state.field.map(field => field.fieldName)
+        console.log(fields[1])
+        const documents = this.state.document.map(documents => documents.answers)
+        const data = [{ field: documents }];
+        const columns = [
+            {
+                name: fields[1],
+                selector: "field",
+                sortable: true,
+            },
+        ];
         return (
-
-            // <DataTable
-            //     title={"View"}
-            //     columns={columns}
-            // />
-            <li>{columns}</li>
+            <DataTable
+                title="Arnold Movies"
+                columns={columns}
+                data={data}
+            />
         )
     }
+};
+// render() {
+//     let columns = [
 
-}
+//         this.state.field.map((field) => {
+//             return (field.fieldName)
+
+//         })
+
+
+//     ]
+//     console.log(columns)
+//     return (
+
+//         // <DataTable
+//         //     title={"View"}
+//         //     columns={columns}
+//         // />
+//         <li>{columns}</li>
+//     )
+// }
+
+
 

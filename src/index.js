@@ -26,7 +26,6 @@ const rotas = (
                 <Route exact path="/editingfields" component={editingFields} />
                 <Route exact path="/senddocuments" component={sendDocuments} />
                 <Route exact path="/editingviews" component={editingViews} />
-                <Route exact path="/editingviews" component={editingViews} />
                 <Route exact path="/listviews" component={listViews} />
                 <Route component={notFound} />
             </Switch>
