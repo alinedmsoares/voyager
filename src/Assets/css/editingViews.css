@@ -2,6 +2,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-user-select: none;
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
+     user-select: none;
 }
 .all {
     display: flex;
@@ -10,7 +14,7 @@
 .formView {
     width: 95%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     text-align: center;
     margin-left: 5%;
@@ -24,10 +28,11 @@
 }
 .divTitle label {
     align-self: baseline;
+    margin-left: 35px;
 }
 
 .viewTitle {
-    width: 92%;
+    width: 90%;
     height: 7vh;
     margin-top: 1em;
     background: #F9F9F9;
@@ -45,12 +50,13 @@
 .conditionsView .conditionsTitle {
     align-self: baseline;
     margin-top: 2em;
-    margin-bottom: -3vh;
+    margin-bottom: -2vh;
+    margin-left: 30px;
 }
 .itensView {
     display: flex;
     justify-content: space-between;
-    width: 92%;
+    width: 90%;
     height: 7vh;
     margin-top: 1em;
     margin-bottom: 2%;
@@ -58,15 +64,13 @@
 .itensView-extra {
     display: flex;
     justify-content: space-between;
-    width: 89vh;
+    width: 90%;
     height: 7vh;
-    margin-left: 22%;
     align-items: center;
 }
 .item {
     margin-top: 1em;
-
-    width: 23%;
+    width: 160px;
     height: 7vh;
     background: #F9F9F9;
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
@@ -75,7 +79,7 @@
     cursor: pointer;
 }
 .itemExtra {
-    width: 23%;
+    width: 160px;
     height: 7vh;
     background: #F9F9F9;
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
@@ -86,8 +90,9 @@
 .divAdd {
     display: flex;
     flex-direction: row-reverse;
+    display: flex;
+    align-self: center;
     width: 92%;
-    flex-direction: column;
     margin-top: 2em;
 }
 .divSave {
@@ -133,7 +138,13 @@
 .save:hover {
     background-color: rgb(202, 74, 74);
 }
-
+/* .listView {
+    height: 300vh;
+    width: 50vh;
+    margin-left: 40px;
+    background: #F6F6F6;
+    box-shadow: 1px 0px 9px rgba(0, 0, 0, 0.39);
+} */
 .general .remove-value {
     background-image: url(https://image.flaticon.com/icons/svg/32/32178.svg);
     width: 3vh;
@@ -141,18 +152,18 @@
     background-repeat: no-repeat;
     height: 3vh;
     cursor: pointer;
-    margin: auto;
+    margin-left: 20px;
 }
 .general {
-    width: 135vh;
+    width: 100%;
     display: flex;
     text-align: center;
     align-items: center;
     margin-top: 2vh;
-    margin-left: 1%;
+    margin-left: 5%;
 }
 .columns {
-    width: 80%;
+    width: 75%;
     display: flex;
     align-items: baseline;
     flex-direction: column;
@@ -164,6 +175,7 @@
 }
 .columnDiv {
     display: inline;
+    width: 15%;
     padding: 1%;
     background-color: purple;
 }
@@ -171,24 +183,32 @@
 .orderGeral {
     width: 80%;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     margin-top: 2vh;
 }
 .orderGeral label {
     align-self: baseline;
+    margin-left: 25px;
 }
 .order {
     justify-content: space-between;
     display: flex;
-    width: 95%;
+    width: 92%;
+}
+.OrderItem {
+    margin-top: 1em;
+    width: 550px;
+    height: 7vh;
+    background: #F9F9F9;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+    margin-right: 65px;
 }
 .columnCheckbox {
     margin-top: 1vh;
     -webkit-appearance: none;
-}
-.columnCheckbox:checked {
-    -webkit-appearance: none;
-    background-color: #242C91;
 }
 .closeImg {
     background-image: url("https://image.flaticon.com/icons/png/512/14/14704.png");
@@ -205,7 +225,14 @@
     flex-wrap: wrap;
     display: flex;
 }
+.list-View {
+    width: 15%;
+    height: 100%;
+    position: fixed;
+    background: #F6F6F6;
+    box-shadow: 1px 0px 9px rgba(0, 0, 0, 0.39);
 
+}
 
 ul.ks-cboxtags {
     list-style: none;
@@ -213,7 +240,10 @@ ul.ks-cboxtags {
     display: flex;
     margin: 0 1%;
 }
+ul.ks-cboxtags li{
+    /* padding: 0 10px; */
 
+}
 ul.ks-cboxtags li label{
     background-color: rgba(255, 255, 255, .9);
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
@@ -248,21 +278,13 @@ ul.ks-cboxtags li input[type="checkbox"]:checked + label {
 .checkImg {
     width: 15px;
     height: 1vh;
-    background-image: url(https://image.flaticon.com/icons/svg/32/32178.svg);
+    background-image: url("../images/icons/delete.png");
     background-size: 50%;
     background-repeat: no-repeat;
-    fill: #fff;
+
 }
 ul.ks-cboxtags li input[type="checkbox"] {
     -webkit-appearance: none
-}
-
-ul.ks-cboxtags label input[type="checkbox"]:checked{
-    border: 2px solid #1bdbf8;
-    background-color: #12bbd4;
-    color: #fff;
-    transition: all .2s;
-    
 }
 
 form{

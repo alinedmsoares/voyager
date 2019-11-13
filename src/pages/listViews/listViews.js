@@ -22,7 +22,7 @@ export default class listViews extends Component {
             listaView: [],
             currentView: '',
             currentColumns: [],
-            documentView:[]
+            documentView: []
         }
     }
 
@@ -72,15 +72,13 @@ export default class listViews extends Component {
         this.state.listaView.map(element => {
             if (element.titleView === this.state.currentView) {
                 element.column.map(element1 => {
-                    // console.log(element1[0].fieldName)
                     result.push({ name: element1[0].fieldName, selector: element1[0].fieldName })
                 })
 
             }
         })
-
-
         this.setState({ currentColumns: result })
+
 
 
         const listFields = [];
@@ -91,21 +89,18 @@ export default class listViews extends Component {
 
             })
         })
+
         const uniqueAnswers = [...new Set(listFields.map(item => item))];
         this.setState({ answerFilters: uniqueAnswers }, () => {
+            uniqueAnswers.push({ uniqueAnswers: uniqueAnswers })
         });
-        let answer = [];
-        this.state.answerFilters.map(answer => {
-            // if(answer)
-            console.log(answer)
-        })
-        this.setState({ answerFilters: answer })
 
+        this.setState({ answerFilters: uniqueAnswers })
+        console.log(uniqueAnswers)
     }
 
 
     render() {
-        const data = [{currentColumns: "answer"}]
         return (
             <div>
                 <div className="listaView">
@@ -119,35 +114,17 @@ export default class listViews extends Component {
                         })
                     }
                 </div>
+ 
                 <DataTable
-                    title="Views"
+                    title="Arnold Movies"
                     columns={this.state.currentColumns}
-                    data={data}
+                    data={this.state.answerFilters}
+
                 />
             </div>
         )
     }
 };
-// render() {
-//     let columns = [
-
-//         this.state.field.map((field) => {
-//             return (field.fieldName)
-
-//         })
-
-
-//     ]
-//     console.log(columns)
-//     return (
-
-//         // <DataTable
-//         //     title={"View"}
-//         //     columns={columns}
-//         // />
-//         <li>{columns}</li>
-//     )
-// }
 
 
 

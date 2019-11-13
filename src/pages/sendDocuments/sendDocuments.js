@@ -107,24 +107,39 @@ export default class sendDocument extends Component {
                                         return (
                                             <div className="inputMovel">
                                                 <div>
-                                                    <li className="lista">
-                                                        <label>{document.fieldName}</label>
+                                                    <ul>
+                                                        <li className="lista">
+                                                            <label>{document.fieldName}</label>
+                                                            <div className="all-checkbox">
+                                                                {
+                                                                    this.state.field.map((field, index) => {
+                                                                        if (document.fieldName === field.fieldName) {
+                                                                            return (
+                                                                                field.values.map((values) => {
+                                                                                    return (
+                                                                                        <div  class="inputGroup">
+                                                                                            <input id={`checkbox${index}`} type="checkbox" />
+                                                                                            <label htmlFor={`checkbox${index}`}>{values}</label>
+                                                                                        </div>
 
-                                                            {
-                                                                this.state.field.map((field) => {
-                                                                    if (document.fieldName === field.fieldName) {
-                                                                        return (
-                                                                            field.values.map((values) => {
-                                                                                return (
-                                                                                    <label>{values}<input type="checkbox"/></label>
-                                                                                )
-                                                                            }))
-                                                                    }
 
 
-                                                                })
-                                                            }
-                                                    </li>
+
+
+
+
+                                                                                        // <label htmlFor={`checkbox${index}`}>
+                                                                                        //     {values}
+                                                                                        //     <input id={`checkbox${index}`} type="checkbox" />
+                                                                                        // </label>
+                                                                                        )
+                                                                                }))
+                                                                        }
+                                                                    })
+                                                                }
+                                                            </div>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         )
@@ -172,10 +187,8 @@ export default class sendDocument extends Component {
                                 }
                             }
                         }
-
                         )
                     }
-
                     <input type="file" name="files" className="input-file" multiple onChange={(e) => this.handleChange(e.target.files)} onChange={this.updateStateFile} />
                     <div className="buttons">
                         <button type="reset" className="cancel">Cancelar</button>
