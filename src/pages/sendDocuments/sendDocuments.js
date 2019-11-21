@@ -11,22 +11,21 @@ export default class sendDocument extends Component {
         this.state = {
             id: '',
             field: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: [] }],
-            files: [],
-            answer: {},
+            attachmentupload: [],
+            answers: {},
         }
 
         this.updateState = this.updateState.bind(this);
         this.updateStateFile = this.updateStateFile.bind(this);
-        this.updateStateTitle = this.updateStateTitle.bind(this);
-        this.updateStateDescription = this.updateStateDescription.bind(this);
+
     }
     handleChange(selectorfiles) {
         console.log(selectorfiles)
     }
     updateState = (event) => {
         this.setState({
-            answer: {
-                ...this.state.answer,
+            answers: {
+                ...this.state.answers,
                 [event.target.name]: event.target.value
             }
         })
@@ -34,21 +33,13 @@ export default class sendDocument extends Component {
     }
     updateStateFile(event) {
         this.setState({
-            files: event.target.value
+            attachmentupload: event.target.value
         })
 
     }
 
-    updateStateTitle(event) {
-        this.setState({ title: event.target.value })
-    }
-
-    updateStateDescription(event) {
-        this.setState({ description: event.target.value })
-    }
-
     searchFields() {
-        fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document', {
+        fetch('http://192.168.4.49:5000/api/field', {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -62,11 +53,11 @@ export default class sendDocument extends Component {
     }
     registerDocument(event) {
         event.preventDefault();
-        fetch('http://5d8289a9c9e3410014070b11.mockapi.io/respostaDocument', {
+        fetch('http://192.168.4.49:5000/api/document', {
             method: 'POST',
             body: JSON.stringify({
-                files: this.state.files,
-                answer: this.state.answer
+                attachmentupload: this.state.attachmentupload,
+                answers: this.state.answers
             }),
             headers: {
                 'Content-Type': 'application/json'
@@ -102,7 +93,7 @@ export default class sendDocument extends Component {
                         this.state.field.map((document) => {
                             if (document.visible === true) {
 
-                                if (document.fieldType === "multiple-selection") {
+                                if (document.fieldType === "multipleselection") {
                                     if (document.fieldName !== "Status") {
                                         return (
                                             <div className="inputMovel">
