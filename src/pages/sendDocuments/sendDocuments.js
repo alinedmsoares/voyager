@@ -53,6 +53,12 @@ export default class sendDocument extends Component {
     }
     registerDocument(event) {
         event.preventDefault();
+
+console.log({
+    attachmentupload: this.state.attachmentupload,
+    answers: this.state.answers
+})
+
         fetch('http://192.168.4.49:5000/api/document', {
             method: 'POST',
             body: JSON.stringify({

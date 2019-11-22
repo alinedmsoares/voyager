@@ -17,7 +17,7 @@ export default class editingFields extends Component {
             isHiddenField: true, //field value input preview
             fieldType: '', //defined field type
             required: false, //required field
-            values: [], //field value set if required
+            values: [{valueName:''}], //field value set if required
             list: [], //list with all fields registered
             visible: true
         }
@@ -96,10 +96,11 @@ export default class editingFields extends Component {
     createInput() {
         return this.state.values.map((el, i) =>
             <div key={i} className="field-value-input">
-                <input type="text" required value={el || ''} placeholder="Valor do Campo *" onChange={this.handleChange.bind(this, i)} />
+                <input type="text" required value={el.valueName || ''} placeholder="Valor do Campo *" onChange={this.handleChange.bind(this, i)} />
                 <div type='button' className="remove-value" value='remove' onClick={this.removeClick.bind(this, i)}> </div>
-            </div>
+            </div>       
         )
+        
     }
 
     //add entered values ​​to field
@@ -165,13 +166,21 @@ export default class editingFields extends Component {
         }
         else {
 
-            let valor = this.state.values[0];
+            // console.log(this.state.values)
+            let valor = this.state.values.map(element => {
+                return {
+                    valueName: element
+                }
+            })
+
+            console.log()
+
             fetch('http://192.168.4.49:5000/api/field', {
                 method: 'POST',
                 body: JSON.stringify({
                     fieldName: this.state.fieldName,
                     fieldType: this.state.fieldType,
-                    values: [{ valueName : valor}],
+                    values: valor,
                     required: this.state.required,
                     visible: this.state.visible
                 }),
