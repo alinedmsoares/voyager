@@ -3,6 +3,7 @@ import Menu from '../../components/menu/menu'
 import Header from '../../components/header/header'
 import Swal from 'sweetalert2'
 import '../../Assets/css/sendDocuments.css'
+import Axios from 'axios'
 
 
 export default class sendDocument extends Component {
@@ -10,18 +11,20 @@ export default class sendDocument extends Component {
         super();
         this.state = {
             id: '',
-            field: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: [] }],
-            attachmentupload: [],
+            field: [{ id: '', fieldName: '', fieldTypeString: '', visible: false, required: false, values: [], fieldTypeString: '' }],
+            AttachmentFile: null,
+            Attachment: '',
             answers: {},
         }
 
         this.updateState = this.updateState.bind(this);
-        this.updateStateFile = this.updateStateFile.bind(this);
+        //this.updateStateFile = this.updateStateFile.bind(this);
 
     }
     handleChange(selectorfiles) {
         console.log(selectorfiles)
     }
+
     updateState = (event) => {
         this.setState({
             answers: {
@@ -31,11 +34,15 @@ export default class sendDocument extends Component {
         })
         console.log(this.state)
     }
-    updateStateFile(event) {
-        this.setState({
-            attachmentupload: event.target.value
-        })
 
+    updateStateFile = (event) => {
+        let reader = new FileReader();
+        let file = event.target.files[0];
+        console.log('file', file);
+        this.setState({
+            //Attachment : file.name,
+            AttachmentFile: file
+        })
     }
 
     searchFields() {
@@ -51,28 +58,35 @@ export default class sendDocument extends Component {
             })
             .catch(error => console.log(error))
     }
+
     registerDocument(event) {
         event.preventDefault();
+        
+        var formData = new FormData();
 
-console.log({
-    attachmentupload: this.state.attachmentupload,
-    answers: this.state.answers
-})
+        let count = 0;
+        for (var prop in this.state.answers) {
+            formData.append('answers['+ count +'].key', prop);
+            formData.append('answers['+ count +'].value', this.state.answers[prop]);
+            count++
+          }
 
-        fetch('http://192.168.4.49:5000/api/document', {
-            method: 'POST',
-            body: JSON.stringify({
-                attachmentupload: this.state.attachmentupload,
-                answers: this.state.answers
-            }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+        formData.append("attachmentUpload", this.state.AttachmentFile);
+
+        console.log(formData);
+
+        Axios({
+            method:'post', 
+            url: 'http://192.168.4.49:5000/api/document',
+            data: formData,
+            headers: {'Content-Type':'multipart/form-data'}
         })
-            .then(this.AlertSucessRegister())
-            .then(response => response)
-            .then(this.searchFields())
-            .catch(error => console.log(error))
+        .then(function (response){
+            console.log(response)
+        })
+        .catch(function(response){
+            console.log(response)
+        })
     }
 
     AlertSucessRegister() {
@@ -99,7 +113,7 @@ console.log({
                         this.state.field.map((document) => {
                             if (document.visible === true) {
 
-                                if (document.fieldType === "multipleselection") {
+                                if (document.fieldTypeA === "multipleselection") {
                                     if (document.fieldName !== "Status") {
                                         return (
                                             <div className="inputMovel">
@@ -114,22 +128,11 @@ console.log({
                                                                             return (
                                                                                 field.values.map((values) => {
                                                                                     return (
-                                                                                        <div  class="inputGroup">
+                                                                                        <div class="inputGroup">
                                                                                             <input id={`checkbox${index}`} type="checkbox" />
                                                                                             <label htmlFor={`checkbox${index}`}>{values}</label>
                                                                                         </div>
-
-
-
-
-
-
-
-                                                                                        // <label htmlFor={`checkbox${index}`}>
-                                                                                        //     {values}
-                                                                                        //     <input id={`checkbox${index}`} type="checkbox" />
-                                                                                        // </label>
-                                                                                        )
+                                                                                    )
                                                                                 }))
                                                                         }
                                                                     })
@@ -141,14 +144,14 @@ console.log({
                                             </div>
                                         )
                                     }
-                                } else if (document.fieldType === "list") {
+                                } else if (document.fieldTypeString === "list") {
                                     if (document.fieldName !== "Status") {
                                         return (
                                             <div className="inputMovel">
                                                 <div>
                                                     <li className="lista">
                                                         <label>{document.fieldName}</label>
-                                                        <select name={document.fieldName} type={document.fieldType} className="text" onChange={this.updateState}>
+                                                        <select  key={document.fieldName} name={document.fieldName} type={document.fieldTypeString} className="text" onChange={this.updateState}>
 
                                                             {
                                                                 this.state.field.map((field) => {
@@ -173,10 +176,10 @@ console.log({
                                 }
                                 else {
                                     return (
-                                        <div className="inputMovel">
+                                        <div className="inputMovel" >
                                             <div>
                                                 <li className="lista">
-                                                    <input placeholder={document.fieldName} required={document.required ? "required" : ""} name={document.fieldName} type={document.fieldType} className="text" onChange={this.updateState} />
+                                                    <input key={document.fieldName} placeholder={document.fieldName} required={document.required ? "required" : ""} name={document.fieldName} type={document.fieldTypeString} className="text" onChange={this.updateState} />
                                                 </li>
                                             </div>
                                         </div>
@@ -186,7 +189,7 @@ console.log({
                         }
                         )
                     }
-                    <input type="file" name="files" className="input-file" multiple onChange={(e) => this.handleChange(e.target.files)} onChange={this.updateStateFile} />
+                    <input type="file" name="Attachment" className="input-file" value={this.state.Attachment}  onChange={this.updateStateFile} />
                     <div className="buttons">
                         <button type="reset" className="cancel">Cancelar</button>
                         <button type="submit" className="send">Enviar</button>

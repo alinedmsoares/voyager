@@ -15,7 +15,7 @@ export default class editingFields extends Component {
             isHiddenForm: true, //form preview
             fieldName: '', //field fieldName
             isHiddenField: true, //field value input preview
-            fieldType: '', //defined field type
+            fieldTypeString: '', //defined field type
             required: false, //required field
             values: [{valueName:''}], //field value set if required
             list: [], //list with all fields registered
@@ -37,8 +37,8 @@ export default class editingFields extends Component {
 
     //update field type state when registering
     updateStateFieldTypeForm(event) {
-        this.setState({ fieldType: event.target.value }, () => {
-            console.log(this.state.fieldType)
+        this.setState({ fieldTypeString: event.target.value }, () => {
+            console.log(this.state.fieldTypeString)
         })
     }
 
@@ -55,8 +55,8 @@ export default class editingFields extends Component {
     }
 
     //method responsible for viewing input value input if field type is list or multiple selection
-    toggleHiddenValue(fieldType) {
-        if (fieldType.target.id === "list" || fieldType.target.id === "multipleselection") {
+    toggleHiddenValue(fieldTypeString) {
+        if (fieldTypeString.target.id === "List" || fieldTypeString.target.id === "MultipleSelection") {
             this.setState({
                 isHiddenField: this.state.isHiddenField = false
             })
@@ -71,7 +71,7 @@ export default class editingFields extends Component {
         this.setState({
             id: '',
             fieldName: '',
-            fieldType: '',
+            fieldTypeString: '',
             values: [],
             required: false,
             isHiddenForm: true
@@ -148,7 +148,7 @@ export default class editingFields extends Component {
                 body: JSON.stringify({
                     id: this.state.id,
                     fieldName: this.state.fieldName,
-                    fieldType: this.state.fieldType,
+                    fieldTypeString: this.state.fieldTypeString,
                     values: this.state.values,
                     visible: true,
                     required: this.state.required
@@ -166,12 +166,12 @@ export default class editingFields extends Component {
         }
         else {
 
-            // console.log(this.state.values)
-            let valor = this.state.values.map(element => {
-                return {
-                    valueName: element
-                }
-            })
+            // // console.log(this.state.values)
+            // let valor = this.state.values.map(element => {
+            //     return {
+            //         valueName: element
+            //     }
+            // })
 
             console.log()
 
@@ -179,8 +179,8 @@ export default class editingFields extends Component {
                 method: 'POST',
                 body: JSON.stringify({
                     fieldName: this.state.fieldName,
-                    fieldType: this.state.fieldType,
-                    values: valor,
+                    fieldTypeString: this.state.fieldTypeString,
+                    // values: valor,
                     required: this.state.required,
                     visible: this.state.visible
                 }),
@@ -212,7 +212,7 @@ export default class editingFields extends Component {
             .then(data => this.setState({
                 id: data.id,
                 fieldName: data.fieldName,
-                fieldType: data.fieldType,
+                fieldTypeString: data.fieldTypeString,
                 values: data.values,
                 required: data.required,
                 isHiddenForm: !this.state.isHiddenForm
@@ -268,9 +268,9 @@ export default class editingFields extends Component {
                             <div className="field-types--higher">
                                 {/* field type:list */}
                                 <div className="radio--field-types">
-                                    <label for="list">
+                                    <label for="List">
                                         <input type="radio" name="field-types"
-                                            value="list" checked={this.state.fieldType === 'list'} id="list" onChange={this.updateStateFieldTypeForm} 
+                                            value="List" checked={this.state.fieldTypeString === 'List'} id="List" onChange={this.updateStateFieldTypeForm} 
                                             onClick={this.toggleHiddenValue.bind(this)}
                                              />
                                         <img src="https://image.flaticon.com/icons/svg/482/482559.svg" />Lista</label>
@@ -279,18 +279,18 @@ export default class editingFields extends Component {
 
                                 {/* field type:multipleselection */}
                                 <div className="radio--field-types">
-                                    <label for="multipleselection">
+                                    <label for="MultipleSelection">
                                         <input type="radio" name="field-types"
-                                            value="multipleselection" checked={this.state.fieldType === 'multipleselection'} id="multipleselection" onChange={this.updateStateFieldTypeForm}
+                                            value="MultipleSelection" checked={this.state.fieldTypeString === 'MultipleSelection'} id="MultipleSelection" onChange={this.updateStateFieldTypeForm}
                                              onClick={this.toggleHiddenValue.bind(this)} />
                                         <img src="https://image.flaticon.com/icons/svg/2087/2087812.svg" />Seleção Múltipla</label>
                                 </div>
 
                                 {/* field type:numeric */}
                                 <div className="radio--field-types">
-                                    <label for="numeric">
+                                    <label for="Numeric">
                                         <input type="radio" name="field-types"
-                                            value="numeric" checked={this.state.fieldType === 'numeric'} id="numeric" onChange={this.updateStateFieldTypeForm} onClick={this.toggleHiddenValue.bind(this)} />
+                                            value="Numeric" checked={this.state.fieldTypeString === 'Numeric'} id="Numeric" onChange={this.updateStateFieldTypeForm} onClick={this.toggleHiddenValue.bind(this)} />
                                         <img src="https://image.flaticon.com/icons/svg/56/56632.svg" />Numérico</label>
                                 </div>
 
@@ -300,23 +300,23 @@ export default class editingFields extends Component {
 
                                 {/* field type:text */}
                                 <div className="radio--field-types">
-                                    <label for="text">
+                                    <label for="Text">
                                         <input type="radio"
-                                            name="field-types" value="text" checked={this.state.fieldType === 'text'} id="text" onChange={this.updateStateFieldTypeForm} onClick={this.toggleHiddenValue.bind(this)} />
+                                            name="field-types" value="Text" checked={this.state.fieldTypeString === 'Text'} id="Text" onChange={this.updateStateFieldTypeForm} onClick={this.toggleHiddenValue.bind(this)} />
                                         <img src="https://image.flaticon.com/icons/svg/2087/2087728.svg" />Texto</label>
                                 </div>
 
                                 {/* field type:date */}
                                 <div className="radio--field-types">
-                                    <label for="date">
-                                        <input type="radio" name="field-types" value="date" checked={this.state.fieldType === 'date'} id="date" onChange={this.updateStateFieldTypeForm} onClick={this.toggleHiddenValue.bind(this)} />
+                                    <label for="Date">
+                                        <input type="radio" name="field-types" value="Date" checked={this.state.fieldTypeString === 'Date'} id="Date" onChange={this.updateStateFieldTypeForm} onClick={this.toggleHiddenValue.bind(this)} />
                                         <img src="https://image.flaticon.com/icons/svg/481/481787.svg" />Data</label>
                                 </div>
 
                                 {/* field type:check-box */}
                                 <div className="radio--field-types">
                                     <label for="check-box">
-                                        <input type="radio" required="required" name="field-types" value="checkbox" checked={this.state.fieldType === 'checkbox'} id="check-box" onChange={this.updateStateFieldTypeForm} onClick={this.toggleHiddenValue.bind(this)} />
+                                        <input type="radio" required="required" name="field-types" value="CheckBox" checked={this.state.fieldTypeString === 'CheckBox'} id="check-box" onChange={this.updateStateFieldTypeForm} onClick={this.toggleHiddenValue.bind(this)} />
                                         <img src="https://image.flaticon.com/icons/svg/2089/2089626.svg" />Caixa de Seleção</label>
                                 </div>
                             </div>
@@ -334,7 +334,7 @@ export default class editingFields extends Component {
                             }
                             {/* checkbox responsible for defining if the created field must be filled in when submitting a document */}
                             < div className="check-box--required" >
-                                <input type="checkbox" checked={this.state.required} onChange={this.updateStateRequiredForm} />
+                                <input type="CheckBox" checked={this.state.required} onChange={this.updateStateRequiredForm} />
                                 <label>Exigir preenchimento obrigatório</label>
                             </div >
 
@@ -368,10 +368,10 @@ export default class editingFields extends Component {
                                     if(document.fieldName === "Título" || document.fieldName === "Descrição"){
                                     return (
                                         <li className="table-row">
-                                            <div className="row-id" data-label="header-id">{document.id}</div>
+                                            <div className="row-id" data-label="header-id">{document.id.slice(0,7)}</div>
                                             <div className="row-name" data-label="header-name">{document.fieldName}</div>
                                             <div className={document.required ? "requiredTrue" : "requiredFalse"} data-label="header-required">Obrigatório</div>
-                                            <div className="row-type" data-label="header-type">{document.fieldType}</div>
+                                            <div className="row-type" data-label="header-type">{document.fieldTypeString}</div>
                                             <div className="row-actions">
                                                 <div className="row-edit-none" id={document.id} ></div>
                                                 <div id={document.id} className="row-delete-none">
@@ -385,7 +385,7 @@ export default class editingFields extends Component {
                                             <div className="row-id" data-label="header-id">{document.id}</div>
                                             <div className="row-name" data-label="header-name">{document.fieldName}</div>
                                             <div className={document.required ? "requiredTrue" : "requiredFalse"} data-label="header-required">Obrigatório</div>
-                                            <div className="row-type" data-label="header-type">{document.fieldType}</div>
+                                            <div className="row-type" data-label="header-type">{document.fieldTypeString}</div>
                                             <div className="row-actions">
                                                 <div className="row-edit-none" id={document.id}></div>
                                                 <div id={document.id} className="row-delete-none">
@@ -399,7 +399,7 @@ export default class editingFields extends Component {
                                         <div className="row-id" data-label="header-id"  maxlength="3">{document.id}</div>
                                         <div className="row-name" data-label="header-name">{document.fieldName}</div>
                                         <div className={document.required ? "requiredTrue" : "requiredFalse"} data-label="header-required">Obrigatório</div>
-                                        <div className="row-type" data-label="header-type">{document.fieldType}</div>
+                                        <div className="row-type" data-label="header-type">{document.fieldTypeString}</div>
                                         <div className="row-actions">
                                             <div className="row-edit" id={document.id} onClick={root.searchForId}></div>
                                             <div id={document.id} className="row-delete" onClick={root.editVisible}>

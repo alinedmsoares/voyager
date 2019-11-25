@@ -25,7 +25,7 @@
     border: none;
     font-size: 1em;
     background-color: #120055;
-    padding: 1.4%;
+    padding: 1.8%;
     border-radius: 5px;
     cursor: pointer;
     box-shadow: 0 2px 5px 4px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
@@ -73,8 +73,9 @@
     font-size: 1.1em;
 }
 .close--add-field{
-    width: 92%;
+    width: 100%;
     padding: 5%;
+    display: flex;
 }
 .close--add-field img{
     width: 6%;
@@ -93,6 +94,7 @@
     width: 90%;
     height: 10vh;
     justify-content: space-around;
+    align-items: baseline;
 }
 .field-name input{
     width: 97%;
@@ -111,6 +113,7 @@
     width: 90%;
     justify-content: space-around;
     height: 42%;
+    align-items: baseline;
 }
 .field-types--bottom{
     display: flex;
@@ -179,12 +182,16 @@
 }
 .header-id{
     width: 8%;
+    margin-right: 115px;
 }
 .header-name{
-    width: 50%;
+    width: 30%;
+    margin-left: -60px;
+    margin-right: 140px;
 }
 .header-type{
     width: 14%;
+    margin-left: 40px;
 }
 .input--field-name{
     width: 50%;
@@ -277,10 +284,15 @@ input[type=radio]:checked + img {
     opacity: 0.5;
 }
 .row-id{
-    width: 3%;
+    width: 69px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-transform: uppercase;
 }
 .row-name{
     width: 16%;
+    max-height: 4rem;
+    box-lines: 2em;
 }
 .row-type{
     width: 14%;
@@ -294,13 +306,16 @@ input[type=radio]:checked + img {
     display: flex;
     justify-content: space-around;
     margin-bottom: 10px;
+
 }
 .table-header {
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
+    margin-left: 40px;
+    border-radius: 3px;
+    padding: 17px 30px;
+    display: flex;
     width: 65%;
-
+    justify-content: space-between;
+    margin-bottom: 10px;
 }
 .table-row {
     background-color: #ffffff;
@@ -472,18 +487,6 @@ textarea:focus, input:focus, select:focus, button:focus {
         display: flex;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
 .table-row{
     display: block;
 }
