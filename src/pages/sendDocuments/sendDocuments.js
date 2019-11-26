@@ -11,14 +11,13 @@ export default class sendDocument extends Component {
         super();
         this.state = {
             id: '',
-            field: [{ id: '', fieldName: '', fieldTypeString: '', visible: false, required: false, values: [], fieldTypeString: '' }],
+            field: [{ id: '', fieldName: '', jString: '', visible: false, required: false, values: [], fieldTypeString: '' }],
             AttachmentFile: null,
             Attachment: '',
             answers: {},
         }
 
         this.updateState = this.updateState.bind(this);
-        //this.updateStateFile = this.updateStateFile.bind(this);
 
     }
     handleChange(selectorfiles) {
@@ -113,7 +112,7 @@ export default class sendDocument extends Component {
                         this.state.field.map((document) => {
                             if (document.visible === true) {
 
-                                if (document.fieldTypeA === "multipleselection") {
+                                if (document.fieldType === "multipleselection") {
                                     if (document.fieldName !== "Status") {
                                         return (
                                             <div className="inputMovel">
@@ -144,7 +143,7 @@ export default class sendDocument extends Component {
                                             </div>
                                         )
                                     }
-                                } else if (document.fieldTypeString === "list") {
+                                } else if (document.fieldTypeString === "List") {
                                     if (document.fieldName !== "Status") {
                                         return (
                                             <div className="inputMovel">

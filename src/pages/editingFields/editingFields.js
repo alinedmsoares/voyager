@@ -17,7 +17,7 @@ export default class editingFields extends Component {
             isHiddenField: true, //field value input preview
             fieldTypeString: '', //defined field type
             required: false, //required field
-            values: [{valueName:''}], //field value set if required
+            values: [{ valueName: '' }], //field value set if required
             list: [], //list with all fields registered
             visible: true
         }
@@ -33,6 +33,7 @@ export default class editingFields extends Component {
     //update fieldName state when registering
     updateStateFieldNameForm(event) {
         this.setState({ fieldName: event.target.value })
+
     }
 
     //update field type state when registering
@@ -49,6 +50,7 @@ export default class editingFields extends Component {
 
     //method responsible for modifying the visibility of the submenu responsible for creating new fields
     toggleHiddenForm() {
+        this.clearForm();
         this.setState({
             isHiddenForm: !this.state.isHiddenForm
         })
@@ -85,7 +87,10 @@ export default class editingFields extends Component {
             }
         })
             .then(response => response.json())
-            .then(data => this.setState({ list: data }))
+            .then(data => {
+                this.setState({ list: data })
+                console.log(data)
+            })
             .catch(error => console.log(error))
     }
     componentDidMount() {
@@ -98,9 +103,9 @@ export default class editingFields extends Component {
             <div key={i} className="field-value-input">
                 <input type="text" required value={el.valueName || ''} placeholder="Valor do Campo *" onChange={this.handleChange.bind(this, i)} />
                 <div type='button' className="remove-value" value='remove' onClick={this.removeClick.bind(this, i)}> </div>
-            </div>       
+            </div>
         )
-        
+
     }
 
     //add entered values ​​to field
@@ -142,7 +147,7 @@ export default class editingFields extends Component {
     //method responsible for sending the registered data to the API
     registerField(event) {
         event.preventDefault();
-        if (this.state.id != '') {
+        if (this.state.id !== '') {
             fetch('http://192.168.4.49:5000/api/field/' + this.state.id, {
                 method: 'PUT',
                 body: JSON.stringify({
@@ -200,9 +205,19 @@ export default class editingFields extends Component {
     }
 
     //search fields by id
-    searchForId(event) {
+    searchForId(event, data) {
         event.preventDefault();
+        console.log(data)
         console.log('f' + event.target.getAttribute('id'));
+
+        // this.setState({
+        //     id: data.id,
+        //     fieldName: data.fieldName,
+        //     fieldTypeString: data.fieldTypeString,
+        //     values: data.values,
+        //     required: data.required,
+        //     isHiddenForm: !this.state.isHiddenForm
+        // })
         fetch('http://192.168.4.49:5000/api/field/' + event.target.getAttribute('id'), {
             headers: {
                 'Content-Type': 'application/json'
@@ -217,6 +232,7 @@ export default class editingFields extends Component {
                 required: data.required,
                 isHiddenForm: !this.state.isHiddenForm
             }))
+            .then(console.log(this.state.fieldTypeString))
             .catch(erro => console.log(erro))
     }
 
@@ -270,9 +286,9 @@ export default class editingFields extends Component {
                                 <div className="radio--field-types">
                                     <label for="List">
                                         <input type="radio" name="field-types"
-                                            value="List" checked={this.state.fieldTypeString === 'List'} id="List" onChange={this.updateStateFieldTypeForm} 
+                                            value="List" checked={this.state.fieldTypeString === 'List'} id="List" onChange={this.updateStateFieldTypeForm}
                                             onClick={this.toggleHiddenValue.bind(this)}
-                                             />
+                                        />
                                         <img src="https://image.flaticon.com/icons/svg/482/482559.svg" />Lista</label>
 
                                 </div>
@@ -282,7 +298,7 @@ export default class editingFields extends Component {
                                     <label for="MultipleSelection">
                                         <input type="radio" name="field-types"
                                             value="MultipleSelection" checked={this.state.fieldTypeString === 'MultipleSelection'} id="MultipleSelection" onChange={this.updateStateFieldTypeForm}
-                                             onClick={this.toggleHiddenValue.bind(this)} />
+                                            onClick={this.toggleHiddenValue.bind(this)} />
                                         <img src="https://image.flaticon.com/icons/svg/2087/2087812.svg" />Seleção Múltipla</label>
                                 </div>
 
@@ -365,48 +381,48 @@ export default class editingFields extends Component {
                         {
                             this.state.list.map(function (document) {
                                 if (document.visible == true) {
-                                    if(document.fieldName === "Título" || document.fieldName === "Descrição"){
+                                    if (document.fieldName === "Título" || document.fieldName === "Descrição") {
+                                        return (
+                                            <li className="table-row">
+                                                <div className="row-id" data-label="header-id">{document.id.slice(0, 7)}</div>
+                                                <div className="row-name" data-label="header-name">{document.fieldName}</div>
+                                                <div className={document.required ? "requiredTrue" : "requiredFalse"} data-label="header-required">Obrigatório</div>
+                                                <div className="row-type" data-label="header-type">{document.fieldTypeString}</div>
+                                                <div className="row-actions">
+                                                    <div className="row-edit-none" id={document.id} ></div>
+                                                    <div id={document.id} className="row-delete-none">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        );
+                                    } else if (document.fieldName === "Status") {
+                                        return (
+                                            <li className="table-row">
+                                                <div className="row-id" data-label="header-id">{document.id}</div>
+                                                <div className="row-name" data-label="header-name">{document.fieldName}</div>
+                                                <div className={document.required ? "requiredTrue" : "requiredFalse"} data-label="header-required">Obrigatório</div>
+                                                <div className="row-type" data-label="header-type">{document.fieldTypeString}</div>
+                                                <div className="row-actions">
+                                                    <div className="row-edit-none" id={document.id}></div>
+                                                    <div id={document.id} className="row-delete-none">
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        );
+                                    }
                                     return (
                                         <li className="table-row">
-                                            <div className="row-id" data-label="header-id">{document.id.slice(0,7)}</div>
+                                            <div className="row-id" data-label="header-id" maxlength="3">{document.id}</div>
                                             <div className="row-name" data-label="header-name">{document.fieldName}</div>
                                             <div className={document.required ? "requiredTrue" : "requiredFalse"} data-label="header-required">Obrigatório</div>
                                             <div className="row-type" data-label="header-type">{document.fieldTypeString}</div>
                                             <div className="row-actions">
-                                                <div className="row-edit-none" id={document.id} ></div>
-                                                <div id={document.id} className="row-delete-none">
+                                                <div className="row-edit" id={document.id} onClick={(event)=>root.searchForId(event, document)}></div>
+                                                <div id={document.id} className="row-delete" onClick={root.editVisible}>
                                                 </div>
                                             </div>
                                         </li>
                                     );
-                                }else if(document.fieldName === "Status"){
-                                    return (
-                                        <li className="table-row">
-                                            <div className="row-id" data-label="header-id">{document.id}</div>
-                                            <div className="row-name" data-label="header-name">{document.fieldName}</div>
-                                            <div className={document.required ? "requiredTrue" : "requiredFalse"} data-label="header-required">Obrigatório</div>
-                                            <div className="row-type" data-label="header-type">{document.fieldTypeString}</div>
-                                            <div className="row-actions">
-                                                <div className="row-edit-none" id={document.id}></div>
-                                                <div id={document.id} className="row-delete-none">
-                                                </div>
-                                            </div>
-                                        </li>
-                                    );
-                                }
-                                return (
-                                    <li className="table-row">
-                                        <div className="row-id" data-label="header-id"  maxlength="3">{document.id}</div>
-                                        <div className="row-name" data-label="header-name">{document.fieldName}</div>
-                                        <div className={document.required ? "requiredTrue" : "requiredFalse"} data-label="header-required">Obrigatório</div>
-                                        <div className="row-type" data-label="header-type">{document.fieldTypeString}</div>
-                                        <div className="row-actions">
-                                            <div className="row-edit" id={document.id} onClick={root.searchForId}></div>
-                                            <div id={document.id} className="row-delete" onClick={root.editVisible}>
-                                            </div>
-                                        </div>
-                                    </li>
-                                );
                                 }
                             })
                         }
