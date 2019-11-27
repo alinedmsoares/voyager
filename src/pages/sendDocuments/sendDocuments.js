@@ -4,6 +4,8 @@ import Header from '../../components/header/header'
 import Swal from 'sweetalert2'
 import '../../Assets/css/sendDocuments.css'
 import Axios from 'axios'
+import Select from 'react-select';
+
 
 
 export default class sendDocument extends Component {
@@ -60,32 +62,32 @@ export default class sendDocument extends Component {
 
     registerDocument(event) {
         event.preventDefault();
-        
+
         var formData = new FormData();
 
         let count = 0;
         for (var prop in this.state.answers) {
-            formData.append('answers['+ count +'].key', prop);
-            formData.append('answers['+ count +'].value', this.state.answers[prop]);
+            formData.append('answers[' + count + '].key', prop);
+            formData.append('answers[' + count + '].value', this.state.answers[prop]);
             count++
-          }
+        }
 
         formData.append("attachmentUpload", this.state.AttachmentFile);
 
         console.log(formData);
 
         Axios({
-            method:'post', 
+            method: 'post',
             url: 'http://192.168.4.49:5000/api/document',
             data: formData,
-            headers: {'Content-Type':'multipart/form-data'}
+            headers: { 'Content-Type': 'multipart/form-data' }
         })
-        .then(function (response){
-            console.log(response)
-        })
-        .catch(function(response){
-            console.log(response)
-        })
+            .then(function (response) {
+                console.log(response)
+            })
+            .catch(function (response) {
+                console.log(response)
+            })
     }
 
     AlertSucessRegister() {
@@ -145,33 +147,50 @@ export default class sendDocument extends Component {
                                     }
                                 } else if (document.fieldTypeString === "List") {
                                     if (document.fieldName !== "Status") {
-                                        
+                                        var valuesoption = this.state.field.map((field) => {
+                                            if (document.fieldName === field.fieldName) {
+                                                return (
+                                                    field.values.map((value) => {
+                                                        return (
+                                                            <option selected="selected" value={value.valueName}>{value.valueName}</option>
+                                                        )
+                                                    }))
+                                            }
+                                        })
                                         return (
                                             <div className="inputMovel">
                                                 <div>
                                                     <li className="lista">
                                                         <label>{document.fieldName}</label>
-                                                        <select  key={document.fieldName} name={document.fieldName} type={document.fieldTypeString} className="text" onChange={this.updateState}>
-                                                        <option preventDefault="Selecione"></option>
-                                                            {
-                                                                
-                                                                this.state.field.map((field) => {
-                                                                    console.log(document.fieldName);
-                                                                    console.log(field.fieldName);
-                                                                    console.log(field.values);
-                                                                    if (document.fieldName === field.fieldName) {
-                                                                        return (
-                                                                            field.values.map((value) => {
-                                                                                return (
-                                                                                    <option selected="selected" value={value.valueName}>{value.valueName}</option>
-                                                                                )
-                                                                            }))
-                                                                    }
+                                                        <Select
+                                                            classNamePrefix="select"
+                                                            // defaultValue={colourOptions[0]}
+                                                            name="color"
+                                                            options={valuesoption}
+                                                            key={document.fieldName} name={document.fieldName} type={document.fieldTypeString} className="text" onChange={this.updateState}
+                                                        />
+
+                                                        {/* <select key={document.fieldName} name={document.fieldName} type={document.fieldTypeString} className="text" onChange={this.updateState}> */}
+
+                                                        {/* {
+
+                                                            this.state.field.map((field) => {
+                                                                console.log(document.fieldName);
+                                                                console.log(field.fieldName);
+                                                                console.log(field.values);
+                                                                if (document.fieldName === field.fieldName) {
+                                                                    return (
+                                                                        field.values.map((value) => {
+                                                                            return (
+                                                                                <option selected="selected" value={value.valueName}>{value.valueName}</option>
+                                                                            )
+                                                                        }))
+                                                                }
 
 
-                                                                })
-                                                            }
-                                                        </select>
+                                                            })
+                                                        } */}
+                                                        {/* </select> */}
                                                     </li>
                                                 </div>
                                             </div>
@@ -193,7 +212,7 @@ export default class sendDocument extends Component {
                         }
                         )
                     }
-                    <input type="file" name="Attachment" className="input-file" value={this.state.Attachment}  onChange={this.updateStateFile} />
+                    <input type="file" name="Attachment" className="input-file" value={this.state.Attachment} onChange={this.updateStateFile} />
                     <div className="buttons">
                         <button type="reset" className="cancel">Cancelar</button>
                         <button type="submit" className="send">Enviar</button>
