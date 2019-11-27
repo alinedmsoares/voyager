@@ -39,7 +39,6 @@ export default class editingFields extends Component {
     //update field type state when registering
     updateStateFieldTypeForm(event) {
         this.setState({ fieldTypeString: event.target.value }, () => {
-            console.log(this.state.fieldTypeString)
         })
     }
 
@@ -89,7 +88,6 @@ export default class editingFields extends Component {
             .then(response => response.json())
             .then(data => {
                 this.setState({ list: data })
-                console.log(data)
             })
             .catch(error => console.log(error))
     }
@@ -111,7 +109,9 @@ export default class editingFields extends Component {
     //add entered values ​​to field
     handleChange(i, event) {
         let values = [...this.state.values];
-        values[i] = event.target.value;
+        values[i] = {
+            valueName: event.target.value
+        }
         this.setState({ values });
     }
 
@@ -170,27 +170,16 @@ export default class editingFields extends Component {
 
         }
         else {
-
-            // // console.log(this.state.values)
-            // let valor = this.state.values.map(element => {
-            //     return {
-            //         valueName: element
-            //     }
-            // })
-
-            console.log()
-
             fetch('http://192.168.4.49:5000/api/field', {
                 method: 'POST',
                 body: JSON.stringify({
                     fieldName: this.state.fieldName,
                     fieldTypeString: this.state.fieldTypeString,
-                    // values: valor,
+                    values: this.state.values,
                     required: this.state.required,
                     visible: this.state.visible
                 }),
                 headers: {
-
                     'Content-Type': 'application/json'
                 }
             })
@@ -198,7 +187,7 @@ export default class editingFields extends Component {
                 .then(response => response)
                 .then(() => {
                     (this.searchFields())
-                        (this.clearForm())
+                    (this.clearForm())
                 })
                 .catch(error => console.log(error))
         }
@@ -207,17 +196,7 @@ export default class editingFields extends Component {
     //search fields by id
     searchForId(event, data) {
         event.preventDefault();
-        console.log(data)
-        console.log('f' + event.target.getAttribute('id'));
 
-        // this.setState({
-        //     id: data.id,
-        //     fieldName: data.fieldName,
-        //     fieldTypeString: data.fieldTypeString,
-        //     values: data.values,
-        //     required: data.required,
-        //     isHiddenForm: !this.state.isHiddenForm
-        // })
         fetch('http://192.168.4.49:5000/api/field/' + event.target.getAttribute('id'), {
             headers: {
                 'Content-Type': 'application/json'
@@ -232,7 +211,6 @@ export default class editingFields extends Component {
                 required: data.required,
                 isHiddenForm: !this.state.isHiddenForm
             }))
-            .then(console.log(this.state.fieldTypeString))
             .catch(erro => console.log(erro))
     }
 
@@ -383,7 +361,7 @@ export default class editingFields extends Component {
                                 if (document.visible == true) {
                                     if (document.fieldName === "Título" || document.fieldName === "Descrição") {
                                         return (
-                                            <li className="table-row">
+                                            <li className="table-row" ley={document}>
                                                 <div className="row-id" data-label="header-id">{document.id.slice(0, 7)}</div>
                                                 <div className="row-name" data-label="header-name">{document.fieldName}</div>
                                                 <div className={document.required ? "requiredTrue" : "requiredFalse"} data-label="header-required">Obrigatório</div>
@@ -411,8 +389,8 @@ export default class editingFields extends Component {
                                         );
                                     }
                                     return (
-                                        <li className="table-row">
-                                            <div className="row-id" data-label="header-id" maxlength="3">{document.id}</div>
+                                        <li className="table-row" key={document}>
+                                            <div className="row-id" data-label="header-id">{document.id}</div>
                                             <div className="row-name" data-label="header-name">{document.fieldName}</div>
                                             <div className={document.required ? "requiredTrue" : "requiredFalse"} data-label="header-required">Obrigatório</div>
                                             <div className="row-type" data-label="header-type">{document.fieldTypeString}</div>

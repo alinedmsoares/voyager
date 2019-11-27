@@ -145,20 +145,25 @@ export default class sendDocument extends Component {
                                     }
                                 } else if (document.fieldTypeString === "List") {
                                     if (document.fieldName !== "Status") {
+                                        
                                         return (
                                             <div className="inputMovel">
                                                 <div>
                                                     <li className="lista">
                                                         <label>{document.fieldName}</label>
                                                         <select  key={document.fieldName} name={document.fieldName} type={document.fieldTypeString} className="text" onChange={this.updateState}>
-
+                                                        <option preventDefault="Selecione"></option>
                                                             {
+                                                                
                                                                 this.state.field.map((field) => {
+                                                                    console.log(document.fieldName);
+                                                                    console.log(field.fieldName);
+                                                                    console.log(field.values);
                                                                     if (document.fieldName === field.fieldName) {
                                                                         return (
-                                                                            field.values.map((values) => {
+                                                                            field.values.map((value) => {
                                                                                 return (
-                                                                                    <option selected="selected">{values}</option>
+                                                                                    <option selected="selected" value={value.valueName}>{value.valueName}</option>
                                                                                 )
                                                                             }))
                                                                     }
