@@ -6,6 +6,7 @@
     -moz-user-select: -moz-none;
     -ms-user-select: none;
      user-select: none;
+    /* overflow: hidden; */
 }
 .all {
     display: flex;
@@ -19,9 +20,13 @@
     text-align: center;
     margin-left: 5%;
 }
+.formView form {
+    margin-left: 215px;
+}
 .divTitle {
-    width: 82%;
+    width: 98%;
     display: flex;
+    margin-left: 43px;
     flex-direction: column;
     margin-top: 8em;
 
@@ -29,6 +34,7 @@
 .divTitle label {
     align-self: baseline;
     margin-left: 35px;
+    color: black;
 }
 
 .viewTitle {
@@ -44,27 +50,28 @@
 .conditionsView {
     display: flex;
     flex-direction: column;
-    width: 118vh;
+    width: 805px;
     
 }
 .conditionsView .conditionsTitle {
     align-self: baseline;
     margin-top: 2em;
     margin-bottom: -2vh;
-    margin-left: 30px;
+    margin-left: 80px;
 }
 .itensView {
     display: flex;
     justify-content: space-between;
-    width: 90%;
+    width: 80%;
     height: 7vh;
     margin-top: 1em;
     margin-bottom: 2%;
 }
 .itensView-extra {
+    margin-left: 41px;
     display: flex;
     justify-content: space-between;
-    width: 90%;
+    width: 643px;
     height: 7vh;
     align-items: center;
 }
@@ -92,15 +99,7 @@
     flex-direction: row-reverse;
     display: flex;
     align-self: center;
-    width: 92%;
-    margin-top: 2em;
-}
-.divSave {
-    display: flex;
-    flex-direction: row-reverse;
-    display: flex;
-    align-self: center;
-    width: 76%;
+    width: 80%;
     margin-top: 2em;
 }
 .add {
@@ -124,7 +123,8 @@
     margin-top: 1em;
     margin-bottom: 3vh;
     transition: all 0.5s;
-    width: 20%;
+    margin-left: 605px;
+    width: 15%;
     height: 6vh;
     background: #AD1130;
     border-radius: 6px;
@@ -163,32 +163,36 @@
     margin-left: 5%;
 }
 .columns {
-    width: 75%;
+    width: 92%;
     display: flex;
     align-items: baseline;
     flex-direction: column;
-
+    margin-left: 70px;
 }
 
 .columns .title {
-    margin-right: 48%;
+    margin-left: 10px;
 }
 .columnDiv {
     display: inline;
-    width: 15%;
     padding: 1%;
     background-color: purple;
 }
-
+.titleOrder {
+    align-self: baseline;
+    margin-left: 77px;
+    margin-top: 25px;
+}
 .orderGeral {
     width: 80%;
     display: flex;
-    justify-content: space-between;
     margin-top: 2vh;
+    justify-content: space-between;
 }
 .orderGeral label {
     align-self: baseline;
     margin-left: 25px;
+    color: black;
 }
 .order {
     justify-content: space-between;
@@ -218,20 +222,13 @@
 }
 .columnDiv label {
     align-self: center;
+    color: black;
 }
 .allCheckbox {
     width: 100%;
     margin-top: 1%;
     flex-wrap: wrap;
     display: flex;
-}
-.list-View {
-    width: 15%;
-    height: 100%;
-    position: fixed;
-    background: #F6F6F6;
-    box-shadow: 1px 0px 9px rgba(0, 0, 0, 0.39);
-
 }
 
 ul.ks-cboxtags {
@@ -240,10 +237,7 @@ ul.ks-cboxtags {
     display: flex;
     margin: 0 1%;
 }
-ul.ks-cboxtags li{
-    /* padding: 0 10px; */
 
-}
 ul.ks-cboxtags li label{
     background-color: rgba(255, 255, 255, .9);
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
@@ -266,16 +260,19 @@ ul.ks-cboxtags li label{
     
 }
 
-ul.ks-cboxtags li input[type="checkbox"]:checked + label {
-    
-    transform: rotate(-360deg);
-    transition: transform .3s ease-in-out;
+ul.ks-cboxtags li input[type="checkbox"]:checked + label{
     background-color: rgb(33, 40, 138);
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
     color: #fff;
     transition: all .2s;
 }
-.checkImg {
+
+div.checkImg::before{
+    transform: rotate(-360);
+    transition: transform .3s ease-in-out;
+}
+
+div.checkImg{
     width: 15px;
     height: 1vh;
     background-image: url("../images/icons/delete.png");
@@ -287,7 +284,106 @@ ul.ks-cboxtags li input[type="checkbox"] {
     -webkit-appearance: none
 }
 
+/* .checkImg::before {
+    content: "\f00c";
+    transform: rotate(-360deg);
+    transition: transform .3s ease-in-out;;
+} */
+
 form{
     width: 72%;
     text-align: -webkit-center;
+}
+.listaView {
+    margin-top: 42px;
+    width: 16%;
+    height: 100%;
+    position: fixed;
+    background: #F6F6F6;
+    box-shadow: 1px 0px 9px rgba(0, 0, 0, 0.39);
+    padding: 40px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.listaView-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.listaView ul li {
+    list-style-type: none;
+}
+.listaView-item {
+    width: 225px;
+    height: 7vh;
+    background: #F9F9F9;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    padding: 0 12px 0 5px;
+    
+}
+.dropdown {
+    background-image: url("../images/icons/more.png");
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    width: 16px;
+    height: 16px;
+    position: relative;
+    display: inline-block;
+}
+.dropdown-content {
+    display: flex;
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+    transform: translateX(-132px);
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+    cursor: pointer;
+}
+
+.dropdown-content-container{
+    display: flex;
+    /* flex-direction: row; */
+}
+.buttonEdit{
+    height: 3.5vh;
+    border: none;background-color: transparent;
+    color: #979797;
+    /* font-weight: bold; */
+    cursor: pointer;
+    padding: 5px;
+    margin-right: 26px;
+}
+.buttonEdit:hover {
+    color: #acacac;
+    display: flex;
+    flex-direction: row;
+}
+.buttonDelete {
+    height: 3.5vh;
+    border: none;
+    background-color: #AD1130;
+    color: white;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 5px;
+
+}
+.buttonDelete:hover {
+    background-color: rgb(202, 74, 74);
 }
