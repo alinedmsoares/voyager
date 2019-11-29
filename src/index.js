@@ -7,6 +7,7 @@ import sendDocuments from './pages/sendDocuments/sendDocuments'
 import notFound from './pages/notFound/notFound';
 import listViews from './pages/listViews/listViews'
 import * as serviceWorker from './serviceWorker';
+import login from './pages/login/login'
 import { usuarioAutenticado } from './services/auth';
 import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 
@@ -23,6 +24,7 @@ const rotas = (
     <Router>
         <div>
             <Switch>
+                <Route exact path="/" component={login} />
                 <Route exact path="/editingfields" component={editingFields} />
                 <Route exact path="/senddocuments" component={sendDocuments} />
                 <Route exact path="/editingviews" component={editingViews} />

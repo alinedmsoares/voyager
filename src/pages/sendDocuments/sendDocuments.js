@@ -4,7 +4,6 @@ import Header from '../../components/header/header'
 import Swal from 'sweetalert2'
 import '../../Assets/css/sendDocuments.css'
 import Axios from 'axios'
-import Select from 'react-select';
 
 
 
