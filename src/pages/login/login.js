@@ -32,7 +32,7 @@ export default class editingFields extends Component {
     efetuaLogin(event) {
         event.preventDefault();
 
-        Axios.post('http://5d8289a9c9e3410014070b11.mockapi.io/externalusers', {
+        Axios.post('http://192.168.4.49:5000/api/login', {
             email: this.state.email,
             password: this.state.password
         })
@@ -50,21 +50,22 @@ export default class editingFields extends Component {
     }
     render() {
         return (
-
-            <form action="" onSubmit={this.efetuaLogin.bind(this)} className="log-in" autocomplete="off">
-                <div className="floating-label">
-                    <input placeholder="Email" type="text" name="email" id="email" value={this.state.email} onChange={this.atualizaEstadoEmail.bind(this)}
-                        autocomplete="off"/>
+            <div>
+                <form action="" onSubmit={this.efetuaLogin.bind(this)} className="log-in" autocomplete="off">
+                    <div className="floating-label">
+                        <input placeholder="Email" type="text" name="email" id="email" value={this.state.email} onChange={this.atualizaEstadoEmail.bind(this)}
+                            autocomplete="off" />
                         <label for="email">Email:</label>
-</div>
+                    </div>
                     <div className="floating-label">
                         <input placeholder="Password" type="password" value={this.state.password}
-                            onChange={this.atualizaEstadoSenha.bind(this)} name="password" id="password" autocomplete="off"/>
-                            <label for="password">Password:</label>
-</div>
-                        <button type="submit" onClick="return false;">Log in</button>
+                            onChange={this.atualizaEstadoSenha.bind(this)} name="password" id="password" autocomplete="off" />
+                        <label for="password">Password:</label>
+                    </div>
+                    <button type="submit" onClick="return false;">Log in</button>
 
-</form>
-                    )
-                }
+                </form>
+            </div>
+        )
+    }
 }
