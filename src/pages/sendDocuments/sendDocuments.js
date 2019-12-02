@@ -14,9 +14,10 @@ export default class sendDocument extends Component {
             id: '',
             field: [{ id: '', fieldName: '', jString: '', visible: false, required: false, values: [], fieldTypeString: '' }],
             AttachmentFile: null,
-            Attachment: '',
+            Attachment: [],
             answers: {},
-        }
+            title: '',
+            description:''        }
 
         this.updateState = this.updateState.bind(this);
 
@@ -37,12 +38,14 @@ export default class sendDocument extends Component {
 
     updateStateFile = (event) => {
         let reader = new FileReader();
-        let file = event.target.files[0];
+        // let file = [...this.state.Attachment, ...event.target.files[0]]
+        let file = event.target.files[0]
         console.log('file', file);
         this.setState({
             //Attachment : file.name,
             AttachmentFile: file
         })
+        const target = event.target;
     }
 
     searchFields() {
@@ -108,69 +111,63 @@ export default class sendDocument extends Component {
                 <Header />
                 <Menu />
                 <form onSubmit={this.registerDocument.bind(this)} className="form">
-
+                {/* <input placeholder="Título" required name={this.state.title} type="text" className="text" onChange={this.updateState.bind(this)} /> */}
                     {
                         this.state.field.map((document) => {
                             if (document.visible === true) {
-
-                                    if (document.fieldType === "MultipleSelection") {
-                                        if (document.fieldName !== "Status") {
-                                            return (
-                                                <div className="inputMovel">
-                                                    <div>
-                                                        <ul>
-                                                            <li className="lista">
-                                                                <label>{document.fieldName}</label>
-                                                                <div className="all-checkbox">
-                                                                    {
-                                                                        this.state.field.map((field, index) => {
-                                                                            if (document.fieldName === field.fieldName) {
-                                                                                return (
-                                                                                    field.values.map((values) => {
-                                                                                        return (
-                                                                                            <div class="inputGroup">
-                                                                                                <input id={`checkbox${index}`} type="checkbox" />
-                                                                                                <label htmlFor={`checkbox${index}`}>{values}</label>
-                                                                                            </div>
-                                                                                        )
-                                                                                    }))
-                                                                            }
-                                                                        })
-                                                                    }
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                if (document.fieldTypeString === "MultipleSelection") {
+                                    if (document.fieldName !== "Status") {
+                                        return (
+                                            <div className="inputMovel">
+                                                <div>
+                                                    <ul>
+                                                        <li className="lista">
+                                                            <label>{document.fieldName}</label>
+                                                            <div className="all-checkbox">
+                                                                {
+                                                                    this.state.field.map((field, index) => {
+                                                                        if (document.fieldName === field.fieldName) {
+                                                                            return (
+                                                                                field.values.map((value) => {
+                                                                                    return (
+                                                                                        <div>
+                                                                                            <input id={`checkbox${index}`} value={value.valueName} name={value.valueName} type="checkbox" onChange={this.updateState}/>
+                                                                                            <label htmlFor={`checkbox${index}`}>{value.valueName}</label>
+                                                                                        </div>
+                                                                                    )
+                                                                                }))
+                                                                        }
+                                                                    })
+                                                                }
+                                                            </div>
+                                                        </li>
+                                                    </ul>
                                                 </div>
-                                            )
-                                        }
-                        } 
+                                            </div>
+                                        )
+                                    }
+                                }
                                 else if (document.fieldTypeString === "List") {
                                     if (document.fieldName !== "Status") {
-                                        
+
                                         return (
                                             <div className="inputMovel">
                                                 <div>
                                                     <li className="lista">
                                                         <label>{document.fieldName}</label>
                                                         <select key={document.fieldName} select="multiple" name={document.fieldName} type={document.fieldTypeString} className="text" onChange={this.updateState}>
-                                                        {
-                                                            this.state.field.map((field) => {
-                                                                console.log(document.fieldName);
-                                                                console.log(field.fieldName);
-                                                                console.log(field.values);
-                                                                if (document.fieldName === field.fieldName) {
-                                                                    return (
-                                                                        field.values.map((value) => {
-                                                                            return (
-                                                                                <option selected="selected" value={value.valueName}>{value.valueName}</option>
-                                                                            )
-                                                                        }))
-                                                                }
-
-
-                                                            })
-                                                        }
+                                                            {
+                                                                this.state.field.map((field) => {
+                                                                    if (document.fieldName === field.fieldName) {
+                                                                        return (
+                                                                            field.values.map((value) => {
+                                                                                return (
+                                                                                    <option selected="selected" value={value.valueName}>{value.valueName}</option>
+                                                                                )
+                                                                            }))
+                                                                    }
+                                                                })
+                                                            }
                                                         </select>
                                                     </li>
                                                 </div>
@@ -183,6 +180,7 @@ export default class sendDocument extends Component {
                                         <div className="inputMovel" >
                                             <div>
                                                 <li className="lista">
+                                                    <label>{document.fieldName}</label>
                                                     <input key={document.fieldName} placeholder={document.fieldName} required={document.required ? "required" : ""} name={document.fieldName} type={document.fieldTypeString} className="text" onChange={this.updateState} />
                                                 </li>
                                             </div>
@@ -192,7 +190,7 @@ export default class sendDocument extends Component {
                             }
                         })
                     }
-                    <input type="file" name="Attachment" className="input-file" value={this.state.Attachment} onChange={this.updateStateFile} />
+                    <input type="file" name="Attachment" multiple className="input-file" value={this.state.Attachment} onChange={this.updateStateFile} />
                     <div className="buttons">
                         <button type="reset" className="cancel">Cancelar</button>
                         <button type="submit" className="send">Enviar</button>

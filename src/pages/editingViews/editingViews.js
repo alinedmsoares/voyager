@@ -2,599 +2,482 @@ import React, { Component } from 'react'
 import '../../Assets/css/editingViews.css'
 import Menu from '../../components/menu/menu'
 import Header from '../../components/header/header'
-import Swal from 'sweetalert2'
 
 export default class editingFields extends Component {
 
-    constructor() {
+    constructor(){
         super();
         this.state = {
-
-            // id: '',
-            // title: '',
-            condition: [],
-            column: [],
-            ordenation: [],
-            selected: '',
-            selected2: '',
-            line: [],
-            answerFilters: [],
-            document: [{
-                field: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: [] }],
-                answers: { title: '', description: '' }
-            }],
-            field: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: [] }],
-            listaUser: [{
-                view: [{
-                    id: '',
-                    title: '',
-                    condition: [],
-                    column: [],
-                    ordenation: [],
-                }]
-            }]
+          id : '',
+          fields: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: [] }],
+          conditions : [],
+          answers : [],
+          answerFilters : [],
+          order : '',
+          columns: [],
+          views: []
         }
-        this.onChangeFieldName = this.onChangeFieldName.bind(this)
-        this.onChangeCondition = this.onChangeCondition.bind(this)
-        this.onChangeOption = this.onChangeOption.bind(this)
-        this.onChangeAnswer = this.onChangeAnswer.bind(this)
-        this.updateStateTitleView = this.updateStateTitleView.bind(this);
-        this.updateColumn = this.updateColumn.bind(this)
-        this.searchForIdView = this.searchForIdView.bind(this);
-        this.deleteView = this.deleteView.bind(this);
-        this.nullState = this.state
-    }
-
-    componentDidMount() {
+      }
+    
+    
+    
+      componentDidMount(){
         this.searchFields();
         this.searchAnswers();
         this.searchViews();
-    }
-
-    updateStateTitleView(event) {
-        this.setState({ title: event.target.value })
-    }
-
-    updateColumn(event) {
-
-        const field = this.state.field.filter(element => element.fieldName === event.target.value);
-        const column = this.state.column;
-        if (column.indexOf(event.target.value) === -1) {
-
-            column.push(field[0].fieldName);
-        } else {
-            column.splice(column.indexOf(event.target.value), 1);
-        }
-
-        this.setState({ column: column })
-    }
-
-    onChangeFieldName = (event) => {
-        const listFields = [];
-        const fieldSelected = this.state.field.filter(Element => Element.fieldName === event.target.value)
-
-        const condition = [];
-        condition.push(event.target.value);
-
-        this.setState({
-            [event.target.name]: event.target.value,
-            selected: fieldSelected,
-            condition: condition
-        }, () => {
-            console.log(this.state)
-        })
-
-        this.state.answer.map((answer) => {
-            const fields = Object.keys(answer.answer)
-            console.log(fields)
-            fields.map((field) => {
-                if (field == event.target.value) {
-                    listFields.push(answer.answer[field]);
-                }
-            })
-        })
-
-        const uniqueAnswers = [...new Set(listFields.map(item => item))];
-        this.setState({ answerFilters: uniqueAnswers }, () => {
-        });
-    }
-
-    onChangeFieldName2 = (event) => {
-        const listFields = [];
-        const fieldSelected2 = this.state.field.filter(Element => Element.fieldName === event.target.value)
-
-        const ordenation = [];
-        ordenation.push(event.target.value);
-
-        this.setState({
-            [event.target.name]: event.target.value,
-            selected2: fieldSelected2,
-            ordenation: ordenation
-        }, () => {
-            console.log(this.state)
-        })
-    }
-
-    deleteView(event) {
-        event.preventDefault();
-        fetch('https://5d8289a9c9e3410014070b11.mockapi.io/view/' + event.target.getAttribute('id'), {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(this.searchViews())
-            .then(response => response)
-    }
-
-    searchForIdView(event, view) {
-        event.preventDefault();
-
-        this.setState({
-            id: view.id,
-            title: view.title,
-            condition: view.condition,
-            column: view.column,
-            ordenation: view.ordenation
-        });
-
-        if (view.condition.length === 3) {
-
-            let answer = '';
-
-            this.state.field.map(e => {
-
-                if (e.fieldName === view.condition[0]) {
-
-                    answer = e.values.filter(element => {
-                        return element !== view.condition[2];
-                    })
-
-                    answer.unshift(view.condition[2]);
-                    this.setState({ answerFilters: answer })
-                }
-            })
-        }
-    }
-
-    registerView(event) {
-        event.preventDefault();
-
-        if (this.state.id != '') {
-            fetch('https://5d8289a9c9e3410014070b11.mockapi.io/view/' + this.state.id, {
-                method: 'PUT',
-                body: JSON.stringify({
-                    id: this.state.id,
-                    title: this.state.title,
-                    condition: this.state.condition,
-                    column: this.state.column,
-                    ordenation: this.state.ordenation
-                }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(response => response)
-                .then(() => {
-                    this.setState({ id: '' })
-                    this.searchViews();
-                    this.clearForm();
-                })
-        }
-        else {
-            fetch('https://5d8289a9c9e3410014070b11.mockapi.io/view', {
-                method: 'POST',
-                body: JSON.stringify({
-                    title: this.state.title,
-                    column: this.state.column,
-                    condition: this.state.condition,
-                    ordenation: this.state.ordenation
-                }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => response)
-                .then(() => {
-                    this.searchViews();
-                    this.clearForm();
-                })
-                .catch(error => console.log(error))
-        }
-    }
-
-    searchViews() {
-        fetch('http://192.168.4.49:5000/api/user/', {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(data => this.setState({ listaUser: data }))
-            .catch(error => console.log(error))
-    }
-
-    onChangeCondition(event) {
-        const condition = this.state.condition;
-        condition.push(event.target.value);
-
-        this.setState({
-            [event.target.name]: event.target.value,
-            option: event.target.value,
-            condition: condition
-        }, () => {
-            console.log(this.state.condition.option)
-        })
-    }
-
-    onChangeOption(event) {
-        const ordenation = this.state.ordenation;
-        ordenation.push(event.target.value);
-
-        this.setState({
-            [event.target.name]: event.target.value,
-            option: event.target.value,
-            ordenation: ordenation
-        }, () => {
-            console.log(this.state.ordenation.option)
-        })
-    }
-
-    onChangeAnswer = (event) => {
-        const condition = this.state.condition;
-        condition.push(event.target.value);
-
-        this.setState({
-            answer: {
-                ...this.state.answers,
-                [event.target.name]: event.target.value,
-                condition: condition
-            }
-        })
-    }
-
-    createCondition() {
-
-        return this.state.line.map((el, i) =>
-            <div className="general">
-                <div key={i} className="itensView-extra">
-                    <select className="item" name={'lista_dos_campos'} onChange={this.onChangeFieldName.bind(this)}>
-                        {
-                            this.state.field.map((fields) => {
-                                return (
-                                    <option value={fields.fieldName}>{fields.fieldName}</option>)
-                            })
-                        })
-                    }
-                    </select>
-
-                    <select className="item" name={'lista_dos_campos'} onChange={this.onChangeCondition.bind(this)}>
-                        <option value="É">É</option>
-                        <option value="Não é">Não é</option>
-                        {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "number" && (
-                            <option value="Maior que">Maior que</option>) : ''}
-                        {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "date" && (
-                            <option value="Maior que">Maior que</option>) : ''}
-                        {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "number" && (
-                            <option value="Maior que">Menor que</option>) : ''}
-                        {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "date" && (
-                            <option value="Maior que">Menor que</option>) : ''}
-                    </select>
-
-                    <select className="item" name={'lista_dos_campos'} onChange={this.onChangeAnswer.bind(this)}>
-                        {
-                            this.state.answerFilters.map((answer) => {
-                                return (
-                                    <option>{answer}</option>
-                                )
-                            })
-                        })
-
-                    {
-                            this.state.field.map((field) => {
-                                if (field.visible === true) {
-                                    if (this.state.selected.length != 0) {
-                                        if (this.state.selected[0].fieldName === field.fieldName) {
-                                            return (
-                                                field.values.map((values) => {
-                                                    return (
-                                                        <option>{values}</option>
-                                                    )
-                                                })
-                                            )
-                                        }
-                                    }
-                                }
-                            })
-                        }
-                    </select>
-                </div>
-                <div type='button' className="remove-value" value='remove' onClick={this.removeClick.bind(this, i)}> </div>
-            </div>
-        )
-    }
-
-    createCondition2() {
-        return this.state.condition.map((el, i) =>
-            <div className="general">
-                <div key={i} className="itensView-extra">
-                    <select className="item" name='camposlista' onChange={this.onChangeFieldName2.bind(this)}>
-                        {
-                            this.state.field.map((fields) => {
-                                return (
-                                    <option value={fields.fieldName}>{fields.fieldName}</option>)
-                            })
-                        })
-                    }
-                    </select>
-
-                    <select className="item" name='valoreslista' onChange={this.onChangeOption.bind(this)}>
-                        <option value="É">É</option>
-                        <option value="Não é">Não é</option>
-                        {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "number" && (
-                            <option value="Maior que">Maior que</option>) : ''}
-                        {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "date" && (
-                            <option value="Maior que">Maior que</option>) : ''}
-                        {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "number" && (
-                            <option value="Maior que">Menor que</option>) : ''}
-                        {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "date" && (
-                            <option value="Maior que">Menor que</option>) : ''}
-                    </select>
-
-                </div>
-            </div>
-        )
-    }
-
-    searchFields() {
+      }
+    
+      searchFields() {
         fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document', {
             headers: {
                 'Content-Type': 'application/json'
             }
         })
             .then(response => response.json())
-            .then(data => this.setState({ field: data }))
+            .then(data => this.setState({ fields: data }))
             .catch(error => console.log(error))
-    }
-
-    searchAnswers() {
+      }
+    
+      searchAnswers() {
         fetch('https://5d8289a9c9e3410014070b11.mockapi.io/respostaDocument', {
             headers: {
                 'Content-Type': 'application/json'
             }
         })
             .then(response => response.json())
-            .then(data => this.setState({ answer: data }))
+            .then(data => this.setState({ answers: data }))
             .catch(error => console.log(error))
-    }
-
-    addClick() {
-        this.setState(prevState => ({ line: [...prevState.line, ''] }))
-    }
-
-    removeClick(i) {
-        let line = [...this.state.line];
-        line.splice(i, 1);
-        this.setState({ line });
-    }
-
-    clearForm() {
+      }
+    
+      searchViews(){
+        fetch('https://5d8289a9c9e3410014070b11.mockapi.io/view', {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => this.setState({ views: data }))
+                .catch(error => console.log(error))
+      }
+    
+    
+      onChangeFieldName(event){
+        const listFields = [];
+        let index = event.target.getAttribute('data-count');
+        if (this.state.conditions[index] !== undefined) {
+            this.state.conditions[index].field = event.target.value;
+        } else {
+            this.state.condition.push({
+                field: event.target.value,
+                conditional: '',
+                answer: ''
+            })
+        }
+    
+        this.state.answers.map((answer) => {
+            const fields = Object.keys(answer.answer)
+            fields.map((field) => {
+                if (field === event.target.value) {
+                    listFields.push(answer.answer[field]);
+                }
+            })
+        })
+    
+        const uniqueAnswers = [...new Set(listFields.map(item => item))];
+        this.setState({ answerFilters : uniqueAnswers });
+      }
+    
+      onChangeConditionnal(event){
+        console.log(event.target.value);
+        if (
+          this.state.conditions[event.target.getAttribute("data-count")] !==
+          undefined
+        ) {
+          this.state.conditions[
+            event.target.getAttribute("data-count")
+          ].conditional = event.target.value;
+        } else {
+          this.state.conditions.push({
+            field: "",
+            conditional: event.target.value,
+            answer: ""
+          });
+        }
+      }
+    
+      onChangeAnswer(event){
+        let index = event.target.getAttribute('data-count');
+        if (this.state.conditions[index] !== undefined) {
+          this.state.conditions[index].answer = event.target.value;
+        } else {
+            this.state.conditions.push({
+                field: '',
+                conditional: '',
+                answer: event.target.value
+            })
+        }
+      }
+    
+      onChangeOrder(event){
+        this.setState({order : event.target.value});
+      }
+    
+      updateColumn(event) {
+    
+        const field = this.state.fields.filter(element => element.fieldName === event.target.value);
+        const columns = this.state.columns;
+        if (columns.indexOf(event.target.value) === -1) {
+            columns.push(field[0].fieldName);
+        } else {
+            columns.splice(columns.indexOf(event.target.value), 1);
+        }
+    
+        this.setState({ column: columns })
+      }
+    
+      addCondition(){
+        console.log('add');
+        this.state.conditions.push({
+          field: "",
+          conditional: "",
+          answer: ""
+        })
+        this.setState({conditions : this.state.conditions})
+      }
+    
+      removeCondition(event, index){
+        this.state.conditions.splice(index, 1);
+    
+        this.setState({conditions : this.state.conditions})
+      }
+    
+      clearForm() {
         this.setState({
             id: '',
             title: '',
-            condition: [],
-            column: [],
-            ordenation: []
+            conditions: [],
+            columns: [],
+            order: []
         })
     }
-
-    resetForm = () => {
-        let colunas = this.state.column;
-
-        this.state.column.forEach((item) => {
-            this.state.column.splice(colunas.indexOf(item));
-        });
-
-        this.setState({ column: this.state.column })
-
-        this.setState({
-            id: '',
-            title: '',
-            condition: [],
-            ordenation: []
-        })
+    
+    editView(event){
+    
+      let viewId = event.target.getAttribute('data-id');
+      console.log(viewId);
+    
+      let view = this.state.views[viewId];
+      this.setState({
+        id: view.id,
+        title: view.title,
+        conditions: view.conditions,
+        columns: view.columns,
+        order: view.order
+      });
     }
 
-    render() {
-        const root = this;
-
-        return (
-            <div className="all">
-                <Header />
-                <Menu />
-                <div className="formView">
-                    <form onSubmit={this.registerView.bind(this)}>
-                        <div className="divTitle">
-                            <label>Título da View</label>
-                            <input className="viewTitle" type="text" required value={this.state.title || ''} onChange={this.updateStateTitleView} />
-                        </div>
-
-                        <div className="conditionsView">
-                            <label className="conditionsTitle">Condições</label>
-                            <div className="itensView">
-
-                                <select className="item" name='condicional' onChange={this.onChangeFieldName.bind(this)}>
-                                    {
-                                        this.state.field.map((fields) => {
-                                            return (
-                                                <option
-                                                    value={fields.fieldName}
-                                                    selected={(this.state.condition[0] === fields.fieldName) ? true : false}
-                                                >
-
-                                                    {fields.fieldName}
-
-                                                </option>
-                                            )
-                                        })
-                                    })
-                                }
-                        </select>
-
-                                <select className="item" name='lista_dos_campos' onChange={this.onChangeCondition.bind(this)}>
-                                    <option selected={(this.state.condition[1] === "É") ? true : false} value="É">É</option>
-                                    <option value="Não é" selected={(this.state.condition[1] === "Não é") ? true : false}>Não é</option>
-                                    {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "number" && (
-                                        <option value="Maior que" selected={(this.state.condition[1] === "Maior que") ? true : false}>Maior que</option>) : ''}
-                                    {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "date" && (
-                                        <option value="Maior que" selected={(this.state.condition[1] === "Maior que") ? true : false}>Maior que</option>) : ''}
-                                    {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "number" && (
-                                        <option value="Maior que" selected={(this.state.condition[1] === "Maior que") ? true : false}>Menor que</option>) : ''}
-                                    {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "date" && (
-                                        <option value="Maior que" selected={(this.state.condition[1] === "Maior que") ? true : false}>Menor que</option>) : ''}
-                                </select>
-
-                                <select className="item" name='answer' onChange={this.onChangeAnswer.bind(this)}>
-                                    {
-                                        this.state.answerFilters.map((answer) => {
-                                            return (
-                                                <option value={answer}>{answer}</option>
-                                            )
-                                        })
-                                    })
-                                {
-                                        this.state.field.map((field) => {
-                                            if (field.visible === true) {
-                                                if (this.state.selected.length != 0) {
-                                                    if (this.state.selected[0].fieldName === field.fieldName) {
-                                                        return (
-                                                            field.values.map((values) => {
-                                                                return (
-                                                                    <option value={values}>{values}</option>
-                                                                )
-                                                            })
-                                                        )
-                                                    }
-                                                }
-                                            }
-                                        })
-                                    }
-                                </select>
-                            </div>
-                            {this.createCondition()}
-
-                            <div className="divAdd">
-                                <button className="add" onClick={this.addClick.bind(this)} type="button">Adicionar</button>
-                            </div>
-                        </div>
-
-                        <div className="columns">
-                            <label className="title">Colunas da Tabela</label>
-                            <div className="allCheckbox">
-                                <ul class="ks-cboxtags">
-                                    {
-                                        this.state.field.map((field, index) => {
-                                            if (field.visible == true) {
-                                                return (
-                                                    <li>
-
-                                                        {this.state.column.indexOf(field.fieldName) !== -1 ? (
-                                                            <input
-                                                                id={`checkbox${index}`}
-                                                                type="checkbox"
-                                                                className="checkboxOne"
-                                                                value={field.fieldName}
-                                                                onClick={this.updateColumn.bind(this)}
-                                                                defaultChecked
-                                                            />
-                                                        ) : (
-                                                                <div>
-
-                                                                    <input
-                                                                        id={`checkbox${index}`}
-                                                                        type="checkbox"
-                                                                        className="checkboxOne"
-                                                                        value={field.fieldName}
-                                                                        onClick={this.updateColumn.bind(this)}
-                                                                    />
-                                                                </div>
-                                                            )}
-
-                                                        <label htmlFor={`checkbox${index}`}>
-                                                            <div className="checkImg"></div>
-                                                            {field.fieldName}
-                                                        </label>
-                                                    </li>
-                                                )
-                                            }
-                                        })
-                                    }
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div className="orderGeral">
-                            <label>Ordenação</label>
-                            <select className="item" name="camposlista" onChange={this.onChangeFieldName2.bind(this)}>
-                                {
-                                    this.state.field.map((fields) => {
-                                        if (fields.visible === true) {
-                                            return (
-                                                <option value={fields.fieldName} selected={(this.state.ordenation[0] === fields.fieldName) ? true : false}> {fields.visible} {fields.fieldName}</option>
-                                            )
-                                        }
-                                    }
-                                    )
-                                }
-                            </select>
-
-                            <select className="item" name="valoreslista" onChange={this.onChangeOption.bind(this)}>
-                                <option value="A-Z" selected={(this.state.ordenation[1] === "A-Z") ? true : false}>A-Z</option>
-                                <option value="Z-A" selected={(this.state.ordenation[1] === "Z-A") ? true : false}>Z-A</option>
-                                {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "number" && (
-                                    <option value="Crescente" selected={(this.state.ordenation[1] === "Crescente") ? true : false}>Crescente</option>) : ''}
-                                {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "date" && (
-                                    <option value="Crescente" selected={(this.state.ordenation[1] === "Crescente") ? true : false}>Crescente</option>) : ''}
-                                {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "number" && (
-                                    <option value="Decrescente" selected={(this.state.ordenation[1] === "Decrescente") ? true : false}>Decrescente</option>) : ''}
-                                {this.state.selected.length != 0 ? this.state.selected[0].fieldType === "date" && (
-                                    <option value="Decrescente" selected={(this.state.ordenation[1] === "Decrescente") ? true : false}>Decrescente</option>) : ''}
-                            </select>
-                        </div>
-
-                        <button className="save">Salvar</button>
-                        <button onClick={this.resetForm} type="button">Limpar</button>
-
-                    </form>
-                </div>
-
-                <div className="listaUser-container">
-                    <div className="listaUser">
-                        {
-                            this.state.listaUser.map((user) => {
-                                user.view.map((view) => {
-                                    return (
-                                        <ul>
-                                            <li>
-                                                <div className="listaUser-item">
-                                                    {view.title}
-                                                    <div className="dropdown">
-                                                        <div className="dropdown-content">
-                                                            <div className="dropdown-content-container">
-                                                                <button className="buttonEdit" id={view.id} onClick={(event) => root.searchForIdView(event, view)}>Editar</button>
-                                                                <button className="buttonDelete" id={view.id} onClick={this.deleteView.bind(this)}>Excluir</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    )
-                                })
-                            })
+    deleteView(event) {
+      event.preventDefault();
+      fetch('https://5d8289a9c9e3410014070b11.mockapi.io/view/' + event.target.getAttribute('id'), {
+          method: 'DELETE',
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      })
+          .then(this.searchViews())
+          .then(response => response)
+  }
+    
+    listAnswers(index) {
+      let listFields = [];
+       let view = this.state.conditions[index];
+      
+       this.state.answers.map(answer => {
+         const fields = Object.keys(answer.answer);
+         fields.map(field => {
+           if (field === view.field) {
+             listFields.push(answer.answer[field]);
+           }
+         });
+       });
+    
+      const uniqueAnswers = [...new Set(listFields.map(item => item))];
+      return uniqueAnswers;
+    }
+    
+    onSubmit(event) {
+      event.preventDefault();
+    
+                      let data = {
+                        title: this.state.title,
+                        conditions: this.state.conditions,
+                        columns: this.state.columns,
+                        order: this.state.order
+                      };
+    
+                      let url = "https://5d8289a9c9e3410014070b11.mockapi.io/view/";
+                      let method = "POST";
+    
+                      if (this.state.id !== "") {
+                        data.id = this.state.id;
+                        url += this.state.id;
+                        method = "Put";
+                      }
+    
+                      console.log(JSON.stringify(data));
+    
+                      fetch(url, {
+                        method: method,
+                        body: JSON.stringify(data),
+                        headers: {
+                          "Content-Type": "application/json"
                         }
-                    </div>
+                      })
+                        .then(response => response)
+                        .then(() => {
+                          this.setState({ id: "" });
+                          this.searchViews();
+                          this.clearForm();
+                        });
+                    }
+      
+      
+      resetForm = () => {
+        this.setState({
+          id: '',
+          title: '',
+          conditions: [],
+          columns: [],
+          order: []
+        })
+      }
+
+      render(){
+        return (
+          <div className="all">
+          <Header />
+          <Menu />
+          <div className="container">
+            <h2>Edit Views</h2>
+            <div className="formView">
+            <form onSubmit={this.onSubmit.bind(this)}>
+              <div className="divTitle">
+                <label htmlFor="exampleInputEmail1">Título</label>
+                <input
+                  type="titulo"
+                  className="viewTitle"
+                  id="inputTitulo"
+                  aria-describedby="tituloHelp"
+                  placeholder="Title View"
+                  value={this.state.title}
+                  onChange={(e) => this.setState({title : e.target.value})}
+                />
+              </div>
+    
+              <table className="conditionsView">
+              <div className="itensView">
+                <thead>
+                  <tr>
+                    <th className="conditionsTitle">Condições</th>
+                    <th></th>
+                    <th></th>
+                    <th style={{ textAlign: "right" }}>
+                      <button
+                        className="add"
+                        onClick={this.addCondition.bind(this)}
+                        type="button"
+                      >
+                        Adicionar
+                      </button>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.conditions.map((item, index) => {
+                    return (
+                      <tr  key={index}>
+                        <td>
+                          <select
+                            className="item"
+                            name={"field"}
+                            defaultValue={item.field}
+                            data-count={index}
+                            onChange={this.onChangeFieldName.bind(this)}
+                          >
+                            <option value="">Selecione</option>
+                            {this.state.fields.map((field, index) => {
+                              return (
+                                <option key={index} value={field.fieldName}>
+                                  {field.fieldName}
+                                </option>
+                              );
+                            })}
+                            ) }
+                          </select>
+                        </td>
+                        <td>
+                          <select
+                            className="item"
+                            name={"condition"}
+                            defaultValue={item.conditional}
+                            data-count={index}
+                            onChange={this.onChangeConditionnal.bind(this)}
+                            disabled={
+                              this.state.conditions[index].field === ""
+                                ? "none"
+                                : ""
+                            }
+                          >
+                            <option value="">Selecione</option>
+                            <option value="É">É</option>
+                            <option value="Não é">Não é</option>
+                          </select>
+                        </td>
+                        <td>
+                          <select
+                            className="item"
+                            name={"answer"}
+                            defaultValue={item.answer}
+                            data-count={index}
+                            onChange={this.onChangeAnswer.bind(this)}
+                            disabled={item.field === "" ? "none" : ""}
+                          >
+                            <option value="">Selecione</option>
+                            {this.listAnswers(index).map((answer, index) => {
+                              return <option key={index}>{answer}</option>;
+                            })}
+                            )
+                          </select>
+                        </td>
+                        <td>
+                          <button
+                            className="btn btn-sm btn-danger"
+                            onClick={this.removeCondition.bind(this, index)}
+                            type="button"
+                          >
+                            Excluir
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
                 </div>
-            </div >
-        )
+              </table>
+    
+              <div className="columns">
+                <label className="title">Colunas da Tabela</label>
+                <div className="allCheckbox">
+                  <ul className="ks-cboxtags">
+                    {this.state.fields.map((field, index) => {
+                      if (field.visible === true) {
+                        return (
+                          <li key={index}>
+                            {this.state.columns.indexOf(field.fieldName) !== -1 ? (
+                              <input
+                                id={`checkbox${index}`}
+                                type="checkbox"
+                                className="checkboxOne"
+                                value={field.fieldName}
+                                onClick={this.updateColumn.bind(this)}
+                                defaultChecked
+                              />
+                            ) : (
+                              <div>
+                                <input
+                                  id={`checkbox${index}`}
+                                  type="checkbox"
+                                  className="checkboxOne"
+                                  value={field.fieldName}
+                                  onClick={this.updateColumn.bind(this)}
+                                />
+                              </div>
+                            )}
+    
+                            <label htmlFor={`checkbox${index}`}>
+                              <div className="checkImg"></div>
+                              {field.fieldName}
+                            </label>
+                          </li>
+                        );
+                      }
+                    })}
+                  </ul>
+                </div>
+              </div>
+    
+              <div className="orderGeral">
+                <label htmlFor="">Order</label>
+                <select
+                  className="item"
+                  onChange={this.onChangeOrder.bind(this)}
+                  defaultValue={this.state.order}
+                >
+                  <option value="">Selecione</option>
+                  {this.state.fields.map((field, index) => {
+                    if (field.visible === true) {
+                      return (
+                        <option
+                          key={index}
+                          defaultValue={field.fieldName}
+                          selected={
+                            this.state.order === field.fieldName ? true : false
+                          }
+                        >
+                          {" "}
+                          {field.visible} {field.fieldName}
+                        </option>
+                      );
+                    }
+                  })}
+                </select>
+
+                <select className="item" name="valoreslista">
+                  <option value="A-Z" >A-Z</option>
+                  <option value="Z-A" >Z-A</option>
+                </select>
+              </div>
+    
+              <button type="submit" className="save">
+                Salvar
+              </button>
+              <button onClick={this.resetForm} type="button">Limpar</button>
+            </form>
+            </div>
+            <hr />
+
+            <table className="listaView">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.views.map((view, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{view.title}</td>
+                      <td>
+                      <button
+                            data-id={index}
+                            className="buttonEdit"
+                            onClick={this.editView.bind(this)}
+                            type="button"
+                          >
+                            Editar
+                          </button>
+                      </td>
+                      <button id={view.id} onClick={this.deleteView.bind(this)}>Excluir</button>
+                      <td>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          </div>
+        );
+      }
     }
-}

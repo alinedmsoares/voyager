@@ -117,8 +117,8 @@
 .lista {
     display: flex;
     flex-direction: column;
-    align-items: center;
     list-style-type: none;
+    width: 72%;
 }
 .lista label{
     width: 45%;
