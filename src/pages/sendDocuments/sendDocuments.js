@@ -14,7 +14,7 @@ export default class sendDocument extends Component {
             id: '',
             field: [{ id: '', fieldName: '', jString: '', visible: false, required: false, values: [], fieldTypeString: '' }],
             AttachmentFile: null,
-            Attachment: [],
+            Attachment: '',
             answers: {},
             title: '',
             description:''        }
@@ -38,7 +38,6 @@ export default class sendDocument extends Component {
 
     updateStateFile = (event) => {
         let reader = new FileReader();
-        // let file = [...this.state.Attachment, ...event.target.files[0]]
         let file = event.target.files[0]
         console.log('file', file);
         this.setState({
@@ -84,14 +83,29 @@ export default class sendDocument extends Component {
             data: formData,
             headers: { 'Content-Type': 'multipart/form-data' }
         })
-            .then(function (response) {
-                console.log(response)
-            })
+        .then(this.AlertSucessRegister())
             .catch(function (response) {
                 console.log(response)
+                // this.AlertError();
+
             })
     }
-
+    AlertError() {
+        Swal.fire({
+            position: 'center-center',
+            type: 'error',
+            title: 'Erro!',
+            showConfirmButton: false,
+            timer: 1500
+          })
+    }
+    clearForm() {
+        this.setState({
+            id: '',
+            Attachment: '',
+            answers: {}
+        })
+    }
     AlertSucessRegister() {
         Swal.fire(
             'Document enviado!',
@@ -181,7 +195,7 @@ export default class sendDocument extends Component {
                                             <div>
                                                 <li className="lista">
                                                     <label>{document.fieldName}</label>
-                                                    <input key={document.fieldName} placeholder={document.fieldName} required={document.required ? "required" : ""} name={document.fieldName} type={document.fieldTypeString} className="text" onChange={this.updateState} />
+                                                    <input key={document.fieldName} required={document.required ? "required" : ""} name={document.fieldName} type={document.fieldTypeString} className="text" onChange={this.updateState} />
                                                 </li>
                                             </div>
                                         </div>

@@ -183,12 +183,20 @@ export default class editingFields extends Component {
                     'Content-Type': 'application/json'
                 }
             })
-                .then(this.AlertSucessRegister())
                 .then(response => response)
                 .then(() => {
                     (this.searchFields())
                     (this.clearForm())
                 })
+                .then(response => {
+                    if (response.status === 201) {
+                        this.AlertSucessRegister()
+                            (this.clearForm())
+                    }
+                    (this.searchFields())
+                })
+                .then(this.AlertSucessRegister())
+
                 .catch(error => console.log(error))
         }
     }
