@@ -16,8 +16,7 @@ export default class listViews extends Component {
             order: { name: '', type: '' },
             columns: [],
             views: [],
-            listaView: [],
-            query: ''
+            listaView: []
         }
     }
 
@@ -94,11 +93,7 @@ export default class listViews extends Component {
         console.log(uniqueAnswers)
     }
 
-    handleInputChange =()=>{
-        this.setState({
-            query: this.search.value
-        })
-    }
+
     render() {
         const data = [{ title: 'Conan the Barbarian', year: '2002' },{ title: 'Abc the Barbarian', year: '1971' },{ title: 'Cba the Barbarian', year: '1983' },{ title: 'Dab the Barbarian', year: '1880' }];
         const columns = [
@@ -144,12 +139,6 @@ export default class listViews extends Component {
                 columns= {columns}
                 data={data}
                 />
-                <input
-                placeholder='Search'
-                ref={input => this.search = input}
-                onChange={this.handleInputChange}
-                />
-                <p>{this.state.query}</p>
             </div>
         )
     }
