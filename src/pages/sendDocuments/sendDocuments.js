@@ -86,18 +86,7 @@ export default class sendDocument extends Component {
         .then(this.AlertSucessRegister())
             .catch(function (response) {
                 console.log(response)
-                // this.AlertError();
-
             })
-    }
-    AlertError() {
-        Swal.fire({
-            position: 'center-center',
-            type: 'error',
-            title: 'Erro!',
-            showConfirmButton: false,
-            timer: 1500
-          })
     }
     clearForm() {
         this.setState({

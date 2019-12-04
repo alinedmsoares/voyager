@@ -8,21 +8,16 @@ export default class listViews extends Component {
     constructor() {
         super();
         this.state = {
-
             id: '',
-            line: [],
-            selected: '',
-            line: [],
+            fields: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: [] }],
+            conditions: [],
+            answers: [],
             answerFilters: [],
-            document: [{
-                field: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: [] }],
-                answers: { title: '', description: '' }
-            }],
-            field: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: [] }],
+            order: { name: '', type: '' },
+            columns: [],
+            views: [],
             listaView: [],
-            currentView: '',
-            currentColumns: [],
-            documentView: []
+            query: ''
         }
     }
 
@@ -39,7 +34,7 @@ export default class listViews extends Component {
             }
         })
             .then(response => response.json())
-            .then(data => this.setState({ listaView: data }))
+            .then(data => this.setState({ views: data }))
             .catch(error => console.log(error))
     }
 
@@ -90,7 +85,7 @@ export default class listViews extends Component {
             })
         })
 
-        const uniqueAnswers = [...new Set(listFields.map(item => item))];
+        const uniqueAnswers = new Set(listFields.map(item => item));
         this.setState({ answerFilters: uniqueAnswers }, () => {
             uniqueAnswers.push({ uniqueAnswers: uniqueAnswers })
         });
@@ -99,28 +94,62 @@ export default class listViews extends Component {
         console.log(uniqueAnswers)
     }
 
-
+    handleInputChange =()=>{
+        this.setState({
+            query: this.search.value
+        })
+    }
     render() {
+        const data = [{ title: 'Conan the Barbarian', year: '2002' },{ title: 'Abc the Barbarian', year: '1971' },{ title: 'Cba the Barbarian', year: '1983' },{ title: 'Dab the Barbarian', year: '1880' }];
+        const columns = [
+            {
+                name: 'Title',
+                selector: 'title',
+                sortable: true,
+            },
+            {
+                name: 'Year',
+                selector: 'year',
+                sortable: true,
+                right: true,
+            },
+        ]
         return (
             <div>
-                <div className="listaView">
-                    {
-                        this.state.listaView.map((view, index) => {
+                {/* <table className="listaView">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.views.map((view, index) => {
                             return (
-                                <li key={index}>
-                                    <button onClick={() => this.selectView(view.titleView)}>{view.titleView}</button>
-                                </li>
-                            )
-                        })
-                    }
-                </div>
- 
-                <DataTable
-                    title="Arnold Movies"
+                                <tr key={index}>
+                                    <button onClick={() => this.selectView(view.titleView)}>{view.title}</button>
+                                </tr>
+                            );
+                        })}
+                    </tbody>
+                </table> */}
+
+                {/* <DataTable
+                    // title="Arnold Movies"
                     columns={this.state.currentColumns}
                     data={this.state.answerFilters}
 
+                /> */}
+                <DataTable
+                columns= {columns}
+                data={data}
                 />
+                <input
+                placeholder='Search'
+                ref={input => this.search = input}
+                onChange={this.handleInputChange}
+                />
+                <p>{this.state.query}</p>
             </div>
         )
     }
