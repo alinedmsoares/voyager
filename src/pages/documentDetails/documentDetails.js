@@ -8,18 +8,17 @@ export default class documentDetails extends Component {
         super();
         this.state = {
             id: '',
-            field: [{ id: '', fieldName: '', jString: '', visible: false, required: false, values: [], fieldTypeString: '' }],
-            AttachmentFile: null,
-            Attachment: '',
-            answersFilters: '',
             answers: {},
-            title: '',
-            status: '',
+            date: "",
+            attachment: "",
+            documentStatus: 0,
             description: '',
+            documentId: [],
             updates: [{ updateDescription: '', file: '', /*user: {}*/updatedatetime: '' }]
         }
 
         this.updateState = this.updateState.bind(this);
+        this.searchForIdDocument = this.searchForIdDocument.bind(this);
     }
     updateState = (event) => {
         this.setState({
@@ -59,7 +58,7 @@ export default class documentDetails extends Component {
     }
 
     searchDocumentsId() {
-        fetch('http://192.168.4.49:5000/api/document/' + 'a5be3b02-ddef-4ff4-b4ff-76f2d9f45806', {
+        fetch('http://192.168.4.49:5000/api/document/', {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -68,8 +67,19 @@ export default class documentDetails extends Component {
             .then(data => this.setState({ documentId: data }))
             .catch(error => console.log(error))
     }
+    searchForIdDocument(event) {
+        let documentsId = event.target.getAttribute('data-id')
+        console.log(documentsId)
+        let documents = this.state.documentId[documentsId]
+        this.setState({
+            // id: documents.id,
+            answers: documents.answers,
+            date: documents.date,
+            attachment: documents.attachment,
+            documentStatus: documents.documentStatus,
+        });
 
-
+    }
     render() {
         return (
             <div>
@@ -77,24 +87,11 @@ export default class documentDetails extends Component {
                     <li>
                         User
                     </li>
-                    {
-                        this.state.field.map((field) => {
-                            return (
-                                <ul>
-                                    <li>{field.fieldName}</li>
-                                </ul>
-                            )
-                        })
-                    }
-                    <li>
-                        {
-                            this.state.answerFilters.map((answer) => {
-                                return (
-                                    <li>{answer}</li>
-                                )
-                            })
-                        })
-                                    </li>
+                    {this.state.documentId.map((document)=>{
+                        return(
+                            <button className="buttonEdit" daa-id={'640855a0-6837-40c5-b485-9fac0bea4d28'} onClick={this.searchForIdDocument.bind(this)}>Editar</button>
+                        )
+                    })}
                 </ul>
             </div>
         )
