@@ -1,12 +1,16 @@
 * {
     margin: 0;
-    padding: 0;
     box-sizing: border-box;
     -webkit-user-select: none;
     -moz-user-select: -moz-none;
     -ms-user-select: none;
      user-select: none;
     /* overflow: hidden; */
+}
+.container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 .all {
     display: flex;
@@ -21,7 +25,7 @@
     margin-left: 5%;
 }
 .formView form {
-    margin-left: 215px;
+    width: 60%;
 }
 .divTitle {
     width: 98%;
@@ -50,22 +54,45 @@
 .conditionsView {
     display: flex;
     flex-direction: column;
-    width: 805px;
-    
+    width: 100%;
+    margin-left: 1%;
 }
 .conditionsView .conditionsTitle {
     align-self: baseline;
     margin-top: 2em;
     margin-bottom: -2vh;
     margin-left: 80px;
+    font-weight: normal; 
+    color: black;
 }
-.itensView {
+.conditionsView tbody {
+    width: 88%;
+    margin-left: 9.5%;
+}
+.itensView-container {
     display: flex;
     justify-content: space-between;
-    width: 80%;
+    width: 88.5%;
     height: 7vh;
     margin-top: 1em;
     margin-bottom: 2%;
+    margin-left: 9%;
+}
+.itensView {
+    display: flex;
+    align-items: center;
+    width: 147%;
+}
+.itensView-title {
+    width: 10%;
+    margin-left: 8%;
+    margin-top: 6vh;
+}
+.itensView-tr {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-left: 9%;
 }
 .itensView-extra {
     margin-left: 41px;
@@ -75,6 +102,7 @@
     height: 7vh;
     align-items: center;
 }
+
 .item {
     margin-top: 1em;
     width: 160px;
@@ -102,9 +130,16 @@
     width: 80%;
     margin-top: 2em;
 }
+.button-div {
+    display: flex;
+    justify-content: flex-end;
+    width: 88.5%;
+    margin-left: 9%;
+    margin-top: 1vh;
+}
 .add {
     transition: all 0.5s;
-    width: 20%;
+    width: 13%;
     height: 6vh;
     background: #242C91;
     border-radius: 6px;
@@ -120,11 +155,10 @@
 
 }
 .save {
-    margin-top: 1em;
-    margin-bottom: 3vh;
     transition: all 0.5s;
-    margin-left: 605px;
-    width: 15%;
+    margin-left: 1%;
+    margin-right: 1%;
+    width: 10%;
     height: 6vh;
     background: #AD1130;
     border-radius: 6px;
@@ -145,15 +179,16 @@
     background: #F6F6F6;
     box-shadow: 1px 0px 9px rgba(0, 0, 0, 0.39);
 } */
-.general .remove-value {
-    background-image: url(https://image.flaticon.com/icons/svg/32/32178.svg);
-    width: 3vh;
+.remove-value-condition {
+    /* background-image: url(../images/icons/X.png); */
+    width: 115%;
     background-size: 100% 100%;
     background-repeat: no-repeat;
     height: 3vh;
     cursor: pointer;
     margin-left: 20px;
-}
+    margin-top: 60%;
+}   
 .general {
     width: 100%;
     display: flex;
@@ -162,6 +197,7 @@
     margin-top: 2vh;
     margin-left: 5%;
 }
+
 .columns {
     width: 92%;
     display: flex;
@@ -172,9 +208,11 @@
 
 .columns .title {
     margin-left: 10px;
+    color: black;
 }
 .columnDiv {
     display: inline;
+    width: 15%;
     padding: 1%;
     background-color: purple;
 }
@@ -184,14 +222,21 @@
     margin-top: 25px;
 }
 .orderGeral {
-    width: 80%;
+    width: 88.5%;
     display: flex;
     margin-top: 2vh;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: baseline;
+    margin-left: 8.5%;
+}
+.order-select {
+    width: 100%;
+    display: flex;
     justify-content: space-between;
 }
 .orderGeral label {
     align-self: baseline;
-    margin-left: 25px;
     color: black;
 }
 .order {
@@ -203,7 +248,7 @@
     margin-top: 1em;
     width: 550px;
     height: 7vh;
-    background: #F9F9F9;
+    background: #f9f9f9;
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
     border-radius: 3px;
     border: none;
@@ -237,14 +282,17 @@ ul.ks-cboxtags {
     display: flex;
     margin: 0 1%;
 }
+ul.ks-cboxtags li{
+    /* padding: 0 10px; */
 
+}
 ul.ks-cboxtags li label{
     background-color: rgba(255, 255, 255, .9);
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
     color: #adadad;
     border-radius: 25px;
     white-space: nowrap;
-    margin: 3px 0px;
+    margin: 3px 3px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -294,7 +342,7 @@ form{
     width: 72%;
     text-align: -webkit-center;
 }
-.listaView {
+.listView {
     margin-top: 42px;
     width: 16%;
     height: 100%;
@@ -307,15 +355,18 @@ form{
     align-items: center;
 }
 
-.listaView-container {
-    width: 100%;
+.listView-container {
+    width: 30%;
     display: flex;
     justify-content: flex-end;
+    position: fixed;
+    height: 100%;
+    right: 0px;
 }
-.listaView ul li {
+.listView ul li {
     list-style-type: none;
 }
-.listaView-item {
+.listView-item {
     width: 225px;
     height: 7vh;
     background: #F9F9F9;
@@ -327,7 +378,8 @@ form{
     justify-content: space-between;
     margin-bottom: 5px;
     padding: 0 12px 0 5px;
-    
+    flex-direction: row-reverse;
+    color: black;
 }
 .dropdown {
     background-image: url("../images/icons/more.png");
@@ -386,4 +438,28 @@ form{
 }
 .buttonDelete:hover {
     background-color: rgb(202, 74, 74);
+}
+.clear-save-buttons {
+    width: 98%;
+    display: flex;
+    margin-top: 3vh;
+    flex-direction: row-reverse;
+
+}
+.clear-button {
+    transition: all 0.5s;
+    width: 10%;
+    height: 6vh;
+    background: #242C91;
+    border-radius: 6px;
+    border: none;
+    align-self: flex-end;
+    color: white;
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+}
+.clear-button:hover {
+    background-color: rgb(74, 83, 202);
+    
 }

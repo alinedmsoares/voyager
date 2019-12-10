@@ -11,15 +11,14 @@ export default class editingFields extends Component {
       id: '',
       fields: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: [] }],
       conditions: [],
-      answers: [],
+      conditionAnswer: [],
       answerFilters: [],
-      order: { name: '', type: '' },
+      ordernation: { ordername: '', orderenum: '' },
+      selected: '',
       columns: [],
       views: []
     }
   }
-
-
 
   componentDidMount() {
     this.searchFields();
@@ -28,7 +27,7 @@ export default class editingFields extends Component {
   }
 
   searchFields() {
-    fetch('https://5d8289a9c9e3410014070b11.mockapi.io/document', {
+    fetch('http://192.168.4.49:5000/api/field', {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -45,12 +44,12 @@ export default class editingFields extends Component {
       }
     })
       .then(response => response.json())
-      .then(data => this.setState({ answers: data }))
+      .then(data => this.setState({ conditionAnswer: data }))
       .catch(error => console.log(error))
   }
 
   searchViews() {
-    fetch('https://5d8289a9c9e3410014070b11.mockapi.io/view', {
+    fetch('https://192.168.49.4:5000/view', {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -59,7 +58,6 @@ export default class editingFields extends Component {
       .then(data => this.setState({ views: data }))
       .catch(error => console.log(error))
   }
-
 
   onChangeFieldName(event) {
     const listFields = [];
@@ -74,7 +72,7 @@ export default class editingFields extends Component {
       })
     }
 
-    this.state.answers.map((answer) => {
+    this.state.conditionAnswer.map((answer) => {
       const fields = Object.keys(answer.answer)
       fields.map((field) => {
         if (field === event.target.value) {
@@ -119,21 +117,16 @@ export default class editingFields extends Component {
   }
 
   onChangeOrder(event) {
-
-    this.state.order.name = event.target.value;
-    this.setState({ order: this.state.order });
-
-
+    this.state.ordernation.ordername = event.target.value;
+    this.setState({ ordernation: this.state.ordernation });
   }
 
   onChangeConditionnalOrder(event) {
-    this.state.order.type = event.target.value;
-    this.setState({ order: this.state.order });
-
+    this.state.ordernation.orderenum = event.target.value;
+    this.setState({ ordernation: this.state.ordernation });
   }
 
   updateColumn(event) {
-
     const field = this.state.fields.filter(element => element.fieldName === event.target.value);
     const columns = this.state.columns;
     if (columns.indexOf(event.target.value) === -1) {
@@ -141,7 +134,6 @@ export default class editingFields extends Component {
     } else {
       columns.splice(columns.indexOf(event.target.value), 1);
     }
-
     this.setState({ column: columns })
   }
 
@@ -164,25 +156,24 @@ export default class editingFields extends Component {
   clearForm() {
     this.setState({
       id: '',
-      title: '',
+      viewTitle: '',
       conditions: [],
       columns: [],
-      order: {}
+      ordernation: {}
     })
   }
 
   editView(event) {
-
     let viewId = event.target.getAttribute('data-id');
     console.log(viewId);
 
     let view = this.state.views[viewId];
     this.setState({
       id: view.id,
-      title: view.title,
+      viewTitle: view.viewTitle,
       conditions: view.conditions,
       columns: view.columns,
-      order: view.order
+      ordernation: view.ordernation
     });
   }
 
@@ -202,7 +193,7 @@ export default class editingFields extends Component {
     let listFields = [];
     let view = this.state.conditions[index];
 
-    this.state.answers.map(answer => {
+    this.state.conditionAnswer.map(answer => {
       const fields = Object.keys(answer.answer);
       fields.map(field => {
         if (field === view.field) {
@@ -219,13 +210,13 @@ export default class editingFields extends Component {
     event.preventDefault();
 
     let data = {
-      title: this.state.title,
+      viewTitle: this.state.viewTitle,
       conditions: this.state.conditions,
       columns: this.state.columns,
-      order: this.state.order
+      ordernation: this.state.ordernation
     };
 
-    let url = "https://5d8289a9c9e3410014070b11.mockapi.io/view/";
+    let url = "https://192.168.49.4:5000/view/addview/5de89ae3-b189-4f8c-91b4-d830c32484ff";
     let method = "POST";
 
     if (this.state.id !== "") {
@@ -251,14 +242,13 @@ export default class editingFields extends Component {
       });
   }
 
-
   resetForm = () => {
     this.setState({
       id: '',
-      title: '',
+      viewTitle: '',
       conditions: [],
       columns: [],
-      order: {}
+      ordernation: {}
     })
   }
 
@@ -279,34 +269,31 @@ export default class editingFields extends Component {
                   className="viewTitle"
                   id="inputTitulo"
                   aria-describedby="tituloHelp"
+                  required
                   placeholder="Title View"
-                  value={this.state.title}
-                  onChange={(e) => this.setState({ title: e.target.value })}
+                  value={this.state.viewTitle}
+                  onChange={(e) => this.setState({ viewTitle: e.target.value })}
                 />
               </div>
-
+              <div>
               <table className="conditionsView">
-                <div className="itensView">
+                <div className="itensView-title">
                   <thead>
                     <tr>
                       <th className="conditionsTitle">Condições</th>
                       <th></th>
                       <th></th>
-                      <th style={{ textAlign: "right" }}>
-                        <button
-                          className="add"
-                          onClick={this.addCondition.bind(this)}
-                          type="button"
-                        >
-                          Adicionar
-                      </button>
-                      </th>
+                      
                     </tr>
                   </thead>
+                  </div>
+                  
+                  <div className="itensView-container">
                   <tbody>
                     {this.state.conditions.map((item, index) => {
                       return (
-                        <tr key={index}>
+                        <div className="itensView">
+                        <tr className="itensView-tr" key={index}>
                           <td>
                             <select
                               className="item"
@@ -339,9 +326,17 @@ export default class editingFields extends Component {
                                   : ""
                               }
                             >
-                              <option value="">Selecione</option>
-                              <option value="É">É</option>
-                              <option value="Não é">Não é</option>
+                              <option value="">Select</option>
+                              <option value="Is" selected={(this.state.conditions[1] === "Is") ? true : false}>Is</option>
+                              <option value="IsNot" selected={(this.state.conditions[1] === "IsNot") ? true : false}>IsNot</option>
+                              {this.state.selected.length !== 0 ? this.state.selected[0].fieldType === "number" &&(
+                              <option value="Bigger" >Bigger</option>) : ''}
+                              {this.state.selected.length !== 0 ? this.state.selected[0].fieldType === "date" &&(
+                                <option value="Bigger">Bigger</option>) : ''}
+                              {this.state.selected.length !== 0 ? this.state.selected[0].fieldType === "number" &&(
+                                <option value="Smaller">Smaller</option>) : ''}
+                              {this.state.selected.length !== 0 ? this.state.selected[0].fieldType === "date" &&(
+                                <option value="Smaller">Smaller</option>) : ''}
                             </select>
                           </td>
                           <td>
@@ -353,28 +348,44 @@ export default class editingFields extends Component {
                               onChange={this.onChangeAnswer.bind(this)}
                               disabled={item.field === "" ? "none" : ""}
                             >
-                              <option value="">Selecione</option>
+                              <option value="">Select</option>
                               {this.listAnswers(index).map((answer, index) => {
                                 return <option key={index}>{answer}</option>;
                               })}
                               )
                           </select>
                           </td>
+                          </tr>
+                  
+                      
                           <td>
-                            <button
-                              className="btn btn-sm btn-danger"
+                            <div
+                              className="remove-value-condition"
                               onClick={this.removeCondition.bind(this, index)}
                               type="button"
-                            >
-                              Excluir
-                          </button>
-                          </td>
-                        </tr>
+                              >
+                            
+                          </div>
+                          </td>                       
+                        </div>
                       );
                     })}
-                  </tbody>
-                </div>
-              </table>
+                     <th style={{ textAlign: "right" }}>
+                          </th>
+                      </tbody>
+                      </div>
+
+                 <div className="button-div">
+                        <button
+                          className="add"
+                          onClick={this.addCondition.bind(this)}
+                          type="button"
+                        >
+                          Adicionar
+                      </button>
+                  </div>
+                </table>
+               </div>
 
               <div className="columns">
                 <label className="title">Colunas da Tabela</label>
@@ -418,21 +429,18 @@ export default class editingFields extends Component {
               </div>
 
               <div className="orderGeral">
-                <thead>
+              <div className="orderGeral-title">
                   <label htmlFor="">Order</label>
-                </thead>
-                <tbody>
+              </div>
 
-
-                  <tr>
-                    <td>
+              <div className="order-select">
                       <select
                         className="item"
                         name={"field"}
-                        defaultValue={this.state.order.name}
+                        defaultValue={this.state.ordernation.ordername}
                         onChange={this.onChangeOrder.bind(this)}
                       >
-                        <option value="">Selecione</option>
+                        <option value="">Select</option>
                         {this.state.fields.map((field, index) => {
                           return (
                             <option key={index} value={field.fieldName}>
@@ -442,55 +450,60 @@ export default class editingFields extends Component {
 
                         })}
                       </select>
-                    </td>
-
+                    
 
                     <td>
                       <select
                         className="item"
                         name={"condition"}
-                        defaultValue={this.state.order.type}
+                        defaultValue={this.state.ordernation.type}
                         onChange={this.onChangeConditionnalOrder.bind(this)}
                         disabled={
-                          this.state.order.name === ""
+                          this.state.ordernation.ordername === ""
                             ? "none"
                             : ""
                         }
                         name="valoreslista"
                       >
-                        <option value="">Selecione</option>
-                        <option value="A-Z" >A-Z</option>
-                        <option value="Z-A" >Z-A</option>
+                        <option value="">Select</option>
+                        <option value="A-Z" selected={(this.state.ordernation[1] === "AZ") ? true : false}>A-Z</option>
+                        <option value="Z-A" selected={(this.state.ordernation[1] === "ZA") ? true : false}>Z-A</option>
+                        {this.state.selected.length !== 0 ? this.state.selected[0].fieldType === "number" && (
+                          <option value="Crescent" selected={(this.state.ordernation[1] === "Crescent") ? true : false}>Crescent</option>) : ''}
+                        {this.state.selected.length !== 0 ? this.state.selected[0].fieldType === "date" && (
+                          <option value="Crescent" selected={(this.state.ordernation[1] === "Crescent") ? true : false}>Crescent</option>) : ''}
+                        {this.state.selected.length !== 0 ? this.state.selected[0].fieldType === "number" && (
+                          <option value="Descending" selected={(this.state.ordernation[1] === "Descending") ? true : false}>Descending</option>) : ''}
+                        {this.state.selected.length !== 0 ? this.state.selected[0].fieldType === "date" && (
+                          <option value="Descending" selected={(this.state.ordernation[1] === "Descending") ? true : false}>Descending</option>) : ''}  
                       </select>
                     </td>
-
-                  </tr>
-
-                </tbody>
-
+                  
+               
+              </div>
               </div>
 
+              <div className="clear-save-buttons">
               <button type="submit" className="save">
                 Salvar
               </button>
-              <button onClick={this.resetForm} type="button">Limpar</button>
+              <button onClick={this.resetForm} type="button" className="clear-button">Limpar</button>
+              </div>
             </form>
           </div>
-          <hr />
-
-          <table className="listaView">
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
+          
+          <div className="listView-container">
+          <div className="listaView">
               {this.state.views.map((view, index) => {
                 return (
                   <tr key={index}>
-                    <td>{view.title}</td>
-                    <td>
+
+                    <ul>
+                    <li>
+                    <div className="listView-item">
+                    <div className="dropdown">
+                    <div className="dropdown-content">
+                    <div className="dropdown-content-container">
                       <button
                         data-id={index}
                         className="buttonEdit"
@@ -499,15 +512,20 @@ export default class editingFields extends Component {
                       >
                         Editar
                           </button>
-                    </td>
-                    <button id={view.id} onClick={this.deleteView.bind(this)}>Excluir</button>
-                    <td>
-                    </td>
+                    <button id={view.id} className="buttonDelete" onClick={this.deleteView.bind(this)}>Excluir</button>
+                    </div>
+                    </div>
+                    </div>
+                    {view.viewTitle}
+                    </div>
+                    </li>
+                    </ul>
                   </tr>
                 );
               })}
-            </tbody>
-          </table>
+          
+          </div>
+          </div>
         </div>
       </div>
     );

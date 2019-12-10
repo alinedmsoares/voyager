@@ -10,7 +10,6 @@ export default class editingFields extends Component {
 
         this.state = {
             email: '',
-            password: ''
         }
     }
     atualizaEstadoEmail(event) {
@@ -34,13 +33,11 @@ export default class editingFields extends Component {
 
         Axios.post('http://192.168.4.49:5000/api/login', {
             email: this.state.email,
-            password: this.state.password
         })
             .then(data => {
                 if (data.status === 200) {
                     localStorage.setItem("user-voyager", data.data.token);
                     this.props.history.push("/senddocuments")
-
                 }
             })
             .catch(erro => {
@@ -53,14 +50,9 @@ export default class editingFields extends Component {
             <div>
                 <form action="" onSubmit={this.efetuaLogin.bind(this)} className="log-in" autocomplete="off">
                     <div className="floating-label">
+                    <label for="email">Email:</label>
                         <input placeholder="Email" type="text" name="email" id="email" value={this.state.email} onChange={this.atualizaEstadoEmail.bind(this)}
                             autocomplete="off" />
-                        <label for="email">Email:</label>
-                    </div>
-                    <div className="floating-label">
-                        <input placeholder="Password" type="password" value={this.state.password}
-                            onChange={this.atualizaEstadoSenha.bind(this)} name="password" id="password" autocomplete="off" />
-                        <label for="password">Password:</label>
                     </div>
                     <button type="submit" onClick="return false;">Log in</button>
 

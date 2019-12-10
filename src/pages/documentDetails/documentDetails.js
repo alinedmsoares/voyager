@@ -8,6 +8,7 @@ export default class documentDetails extends Component {
         super();
         this.state = {
             id: '',
+            fields: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: []}],
             answers: {},
             date: "",
             attachment: "",
@@ -72,7 +73,7 @@ export default class documentDetails extends Component {
         console.log(documentsId)
         let documents = this.state.documentId[documentsId]
         this.setState({
-            // id: documents.id,
+            id: documents.id,
             answers: documents.answers,
             date: documents.date,
             attachment: documents.attachment,
@@ -87,9 +88,15 @@ export default class documentDetails extends Component {
                     <li>
                         User
                     </li>
+                    {this.state.fields.map((field)=>{
+                        return(
+
+<li>{field.fieldName}</li>
+                        )
+                    })}
                     {this.state.documentId.map((document)=>{
                         return(
-                            <button className="buttonEdit" daa-id={'640855a0-6837-40c5-b485-9fac0bea4d28'} onClick={this.searchForIdDocument.bind(this)}>Editar</button>
+                            <button data-id={'a5be3b02-ddef-4ff4-b4ff-76f2d9f45806'} onClick={this.searchForIdDocument.bind(this)}>a</button>
                         )
                     })}
                 </ul>

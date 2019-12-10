@@ -68,7 +68,6 @@ export default class listViews extends Component {
                 element.column.map(element1 => {
                     result.push({ name: element1[0].fieldName, selector: element1[0].fieldName })
                 })
-
             }
         })
         this.setState({ currentColumns: result })
