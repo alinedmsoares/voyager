@@ -13,8 +13,9 @@ export default class editingFields extends Component {
       conditions: [],
       conditionAnswer: [],
       answerFilters: [],
-      ordernation: { ordername: '', orderenum: '' },
+      ordination: { orderName: '', orderEnum: '' },
       selected: '',
+      ConditionAnswer: '',
       columns: [],
       views: []
     }
@@ -38,7 +39,7 @@ export default class editingFields extends Component {
   }
 
   searchAnswers() {
-    fetch('https://5d8289a9c9e3410014070b11.mockapi.io/respostaDocument', {
+    fetch('http://5d8289a9c9e3410014070b11.mockapi.io/respostaDocument', {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -49,7 +50,7 @@ export default class editingFields extends Component {
   }
 
   searchViews() {
-    fetch('https://192.168.49.4:5000/view', {
+    fetch('http://192.168.4.49:5000/api/user', {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -67,8 +68,8 @@ export default class editingFields extends Component {
     } else {
       this.state.condition.push({
         field: event.target.value,
-        conditional: '',
-        answer: ''
+        enumCondition: '',
+        ConditionAnswer: ''
       })
     }
 
@@ -93,12 +94,12 @@ export default class editingFields extends Component {
     ) {
       this.state.conditions[
         event.target.getAttribute("data-count")
-      ].conditional = event.target.value;
+      ].enumCondition = event.target.value;
     } else {
       this.state.conditions.push({
         field: "",
-        conditional: event.target.value,
-        answer: ""
+        enumCondition: event.target.value,
+        ConditionAnswer: ""
       });
     }
   }
@@ -106,24 +107,24 @@ export default class editingFields extends Component {
   onChangeAnswer(event) {
     let index = event.target.getAttribute('data-count');
     if (this.state.conditions[index] !== undefined) {
-      this.state.conditions[index].answer = event.target.value;
+      this.state.conditions[index].ConditionAnswer = event.target.value;
     } else {
       this.state.conditions.push({
         field: '',
-        conditional: '',
-        answer: event.target.value
+        enumCondition: '',
+        ConditionAnswer: event.target.value
       })
     }
   }
 
   onChangeOrder(event) {
-    this.state.ordernation.ordername = event.target.value;
-    this.setState({ ordernation: this.state.ordernation });
+    this.state.ordination.orderName = event.target.value;
+    this.setState({ ordination: this.state.ordination });
   }
 
   onChangeConditionnalOrder(event) {
-    this.state.ordernation.orderenum = event.target.value;
-    this.setState({ ordernation: this.state.ordernation });
+    this.state.ordination.orderEnum = event.target.value;
+    this.setState({ ordination: this.state.ordination });
   }
 
   updateColumn(event) {
@@ -141,8 +142,8 @@ export default class editingFields extends Component {
     console.log('add');
     this.state.conditions.push({
       field: "",
-      conditional: "",
-      answer: ""
+      enumCondition: "",
+      ConditionAnswer: ""
     })
     this.setState({ conditions: this.state.conditions })
   }
@@ -156,10 +157,10 @@ export default class editingFields extends Component {
   clearForm() {
     this.setState({
       id: '',
-      viewTitle: '',
+      title: '',
       conditions: [],
       columns: [],
-      ordernation: {}
+      ordination: {}
     })
   }
 
@@ -170,10 +171,10 @@ export default class editingFields extends Component {
     let view = this.state.views[viewId];
     this.setState({
       id: view.id,
-      viewTitle: view.viewTitle,
+      title: view.title,
       conditions: view.conditions,
       columns: view.columns,
-      ordernation: view.ordernation
+      ordination: view.ordination
     });
   }
 
@@ -210,13 +211,13 @@ export default class editingFields extends Component {
     event.preventDefault();
 
     let data = {
-      viewTitle: this.state.viewTitle,
+      title: this.state.title,
       conditions: this.state.conditions,
       columns: this.state.columns,
-      ordernation: this.state.ordernation
+      ordination: this.state.ordination
     };
 
-    let url = "https://192.168.49.4:5000/view/addview/5de89ae3-b189-4f8c-91b4-d830c32484ff";
+    let url = "http://192.168.4.49:5000/api/view/addview/e9766f7f-863c-46c7-99d7-69b101e57ff7";
     let method = "POST";
 
     if (this.state.id !== "") {
@@ -245,10 +246,10 @@ export default class editingFields extends Component {
   resetForm = () => {
     this.setState({
       id: '',
-      viewTitle: '',
+      title: '',
       conditions: [],
       columns: [],
-      ordernation: {}
+      ordination: {}
     })
   }
 
@@ -266,13 +267,13 @@ export default class editingFields extends Component {
                 <label htmlFor="exampleInputEmail1">Título</label>
                 <input
                   type="titulo"
-                  className="viewTitle"
+                  className="title"
                   id="inputTitulo"
                   aria-describedby="tituloHelp"
                   required
                   placeholder="Title View"
-                  value={this.state.viewTitle}
-                  onChange={(e) => this.setState({ viewTitle: e.target.value })}
+                  value={this.state.title}
+                  onChange={(e) => this.setState({ title: e.target.value })}
                 />
               </div>
               <div>
@@ -317,7 +318,7 @@ export default class editingFields extends Component {
                             <select
                               className="item"
                               name={"condition"}
-                              defaultValue={item.conditional}
+                              defaultValue={item.enumCondition}
                               data-count={index}
                               onChange={this.onChangeConditionnal.bind(this)}
                               disabled={
@@ -437,7 +438,7 @@ export default class editingFields extends Component {
                       <select
                         className="item"
                         name={"field"}
-                        defaultValue={this.state.ordernation.ordername}
+                        defaultValue={this.state.ordination.orderName}
                         onChange={this.onChangeOrder.bind(this)}
                       >
                         <option value="">Select</option>
@@ -456,26 +457,26 @@ export default class editingFields extends Component {
                       <select
                         className="item"
                         name={"condition"}
-                        defaultValue={this.state.ordernation.type}
+                        defaultValue={this.state.ordination.type}
                         onChange={this.onChangeConditionnalOrder.bind(this)}
                         disabled={
-                          this.state.ordernation.ordername === ""
+                          this.state.ordination.orderName === ""
                             ? "none"
                             : ""
                         }
                         name="valoreslista"
                       >
                         <option value="">Select</option>
-                        <option value="A-Z" selected={(this.state.ordernation[1] === "AZ") ? true : false}>A-Z</option>
-                        <option value="Z-A" selected={(this.state.ordernation[1] === "ZA") ? true : false}>Z-A</option>
+                        <option value="AZ" selected={(this.state.ordination[1] === "AZ") ? true : false}>AZ</option>
+                        <option value="ZA" selected={(this.state.ordination[1] === "ZA") ? true : false}>ZA</option>
                         {this.state.selected.length !== 0 ? this.state.selected[0].fieldType === "number" && (
-                          <option value="Crescent" selected={(this.state.ordernation[1] === "Crescent") ? true : false}>Crescent</option>) : ''}
+                          <option value="Crescent" selected={(this.state.ordination[1] === "Crescent") ? true : false}>Crescent</option>) : ''}
                         {this.state.selected.length !== 0 ? this.state.selected[0].fieldType === "date" && (
-                          <option value="Crescent" selected={(this.state.ordernation[1] === "Crescent") ? true : false}>Crescent</option>) : ''}
+                          <option value="Crescent" selected={(this.state.ordination[1] === "Crescent") ? true : false}>Crescent</option>) : ''}
                         {this.state.selected.length !== 0 ? this.state.selected[0].fieldType === "number" && (
-                          <option value="Descending" selected={(this.state.ordernation[1] === "Descending") ? true : false}>Descending</option>) : ''}
+                          <option value="Descending" selected={(this.state.ordination[1] === "Descending") ? true : false}>Descending</option>) : ''}
                         {this.state.selected.length !== 0 ? this.state.selected[0].fieldType === "date" && (
-                          <option value="Descending" selected={(this.state.ordernation[1] === "Descending") ? true : false}>Descending</option>) : ''}  
+                          <option value="Descending" selected={(this.state.ordination[1] === "Descending") ? true : false}>Descending</option>) : ''}  
                       </select>
                     </td>
                   
@@ -516,7 +517,7 @@ export default class editingFields extends Component {
                     </div>
                     </div>
                     </div>
-                    {view.viewTitle}
+                    {view.title}
                     </div>
                     </li>
                     </ul>
