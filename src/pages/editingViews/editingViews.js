@@ -39,7 +39,7 @@ export default class editingFields extends Component {
   }
 
   searchAnswers() {
-    fetch('http://5d8289a9c9e3410014070b11.mockapi.io/respostaDocument', {
+    fetch('http://192.168.4.49:5000/api/document', {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -50,12 +50,13 @@ export default class editingFields extends Component {
   }
 
   searchViews() {
-    fetch('http://192.168.4.49:5000/api/user', {
+    fetch('http://192.168.4.49:5000/api/document', {
       headers: {
         'Content-Type': 'application/json'
       }
     })
       .then(response => response.json())
+      .then(console.log(this.state.views.title))
       .then(data => this.setState({ views: data }))
       .catch(error => console.log(error))
   }
@@ -217,7 +218,7 @@ export default class editingFields extends Component {
       ordination: this.state.ordination
     };
 
-    let url = "http://192.168.4.49:5000/api/view/addview/e9766f7f-863c-46c7-99d7-69b101e57ff7";
+    let url = "http://192.168.4.49:5000/api/view/addview/bd0de8a7-5df5-46de-8ab7-cdd307e0f07c";
     let method = "POST";
 
     if (this.state.id !== "") {
@@ -271,7 +272,6 @@ export default class editingFields extends Component {
                   id="inputTitulo"
                   aria-describedby="tituloHelp"
                   required
-                  placeholder="Title View"
                   value={this.state.title}
                   onChange={(e) => this.setState({ title: e.target.value })}
                 />
@@ -494,38 +494,29 @@ export default class editingFields extends Component {
           </div>
           
           <div className="listView-container">
-          <div className="listaView">
-              {this.state.views.map((view, index) => {
-                return (
-                  <tr key={index}>
-
+            <div className="listView">
+              {
+                this.state.views.map((view) => {
+                  return (
                     <ul>
-                    <li>
-                    <div className="listView-item">
-                    <div className="dropdown">
-                    <div className="dropdown-content">
-                    <div className="dropdown-content-container">
-                      <button
-                        data-id={index}
-                        className="buttonEdit"
-                        onClick={this.editView.bind(this)}
-                        type="button"
-                      >
-                        Editar
-                          </button>
-                    <button id={view.id} className="buttonDelete" onClick={this.deleteView.bind(this)}>Excluir</button>
-                    </div>
-                    </div>
-                    </div>
-                    {view.title}
-                    </div>
-                    </li>
+                      <li>
+                        <div className="listView-item">
+                          <div className="dropdown">
+                            <div className="dropdown-content">
+                              <div className="dropdown-content-container">
+                                <button className="buttonEdit" id={view.id} onClick={(event) => this.editView(view, event)}>Editar</button>
+                                <button className="buttonDelete" id={view.id} onClick={this.deleteView.bind(this)}>Excluir</button>
+                              </div>
+                            </div>
+                          </div>
+                          {view.title}
+                        </div>
+                      </li>
                     </ul>
-                  </tr>
-                );
-              })}
-          
-          </div>
+                  )
+                })
+              }
+            </div>
           </div>
         </div>
       </div>

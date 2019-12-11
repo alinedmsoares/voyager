@@ -65,6 +65,11 @@
     font-weight: normal; 
     color: black;
 }
+.conditionsView thead {
+    margin-left: 69px;
+    width: 89%;
+    margin-top: 15px;
+}
 .conditionsView tbody {
     width: 88%;
     margin-left: 9.5%;
@@ -90,9 +95,9 @@
 }
 .itensView-tr {
     display: flex;
-    width: 100%;
+    width: 115.5%;
     justify-content: space-between;
-    margin-left: 9%;
+
 }
 .itensView-extra {
     margin-left: 41px;
@@ -181,13 +186,13 @@
 } */
 .remove-value-condition {
     /* background-image: url(../images/icons/X.png); */
-    width: 115%;
+    width: 23px;
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    height: 3vh;
+    height: 23px;
     cursor: pointer;
-    margin-left: 20px;
-    margin-top: 60%;
+    margin-left: -90px;
+    margin-top: 27px;
 }   
 .general {
     width: 100%;
@@ -212,7 +217,6 @@
 }
 .columnDiv {
     display: inline;
-    width: 15%;
     padding: 1%;
     background-color: purple;
 }

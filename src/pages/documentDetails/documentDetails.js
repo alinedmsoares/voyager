@@ -8,14 +8,13 @@ export default class documentDetails extends Component {
         super();
         this.state = {
             id: '',
-            fields: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: []}],
+            fields: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: [] }],
             answers: {},
             date: "",
             attachment: "",
             documentStatus: 0,
-            description: '',
             documentId: [],
-            updates: [{ updateDescription: '', file: '', /*user: {}*/updatedatetime: '' }]
+            update: [{ id: '', updateDescription: '', file: '', /*user: {}*/updateDate: '' }]
         }
 
         this.updateState = this.updateState.bind(this);
@@ -65,20 +64,12 @@ export default class documentDetails extends Component {
             }
         })
             .then(response => response.json())
+            .then(console.log(this.state.documentId[0]))
             .then(data => this.setState({ documentId: data }))
             .catch(error => console.log(error))
     }
     searchForIdDocument(event) {
-        let documentsId = event.target.getAttribute('data-id')
-        console.log(documentsId)
-        let documents = this.state.documentId[documentsId]
-        this.setState({
-            id: documents.id,
-            answers: documents.answers,
-            date: documents.date,
-            attachment: documents.attachment,
-            documentStatus: documents.documentStatus,
-        });
+        console.log(this.state.documentId[0])
 
     }
     render() {
@@ -88,15 +79,27 @@ export default class documentDetails extends Component {
                     <li>
                         User
                     </li>
-                    {this.state.fields.map((field)=>{
-                        return(
-
-<li>{field.fieldName}</li>
+                    {this.state.fields.map((field) => {
+                        return (
+                            <li>{field.fieldName}</li>
                         )
                     })}
-                    {this.state.documentId.map((document)=>{
-                        return(
-                            <button data-id={'a5be3b02-ddef-4ff4-b4ff-76f2d9f45806'} onClick={this.searchForIdDocument.bind(this)}>a</button>
+                    {this.state.documentId.map((document) => {
+                        return (
+                            <div>
+                                <button data-id={document.id} onClick={this.searchForIdDocument.bind(this)}>a</button>
+                                {
+                                    Object.entries(document.answers).map(([key, value]) => {
+                                        return (
+                                            <ul>
+                                                <li>{key}</li>
+                                                <li>{value}</li>
+                                            </ul>
+                                        )
+                                    })
+                                }
+
+                            </div>
                         )
                     })}
                 </ul>
