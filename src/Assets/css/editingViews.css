@@ -81,7 +81,6 @@
     height: 7vh;
     margin-top: 1em;
     margin-bottom: 2%;
-    margin-left: 9%;
 }
 .itensView {
     display: flex;
@@ -95,7 +94,7 @@
 }
 .itensView-tr {
     display: flex;
-    width: 115.5%;
+    width: 78.5%;
     justify-content: space-between;
 
 }
@@ -210,7 +209,15 @@
     flex-direction: column;
     margin-left: 70px;
 }
-
+.title-input{
+    width: 95%;
+    height: 5vh;
+    border: #DDDDDD solid 1px;
+    margin-top: 4%;
+    box-shadow: 0 0px 5px 0px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+    font-size: 1.2em;
+    color: rgb(71, 71, 71);
+}
 .columns .title {
     margin-left: 10px;
     color: black;
@@ -237,7 +244,7 @@
 .order-select {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 .orderGeral label {
     align-self: baseline;

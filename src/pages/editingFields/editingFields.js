@@ -4,9 +4,8 @@ import Menu from '../../components/menu/menu'
 import Header from '../../components/header/header'
 import Swal from 'sweetalert2'
 
-
-
 export default class editingFields extends Component {
+    
     // constructor responsible for setting field properties
     constructor() {
         super();
@@ -66,7 +65,6 @@ export default class editingFields extends Component {
                 isHiddenField: this.state.isHiddenField = true
             })
         }
-
     }
     clearForm() {
         this.setState({
@@ -103,7 +101,6 @@ export default class editingFields extends Component {
                 <div type='button' className="remove-value" value='remove' onClick={this.removeClick.bind(this, i)}> </div>
             </div>
         )
-
     }
 
     //add entered values ​​to field

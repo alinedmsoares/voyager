@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import '../../Assets/css/editingViews.css'
 import Menu from '../../components/menu/menu'
 import Header from '../../components/header/header'
+import Swal from 'sweetalert2'
 
 export default class editingFields extends Component {
 
@@ -50,7 +51,7 @@ export default class editingFields extends Component {
   }
 
   searchUser() {
-    fetch('http://192.168.4.49:5000/api/view/bd0de8a7-5df5-46de-8ab7-cdd307e0f07c', {
+    fetch('http://192.168.4.49:5000/api/view/26d1947d-377d-453b-8729-bd8967227439    ', {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -165,28 +166,44 @@ export default class editingFields extends Component {
   }
 
   editView(event) {
-    let viewId = event.target.getAttribute('data-id');
-    console.log(viewId);
+    let idView = event.target.getAttribute('id');
+    console.log(idView);
 
-    let view = this.state.views[viewId];
-    this.setState({
-      id: view.id,
-      title: view.title,
-      conditions: view.conditions,
-      columns: view.columns,
-      ordination: view.ordination
-    });
+    let user = this.state.user;
+    Object.entries(user).map(([key, value]) => {
+      return (
+        Object.entries(value).map(([key, view]) => {
+          if (view.id === idView) {
+            this.setState({
+              id: view.id,
+              title: view.title,
+              conditions: view.conditions,
+              columns: view.columns,
+              ordination: view.ordination
+            });
+          }
+        })
+      )
+    })
   }
 
   deleteView(event) {
     event.preventDefault();
-    fetch('https://5d8289a9c9e3410014070b11.mockapi.io/view/' + event.target.getAttribute('id'), {
+    let data = {
+      idUser: '26d1947d-377d-453b-8729-bd8967227439',
+      idView: event.target.getAttribute('id')
+    }
+
+    fetch('http://192.168.4.49:5000/api/user', {
       method: 'DELETE',
+      body: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json'
-      }
-    })
-      .then(this.searchViews())
+      },
+    }
+    )
+      .then(this.searchUser())
+      .then(console.log(data))
       .then(response => response)
   }
 
@@ -217,7 +234,7 @@ export default class editingFields extends Component {
       ordination: this.state.ordination
     };
 
-    let url = "http://192.168.4.49:5000/api/view/addview/bd0de8a7-5df5-46de-8ab7-cdd307e0f07c";
+    let url = "http://192.168.4.49:5000/api/user/view/26d1947d-377d-453b-8729-bd8967227439";
     let method = "POST";
 
     if (this.state.id !== "") {
@@ -238,8 +255,9 @@ export default class editingFields extends Component {
       .then(response => response)
       .then(() => {
         this.setState({ id: "" });
-        this.searchViews();
+        this.searchUser();
         this.clearForm();
+        this.AlertSucessRegister();
       });
   }
 
@@ -252,7 +270,13 @@ export default class editingFields extends Component {
       ordination: {}
     })
   }
-
+  AlertSucessRegister() {
+    Swal.fire(
+      'View cadastrada!',
+      '',
+      'success'
+    )
+  }
   render() {
 
     return (
@@ -267,7 +291,7 @@ export default class editingFields extends Component {
                 <label htmlFor="exampleInputEmail1">Título</label>
                 <input
                   type="titulo"
-                  className="title"
+                  className="title-input"
                   id="inputTitulo"
                   aria-describedby="tituloHelp"
                   required
@@ -495,26 +519,29 @@ export default class editingFields extends Component {
           <div className="listView-container">
             <div className="listView">
               {
-                Object.entries(this.state.user).map(([key, value]) => {
+                Object.entries(this.state.user).map(([key, value1]) => {
                   return (
-                    key.views.map((view) => {
-                      return (
-                        <ul>
-                          <li>
-                            <div className="listView-item">
-                              <div className="dropdown">
-                                <div className="dropdown-content">
-                                  <div className="dropdown-content-container">
-                                    <button className="buttonEdit" id={view.id} onClick={(event) => this.editView(view, event)}>Editar</button>
-                                    <button className="buttonDelete" id={view.id} onClick={this.deleteView.bind(this)}>Excluir</button>
+                    // console.log(value[0])
+                    Object.entries(value1).map(([key1, view]) => {
+                      if (view.title !== undefined) {
+                        return (
+                          <ul>
+                            <li>
+                              <div className="listView-item">
+                                <p>{view.title}</p>
+                                <div className="dropdown">
+                                  <div className="dropdown-content">
+                                    <div className="dropdown-content-container">
+                                      <button className="buttonEdit" id={view.id} onClick={this.editView.bind(this)}>Editar</button>
+                                      <button className="buttonDelete" id={view.id} onClick={this.deleteView.bind(this)}>Excluir</button>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                              {view.id}
-                            </div>
-                          </li>
-                        </ul>
-                      )
+                            </li>
+                          </ul>
+                        )
+                      }
                     })
                   )
                 })
