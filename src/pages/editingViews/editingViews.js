@@ -278,7 +278,6 @@ export default class editingFields extends Component {
     )
   }
   render() {
-
     return (
       <div className="all">
         <Header />
@@ -288,7 +287,7 @@ export default class editingFields extends Component {
           <div className="formView">
             <form onSubmit={this.onSubmit.bind(this)}>
               <div className="divTitle">
-                <label htmlFor="exampleInputEmail1">Título</label>
+                <label htmlFor="exampleInputEmail1">Title</label>
                 <input
                   type="titulo"
                   className="title-input"
@@ -299,120 +298,98 @@ export default class editingFields extends Component {
                   onChange={(e) => this.setState({ title: e.target.value })}
                 />
               </div>
-              <div>
-                <table className="conditionsView">
-                  <div className="itensView-title">
-                    <thead>
-                      <tr>
-                        <th className="conditionsTitle">Condições</th>
-                        <th></th>
-                        <th></th>
+              <table className="conditionsView">
+                <div className="itensView-title">
+                  <p className="conditionsTitle">Conditions</p>
+                </div>
+                <div className="itensView-container">
+                  {this.state.conditions.map((item, index) => {
+                    return (
+                      <div className="itensView">
+                        <li className="itensView-tr" key={index}>
 
-                      </tr>
-                    </thead>
-                  </div>
-
-                  <div className="itensView-container">
-                    <tbody>
-                      {this.state.conditions.map((item, index) => {
-                        return (
-                          <div className="itensView">
-                            <tr className="itensView-tr" key={index}>
-                              <td>
-                                <select
-                                  className="item"
-                                  name={"field"}
-                                  defaultValue={item.field}
-                                  data-count={index}
-                                  onChange={this.onChangeFieldName.bind(this)}
-                                >
-                                  <option value="">Selecione</option>
-                                  {this.state.fields.map((field, index) => {
-                                    return (
-                                      <option key={index} value={field.fieldName}>
-                                        {field.fieldName}
-                                      </option>
-                                    );
-                                  })}
-                                  ) }
+                          <select
+                            className="item"
+                            name={"field"}
+                            defaultValue={item.field}
+                            data-count={index}
+                            onChange={this.onChangeFieldName.bind(this)}
+                          >
+                            <option value="">Select</option>
+                            {this.state.fields.map((field, index) => {
+                              return (
+                                <option key={index} value={field.fieldName}>
+                                  {field.fieldName}
+                                </option>
+                              );
+                            })}
+                            ) }
                           </select>
-                              </td>
-                              <td>
-                                <select
-                                  className="item"
-                                  name={"condition"}
-                                  defaultValue={item.enumCondition}
-                                  data-count={index}
-                                  onChange={this.onChangeConditionnal.bind(this)}
-                                  disabled={
-                                    this.state.conditions[index].field === ""
-                                      ? "none"
-                                      : ""
-                                  }
-                                >
-                                  <option value="">Select</option>
-                                  <option value="Is" selected={(this.state.conditions[1] === "Is") ? true : false}>Is</option>
-                                  <option value="IsNot" selected={(this.state.conditions[1] === "IsNot") ? true : false}>IsNot</option>
-                                  {this.state.selected.length !== 0 ? this.state.selected[0].fieldType === "number" && (
-                                    <option value="Bigger" >Bigger</option>) : ''}
-                                  {this.state.selected.length !== 0 ? this.state.selected[0].fieldType === "date" && (
-                                    <option value="Bigger">Bigger</option>) : ''}
-                                  {this.state.selected.length !== 0 ? this.state.selected[0].fieldType === "number" && (
-                                    <option value="Smaller">Smaller</option>) : ''}
-                                  {this.state.selected.length !== 0 ? this.state.selected[0].fieldType === "date" && (
-                                    <option value="Smaller">Smaller</option>) : ''}
-                                </select>
-                              </td>
-                              <td>
-                                <select
-                                  className="item"
-                                  name={"answers"}
-                                  defaultValue={item.answers}
-                                  data-count={index}
-                                  onChange={this.onChangeAnswer.bind(this)}
-                                  disabled={item.field === "" ? "none" : ""}
-                                >
-                                  <option value="">Select</option>
-                                  {this.listAnswers(index).map((answers, index) => {
-                                    return <option key={index}>{answers}</option>;
-                                  })}
-                                  )
+
+                          <select
+                            className="item"
+                            name={"condition"}
+                            defaultValue={item.enumCondition}
+                            data-count={index}
+                            onChange={this.onChangeConditionnal.bind(this)}
+                            disabled={
+                              this.state.conditions[index].field === ""
+                                ? "none"
+                                : ""
+                            }
+                          >
+                            <option value="">Select</option>
+                            <option value="Is" selected={(this.state.conditions[1] === "Is") ? true : false}>Is</option>
+                            <option value="IsNot" selected={(this.state.conditions[1] === "IsNot") ? true : false}>IsNot</option>
+                            {this.state.selected.length !== 0 ? this.state.selected[0].fieldType === "number" && (
+                              <option value="Bigger" >Bigger</option>) : ''}
+                            {this.state.selected.length !== 0 ? this.state.selected[0].fieldType === "date" && (
+                              <option value="Bigger">Bigger</option>) : ''}
+                            {this.state.selected.length !== 0 ? this.state.selected[0].fieldType === "number" && (
+                              <option value="Smaller">Smaller</option>) : ''}
+                            {this.state.selected.length !== 0 ? this.state.selected[0].fieldType === "date" && (
+                              <option value="Smaller">Smaller</option>) : ''}
                           </select>
-                              </td>
-                            </tr>
 
+                          <select
+                            className="item"
+                            name={"answers"}
+                            defaultValue={item.answers}
+                            data-count={index}
+                            onChange={this.onChangeAnswer.bind(this)}
+                            disabled={item.field === "" ? "none" : ""}
+                          >
+                            <option value="">Select</option>
+                            {this.listAnswers(index).map((answers, index) => {
+                              return <option key={index}>{answers}</option>;
+                            })}
+                            )
+                          </select>
 
-                            <td>
-                              <div
-                                className="remove-value-condition"
-                                onClick={this.removeCondition.bind(this, index)}
-                                type="button"
-                              >
+                        </li>
+                        <div
+                          className="remove-value-condition"
+                          onClick={this.removeCondition.bind(this, index)}
+                          type="button"
+                        >
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
 
-                              </div>
-                            </td>
-                          </div>
-                        );
-                      })}
-                      <th style={{ textAlign: "right" }}>
-                      </th>
-                    </tbody>
-                  </div>
-
-                  <div className="button-div">
-                    <button
-                      className="add"
-                      onClick={this.addCondition.bind(this)}
-                      type="button"
-                    >
-                      Adicionar
+                <div className="button-div">
+                  <button
+                    className="add"
+                    onClick={this.addCondition.bind(this)}
+                    type="button"
+                  >
+                    Add
                       </button>
-                  </div>
-                </table>
-              </div>
-
+                </div>
+              </table>
               <div className="columns">
-                <label className="title">Colunas da Tabela</label>
+                <label className="title">Table Columns</label>
                 <div className="allCheckbox">
                   <ul className="ks-cboxtags">
                     {this.state.fields.map((field, index) => {
@@ -457,26 +434,26 @@ export default class editingFields extends Component {
                   <label htmlFor="">Order</label>
                 </div>
 
-                <div className="order-select">
-                  <select
-                    className="item"
-                    name={"field"}
-                    defaultValue={this.state.ordination.orderName}
-                    onChange={this.onChangeOrder.bind(this)}
-                  >
-                    <option value="">Select</option>
-                    {this.state.fields.map((field, index) => {
-                      return (
-                        <option key={index} value={field.fieldName}>
-                          {field.fieldName}
-                        </option>
-                      );
+                <div className="order-select-geral">
+                  <div className="order-select">
+                    <select
+                      className="item"
+                      name={"field"}
+                      defaultValue={this.state.ordination.orderName}
+                      onChange={this.onChangeOrder.bind(this)}
+                    >
+                      <option value="">Select</option>
+                      {this.state.fields.map((field, index) => {
+                        return (
+                          <option key={index} value={field.fieldName}>
+                            {field.fieldName}
+                          </option>
+                        );
 
-                    })}
-                  </select>
+                      })}
+                    </select>
 
 
-                  <td>
                     <select
                       className="item"
                       name={"condition"}
@@ -490,8 +467,8 @@ export default class editingFields extends Component {
                       name="valoreslista"
                     >
                       <option value="">Select</option>
-                      <option value="AZ" selected={(this.state.ordination[1] === "AZ") ? true : false}>AZ</option>
-                      <option value="ZA" selected={(this.state.ordination[1] === "ZA") ? true : false}>ZA</option>
+                      <option value="AZ" selected={(this.state.ordination[1] === "AZ") ? true : false}>A-Z</option>
+                      <option value="ZA" selected={(this.state.ordination[1] === "ZA") ? true : false}>Z-A</option>
                       {this.state.selected.length !== 0 ? this.state.selected[0].fieldType === "number" && (
                         <option value="Crescent" selected={(this.state.ordination[1] === "Crescent") ? true : false}>Crescent</option>) : ''}
                       {this.state.selected.length !== 0 ? this.state.selected[0].fieldType === "date" && (
@@ -501,17 +478,19 @@ export default class editingFields extends Component {
                       {this.state.selected.length !== 0 ? this.state.selected[0].fieldType === "date" && (
                         <option value="Descending" selected={(this.state.ordination[1] === "Descending") ? true : false}>Descending</option>) : ''}
                     </select>
-                  </td>
 
+                  </div>
 
                 </div>
               </div>
 
               <div className="clear-save-buttons">
-                <button type="submit" className="save">
-                  Salvar
+              <div className="buttons-geral">
+                              <button type="submit" className="save">
+                  Save
               </button>
-                <button onClick={this.resetForm} type="button" className="clear-button">Limpar</button>
+                <button onClick={this.resetForm} type="button" className="clear-button">Cancel</button>
+              </div>
               </div>
             </form>
           </div>
@@ -532,13 +511,14 @@ export default class editingFields extends Component {
                                 <div className="dropdown">
                                   <div className="dropdown-content">
                                     <div className="dropdown-content-container">
-                                      <button className="buttonEdit" id={view.id} onClick={this.editView.bind(this)}>Editar</button>
-                                      <button className="buttonDelete" id={view.id} onClick={this.deleteView.bind(this)}>Excluir</button>
+                                      <button className="buttonEdit" id={view.id} onClick={this.editView.bind(this)}>Edit</button>
+                                      <button className="buttonDelete" id={view.id} onClick={this.deleteView.bind(this)}>Delete</button>
                                     </div>
                                   </div>
                                 </div>
                               </div>
                             </li>
+                            
                           </ul>
                         )
                       }

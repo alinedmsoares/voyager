@@ -6,7 +6,7 @@ import editingFields from './pages/editingFields/editingFields';
 import sendDocuments from './pages/sendDocuments/sendDocuments'
 import notFound from './pages/notFound/notFound';
 import documentDetails from './pages/documentDetails/documentDetails'
-import listViews from './pages/listViews/listViews'
+import listDocuments from './pages/listDocuments/listDocuments'
 import * as serviceWorker from './serviceWorker';
 import login from './pages/login/login'
 import { usuarioAutenticado } from './services/auth';
@@ -29,8 +29,8 @@ const rotas = (
                 <Route exact path="/editingfields" component={editingFields} />
                 <Route exact path="/senddocuments" component={sendDocuments} />
                 <Route exact path="/editingviews" component={editingViews} />
-                <Route exact path="/listviews" component={listViews} />
-                <Route exact path="/documentDetails" component={documentDetails} />
+                <Route exact path="/listdocuments" component={listDocuments} />
+                <Route exact path="/documentdetails" component={documentDetails} />
                 <Route component={notFound} />
             </Switch>
         </div>

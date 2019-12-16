@@ -1,50 +1,52 @@
-* {
+ *{
     margin: 0;
     box-sizing: border-box;
     -webkit-user-select: none;
     -moz-user-select: -moz-none;
     -ms-user-select: none;
      user-select: none;
-    /* overflow: hidden; */
+
 }
+div{
+    height: 100%;
+}
+
 .container {
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    width: 100% !important;
 }
 .all {
     display: flex;
-
+    height: 100% !important;
 }
 .formView {
-    width: 95%;
+    width: 100%;
     display: flex;
-    flex-direction: row;
+    justify-content: center;
     align-items: center;
-    text-align: center;
-    margin-left: 5%;
 }
 .formView form {
-    width: 60%;
+    width: 80%;
+    display: block;
+    height: 50%;
 }
-.divTitle {
-    width: 98%;
-    display: flex;
-    margin-left: 43px;
-    flex-direction: column;
-    margin-top: 8em;
 
+.divTitle {
+    height: 30%;
+    text-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 .divTitle label {
     align-self: baseline;
-    margin-left: 35px;
     color: black;
 }
 
 .viewTitle {
     width: 90%;
     height: 7vh;
-    margin-top: 1em;
     background: #F9F9F9;
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
     border-radius: 3px;
@@ -55,42 +57,33 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-left: 1%;
+    height: auto;
 }
 .conditionsView .conditionsTitle {
     align-self: baseline;
-    margin-top: 2em;
-    margin-bottom: -2vh;
-    margin-left: 80px;
     font-weight: normal; 
     color: black;
 }
 .conditionsView thead {
-    margin-left: 69px;
     width: 89%;
-    margin-top: 15px;
 }
-.conditionsView tbody {
-    width: 88%;
-    margin-left: 9.5%;
-}
+
 .itensView-container {
     display: flex;
     justify-content: space-between;
     width: 88.5%;
-    height: 7vh;
-    margin-top: 1em;
-    margin-bottom: 2%;
+    flex-direction: column;
+    height: auto !important;
 }
 .itensView {
     display: flex;
     align-items: center;
-    width: 147%;
+    width: 100%;
+    min-height: 10vh !important;
 }
 .itensView-title {
-    width: 10%;
-    margin-left: 8%;
-    margin-top: 6vh;
+    width: 100%;
+    height: 5vh !important;
 }
 .itensView-tr {
     display: flex;
@@ -99,7 +92,6 @@
 
 }
 .itensView-extra {
-    margin-left: 41px;
     display: flex;
     justify-content: space-between;
     width: 643px;
@@ -108,7 +100,6 @@
 }
 
 .item {
-    margin-top: 1em;
     width: 160px;
     height: 7vh;
     background: #F9F9F9;
@@ -132,14 +123,11 @@
     display: flex;
     align-self: center;
     width: 80%;
-    margin-top: 2em;
 }
 .button-div {
     display: flex;
     justify-content: flex-end;
-    width: 88.5%;
-    margin-left: 9%;
-    margin-top: 1vh;
+    width: 70%;
 }
 .add {
     transition: all 0.5s;
@@ -160,9 +148,7 @@
 }
 .save {
     transition: all 0.5s;
-    margin-left: 1%;
-    margin-right: 1%;
-    width: 10%;
+    width: 20%;
     height: 6vh;
     background: #AD1130;
     border-radius: 6px;
@@ -184,42 +170,37 @@
     box-shadow: 1px 0px 9px rgba(0, 0, 0, 0.39);
 } */
 .remove-value-condition {
-    /* background-image: url(../images/icons/X.png); */
-    width: 23px;
+    background-image: url(https://image.flaticon.com/icons/svg/32/32178.svg);
+    width: 5%;
     background-size: 100% 100%;
     background-repeat: no-repeat;
-    height: 23px;
+    height: 3vh;
     cursor: pointer;
-    margin-left: -90px;
-    margin-top: 27px;
 }   
 .general {
     width: 100%;
     display: flex;
     text-align: center;
     align-items: center;
-    margin-top: 2vh;
-    margin-left: 5%;
 }
 
 .columns {
-    width: 92%;
     display: flex;
     align-items: baseline;
     flex-direction: column;
-    margin-left: 70px;
+    min-height: 30%;
+    display: flex;
+    height: 0 !important;
 }
 .title-input{
-    width: 95%;
+    width: 70%;
     height: 5vh;
     border: #DDDDDD solid 1px;
-    margin-top: 4%;
-    box-shadow: 0 0px 5px 0px rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+    box-shadow:0 1px 0px 0 rgba(0, 0, 0, 0.10);
     font-size: 1.2em;
     color: rgb(71, 71, 71);
 }
 .columns .title {
-    margin-left: 10px;
     color: black;
 }
 .columnDiv {
@@ -229,22 +210,24 @@
 }
 .titleOrder {
     align-self: baseline;
-    margin-left: 77px;
-    margin-top: 25px;
 }
 .orderGeral {
-    width: 88.5%;
     display: flex;
-    margin-top: 2vh;
     justify-content: space-between;
     flex-direction: column;
     align-items: baseline;
-    margin-left: 8.5%;
+    height: 30%;
 }
 .order-select {
-    width: 100%;
+    width: 43%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+}
+.order-select-geral{
+    width: 100%;
+    justify-content: start;
+    align-items: start;
+    display: flex;
 }
 .orderGeral label {
     align-self: baseline;
@@ -256,7 +239,6 @@
     width: 92%;
 }
 .OrderItem {
-    margin-top: 1em;
     width: 550px;
     height: 7vh;
     background: #f9f9f9;
@@ -264,10 +246,8 @@
     border-radius: 3px;
     border: none;
     cursor: pointer;
-    margin-right: 65px;
 }
 .columnCheckbox {
-    margin-top: 1vh;
     -webkit-appearance: none;
 }
 .closeImg {
@@ -282,7 +262,6 @@
 }
 .allCheckbox {
     width: 100%;
-    margin-top: 1%;
     flex-wrap: wrap;
     display: flex;
 }
@@ -291,19 +270,14 @@ ul.ks-cboxtags {
     list-style: none;
     align-content: center;
     display: flex;
-    margin: 0 1%;
 }
-ul.ks-cboxtags li{
-    /* padding: 0 10px; */
 
-}
 ul.ks-cboxtags li label{
     background-color: rgba(255, 255, 255, .9);
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
     color: #adadad;
     border-radius: 25px;
     white-space: nowrap;
-    margin: 3px 3px;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -350,11 +324,9 @@ ul.ks-cboxtags li input[type="checkbox"] {
 } */
 
 form{
-    width: 72%;
     text-align: -webkit-center;
 }
 .listView {
-    margin-top: 42px;
     width: 16%;
     height: 100%;
     position: fixed;
@@ -387,7 +359,6 @@ form{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 5px;
     padding: 0 12px 0 5px;
     flex-direction: row-reverse;
     color: black;
@@ -429,7 +400,6 @@ form{
     /* font-weight: bold; */
     cursor: pointer;
     padding: 5px;
-    margin-right: 26px;
 }
 .buttonEdit:hover {
     color: #acacac;
@@ -451,15 +421,22 @@ form{
     background-color: rgb(202, 74, 74);
 }
 .clear-save-buttons {
-    width: 98%;
+    width: 67%;
     display: flex;
-    margin-top: 3vh;
+    height: 20%;
     flex-direction: row-reverse;
-
+}
+.buttons-geral{
+    width: 80%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row-reverse;
+    align-items: center;
+    height: 8vh;
 }
 .clear-button {
     transition: all 0.5s;
-    width: 10%;
+    width: 20%;
     height: 6vh;
     background: #242C91;
     border-radius: 6px;
@@ -472,5 +449,4 @@ form{
 }
 .clear-button:hover {
     background-color: rgb(74, 83, 202);
-    
 }

@@ -2,33 +2,96 @@ body{
     background-color:#383838;
     font-family: 'Exo 2', sans-serif;
   }
+  .menu{
+    height: 0 !important;
+  }
+  .sidebar-close, .sidebar-close *, .sidebar-close:before{
+    transition: all 0.24s ease-in-out;
+  }
+  .sidebar-close {
+    width: 6%;
+    height: 100%;
+    position: fixed;
+    top: 385px;
+    transform: translate(0%,-50%);
+    background-color: #120055;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    list-style: none;
+}
+.sidebar-close a{
+  padding: 0.5%;
+}
+  .doc-fields {
+    width: 30px;
+    height: 30px;
+    background-size: 30px;
+    background-image: url(../images/icons/writing.svg);
+    background-repeat: no-repeat;
+  }
+  .views-add {
+    width: 30px;
+    height: 30px;
+    background-size: 30px;
+    background-image: url(../images/icons/file.svg);
+    background-repeat: no-repeat;
+}
+.doc-list {
+    width: 30px;
+    height: 30px;
+    background-size: 30px;
+    background-image: url(../images/icons/file2.svg);
+    background-repeat: no-repeat;
+}
+.doc-details {
+  width: 30px;
+  height: 30px;
+  background-size: 30px;
+  background-image: url(../images/icons/add-file.svg);
+  background-repeat: no-repeat;
+}
+.send-doc {
+  width: 30px;
+  height: 30px;
+  background-size: 30px;
+  background-image: url(../images/icons/email.svg);
+  background-repeat: no-repeat;
+}
   .sidebar, .sidebar *, .sidebar:before{
     transition: all 0.24s ease-in-out;
   }
   .sidebar {
-    margin-top: 60px;
-    width: 11%;
+    width: 6%;
     height: 100%;
     position: fixed;
-    top: 365px;
+    top: 385px;
     transform: translate(0%,-50%);
-    margin-left: -90px;
-    background-color: #120055;
-    overflow: hidden;
     box-shadow: 0 1px 4px rgba(0,0,0,0.2);
 }
-  
   .sidebar li{
     opacity:0;
+    height: 11vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .sidebar-close li{
+    height: 11vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .sidebar:before{
     text-align: center;
-    content: ">";
     position:absolute;
     right:10px;
     top:50%;
     transform: translate(0%,-50%);
-    color:#bbb;
+    color:#fff;
+    background-color: #120055;
     font-size:2em;
     text-shadow: -1px -1px 0 rgba(0,0,0,0.2);
   }
@@ -37,30 +100,28 @@ body{
   }
   .sidebar:hover{
     margin-left:0px;
-    width:270px;
+    width:20%;
+    background-color: #120055;
 
-  }
+ }
   .sidebar:hover li{
     opacity:1;
   }
   .sidebar a{
     text-decoration:none;
-    color:#bbb;
-    line-height: 50px;
+    color:#fff;
     text-shadow: -1px -1px 0 rgba(0,0,0,0.2);
-    padding: 0 20px;
-    display:flex;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 20px;
   }
   .sidebar a:hover{
     color:#fff;
   }
   .sidebar li{
-    height:50px;
-    border-bottom: 1px solid rgba(255,255,255,0.24);
+    height:11vh;
   }
   .sidebar li:hover{
     background-color: #AD113D;
@@ -72,51 +133,43 @@ body{
   .sidebar li:first-child{
     border-radius: 0px 5px 0px 0px;
   }
-  .account-img {
-      width: 35px;
-      height: 35px;
-      background-size: 35px;
-      background-image: url(../images/icons/user.png);
-      background-repeat: no-repeat;
-  }
+
   .doc-fields {
-    width: 35px;
-    height: 35px;
-    background-size: 35px;
-    background-image: url(../images/icons/checklist.png);
+    width: 30px;
+    height: 30px;
+    background-size: 30px;
+    background-image: url(../images/icons/writing.svg);
     background-repeat: no-repeat;
   }
   .views-add {
-    width: 35px;
-    height: 35px;
-    background-size: 35px;
-    background-image: url(../images/icons/squares.png);
+    width: 30px;
+    height: 30px;
+    background-size: 30px;
+    background-image: url(../images/icons/file.svg);
     background-repeat: no-repeat;
 }
 .doc-list {
-    width: 35px;
-    height: 35px;
-    background-size: 35px;
-    background-image: url(../images/icons/multiple-documents.png);
+    width: 30px;
+    height: 30px;
+    background-size: 30px;
+    background-image: url(../images/icons/file2.svg);
     background-repeat: no-repeat;
 }
 .doc-details {
-  width: 35px;
-  height: 35px;
-  background-size: 35px;
-  background-image: url(../images/icons/file.png);
+  width: 30px;
+  height: 30px;
+  background-size: 30px;
+  background-image: url(../images/icons/add-file.svg);
   background-repeat: no-repeat;
 }
 .send-doc {
-  width: 35px;
-  height: 35px;
-  background-size: 35px;
-  background-image: url(../images/icons/paper-plane.png);
+  width: 30px;
+  height: 30px;
+  background-size: 30px;
+  background-image: url(../images/icons/email.svg);
   background-repeat: no-repeat;
 }
-.account-li {
-  display: none;
-}
+
 
 @media screen and (max-width:800px){
     .menu{
