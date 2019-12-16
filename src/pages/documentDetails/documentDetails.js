@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import '../../Assets/css/editingViews.css'
+import '../../Assets/css/documentDetails.css'
 import Menu from '../../components/menu/menu'
 import Header from '../../components/header/header'
 
@@ -8,17 +8,18 @@ export default class documentDetails extends Component {
         super();
         this.state = {
             id: '',
-            fields: [{ id: '', fieldName: '', fieldType: '', visible: false, required: false, values: [] }],
+            field: [{ id: '', fieldName: '', jString: '', visible: false, required: false, values: [], fieldTypeString: '' }],
+            AttachmentFile: null,
+            Attachment: '',
+            answersFilters: '',
             answers: {},
-            date: "",
-            attachment: "",
-            documentStatus: 0,
-            documentId: [],
-            update: [{ id: '', updateDescription: '', file: '', /*user: {}*/updateDate: '' }]
+            title: '',
+            status: '',
+            description: '',
+            updates: [{ updateDescription: '', file: '', /*user: {}*/updatedatetime: '' }]
         }
 
         this.updateState = this.updateState.bind(this);
-        this.searchForIdDocument = this.searchForIdDocument.bind(this);
     }
     updateState = (event) => {
         this.setState({
@@ -35,7 +36,7 @@ export default class documentDetails extends Component {
         this.searchDocumentsId();
     }
     searchFields() {
-        fetch('http://192.168.4.49:5000/api/field', {
+        fetch('http://localhost:5000/api/field', {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -47,7 +48,7 @@ export default class documentDetails extends Component {
             .catch(error => console.log(error))
     }
     searchAnswers() {
-        fetch('http://192.168.4.49:5000/api/document', {
+        fetch('http://localhost:5000/api/document', {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -58,55 +59,83 @@ export default class documentDetails extends Component {
     }
 
     searchDocumentsId() {
-        fetch('http://192.168.4.49:5000/api/document/', {
+        fetch('http://localhost:5000/api/document/' + this.state.id, {
             headers: {
                 'Content-Type': 'application/json'
             }
         })
             .then(response => response.json())
-            .then(console.log(this.state.documentId[0]))
             .then(data => this.setState({ documentId: data }))
             .catch(error => console.log(error))
     }
-    searchForIdDocument(event) {
-        console.log(this.state.documentId[0])
 
-    }
+
     render() {
         return (
-            <div>
-                <ul>
-                    <li>
-                        User
-                    </li>
-                    {this.state.fields.map((field) => {
-                        return (
-                            <li>{field.fieldName}</li>
-                        )
-                    })}
-                    {this.state.documentId.map((document) => {
-                        return (
-                            <div>
-                                <button data-id={document.id} onClick={this.searchForIdDocument.bind(this)}>a</button>
-                                {
-                                    Object.entries(document.answers).map(([key, value]) => {
-                                        return (
-                                            <ul>
-                                                <li>{key}</li>
-                                                <li>{value}</li>
-                                            </ul>
-                                        )
-                                    })
-                                }
+            <section className="documentDetails">
+                <Header />
 
-                            </div>
-                        )
-                    })}
-                </ul>
-            </div>
+                <Menu />
+
+                <section className="content">
+                    <div className="centralizer">
+
+                        <div className="container">
+                            <section className="left">
+                                <div className="documentUserCentralizer">
+                                    <div className="documentUser">
+                                        <h1>User</h1>
+                                        <div className="userEmail">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="documentDescription">
+                                    {/* Each item in documentDetail */}
+                                    <div className="documentFieldCentralizer">
+
+                                        <li classname="documentFields">
+                                            <div className="fieldName">
+                                                <h1>Versao</h1>
+                                            </div>
+                                            <div className='fieldAnswer'>
+                                                <div className="answerContainer">
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </div>
+                                    {/*  */}
+
+                                </div>
+                            </section>
+                            <section className="right">     
+                                <div className="descriptionContainer">
+                                    
+                                    <div className="documentTitleContainer">
+                                        <div className="documentTitle">
+                                        <h1>Document Title</h1>
+                                        </div>
+                                    </div>
+                                    <div className="description">
+
+                                    </div>
+
+                                    <div className="documentDescriptionText">
+                                        
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+                    </div>
+                </section>
+            </section>
+
         )
     }
-};
+
+}
 
 
 

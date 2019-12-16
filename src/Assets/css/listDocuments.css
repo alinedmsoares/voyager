@@ -4,12 +4,42 @@
     display: flex;
     height: auto !important;
   }
+  .section-page-list{
+    height: auto;
+  }
+  .list-listview{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+  }
+  .list-listview button{
+    padding: 1%;
+    border: none;
+    width: 95%;
+    cursor: pointer;
+  }
+  .listview-container{
+    width: 94%;
+    display: flex;
+    flex-direction: column-reverse
+  }
+  .listdoc-listView{
+    width: 16%;
+    height: 100%;
+    position: fixed;
+    background: #F6F6F6;
+    box-shadow: 1px 0px 9px rgba(0, 0, 0, 0.39);
+    padding: 60px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   .searchTerm {
     width: 100%;
-    border: 3px solid #00B4CC;
-    border-right: none;
     padding: 5px;
-    height: 20px;
+    border: 1px #aaa solid;
+    height: auto !important;
     border-radius: 5px 0 0 5px;
     outline: none;
     color: #9DBFAF;
@@ -17,14 +47,14 @@
   
   .searchTerm:focus{
     height: auto !important;
-    color: #00B4CC;
+    color: #242C91;
   }
   
   .searchButton {
     width: 40px;
     height: 36px;
-    border: 1px solid #00B4CC;
-    background: #00B4CC;
+    border: 1px #242C91 solid;
+    background: #242C91;
     text-align: center;
     color: #fff;
     border-radius: 0 5px 5px 0;

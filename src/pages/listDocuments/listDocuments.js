@@ -4,9 +4,9 @@ import DataTable from 'react-data-table-component';
 import Menu from '../../components/menu/menu';
 import Header from '../../components/header/header';
 import ReactDataTablePagination from 'react-datatable-pagination'
-import {Button,Input,Footer,Card,CardBody,CardImage,CardTitle,CardText} from "mdbreact";
+import { Button, Input, Footer, Card, CardBody, CardImage, CardTitle, CardText } from "mdbreact";
 import { tsThisType } from '@babel/types';
-  
+
 
 export default class listViews extends Component {
     constructor() {
@@ -33,7 +33,7 @@ export default class listViews extends Component {
         this.searchAnswers();
         this.searchViews();
     }
-    
+
     searchViews() {
         fetch('https://5d8289a9c9e3410014070b11.mockapi.io/view', {
             headers: {
@@ -98,14 +98,14 @@ export default class listViews extends Component {
         console.log(uniqueAnswers)
     }
 
-    handleValue = (event) =>{
-        let filter = this.state.arrayOfObjects.filter(element =>{
-            return element.title.toLowerCase().indexOf(event.target.value) !== -1 
+    handleValue = (event) => {
+        let filter = this.state.arrayOfObjects.filter(element => {
+            return element.title.toLowerCase().indexOf(event.target.value) !== -1
         })
 
-        this.setState({arrayFilter: filter})
+        this.setState({ arrayFilter: filter })
     }
-    onChangeInput(event){
+    onChangeInput(event) {
         this.setState({ inputDocs: event.target.value })
     }
     render() {
@@ -122,61 +122,80 @@ export default class listViews extends Component {
                 right: true,
             },
         ]
-        
+
         return (
-            
-            <div>     
-            <input onChange={this.onChangeInput.bind(this)} value={this.state.inputDocs} placeholder="Documents por página"/> 
-            
-            <ReactDataTablePagination arrayOfObjects={this.state.arrayFilter} dataInOnePage={this.state.inputDocs} style="height:auto !important"/>
-            
-            <div class="wrap">
             <div>
-                <div class="search">
-                    <input type="text" class="searchTerm" placeholder="Pesquise sua View" onChange={this.handleValue} />
-                    <button type="submit" class="searchButton">
-                   <i class="fa fa-search"></i>
-                    </button>
-                </div>
+                <Header />
+                <Menu />
+<div className="section-page-list">
+<div className="listView-container">
+            <div className="listdoc-listView">
+
+                          <ul className="list-listview">
+                            <button>
+                              <div className="listView-item">
+                                <p>View 1</p>
+                              </div>
+                            </button>
+                            <button>
+                              <div className="listView-item">
+                                <p>View 2</p>
+                              </div>
+                            </button>
+                            <button>
+                              <div className="listView-item">
+                                <p>View 3</p>
+                              </div>
+                            </button>
+                            <button>
+                              <div className="listView-item">
+                                <p>View 4</p>
+                              </div>
+                            </button>
+                            <button>
+                              <div className="listView-item">
+                                <p>View 5</p>
+                              </div>
+                            </button>
+                            <button>
+                              <div className="listView-item">
+                                <p>View 6</p>
+                              </div>
+                            </button>
+                            <button>
+                              <div className="listView-item">
+                                <p>View 7</p>
+                              </div>
+                            </button>
+                          </ul>
             </div>
-            </div>
+          </div>
+</div>
+
                 <div class="wrap">
-            <div>
-                <div class="search">
-                    <input type="text" class="searchTerm" placeholder="Pesquise sua View" onChange={this.handleValue} />
-                    <button type="submit" class="searchButton">
-                   <i class="fa fa-search"></i>
-                    </button>
+                    <div>
+                        <div class="search">
+                            <input type="text" class="searchTerm" placeholder="Pesquise sua View" onChange={this.handleValue} />
+                            <button type="submit" class="searchButton">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            </div>
+                <div class="wrap">
+                    <div>
+                        <div class="search">
+                            <input type="text" class="searchTerm" placeholder="Pesquise sua View" onChange={this.handleValue} />
+                            <button type="submit" class="searchButton">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 
+                <ReactDataTablePagination arrayOfObjects={this.state.arrayFilter} dataInOnePage={this.state.inputDocs} style="height:auto !important" />
+                <input onChange={this.onChangeInput.bind(this)} value={this.state.inputDocs} placeholder="Documents por página" />
 
-                {/* <table className="listaView">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.state.views.map((view, index) => {
-                            return (
-                                <tr key={index}>
-                                    <button onClick={() => this.selectView(view.titleView)}>{view.title}</button>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table> */}
-
-                {/* <DataTable
-                    // title="Arnold Movies"
-                    columns={this.state.currentColumns}
-                    data={this.state.answerFilters}
-
-                /> */}
-            
             </div>
         )
     }
