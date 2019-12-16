@@ -35,7 +35,7 @@ function menu() {
                     </li>
                 </ul>
                 <ul className="sidebar">
-                    <li>
+                    <li className="sidebar-li">
                         <a href="http://localhost:3000/editingfields">
                             <div className="doc-fields"></div>
                             <p>
@@ -43,7 +43,7 @@ function menu() {
                         </p>
                         </a>
                     </li>
-                    <li>
+                    <li className="sidebar-li">
                         <a href="http://localhost:3000/editingviews">
                             <div className="views-add"></div>
                             <p>
@@ -51,7 +51,7 @@ function menu() {
                         </p>
                         </a>
                     </li>
-                    <li>
+                    <li className="sidebar-li">
                         <a href="http://localhost:3000/listdocuments">
                             <div className="doc-list"></div>
                             <p>
@@ -59,7 +59,7 @@ function menu() {
                         </p>
                         </a>
                     </li>
-                    <li>
+                    <li className="sidebar-li">
                         <a href="#">
                             <div className="doc-details"></div>
                             <p>
@@ -67,7 +67,7 @@ function menu() {
                         </p>
                         </a>
                     </li>
-                    <li>
+                    <li className="sidebar-li">
                         <a href="http://localhost:3000/senddocuments">
                             <div className="send-doc"></div>
                             <p>
