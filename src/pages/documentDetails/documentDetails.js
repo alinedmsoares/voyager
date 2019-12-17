@@ -130,7 +130,18 @@ export default class documentDetails extends Component {
 
                     </div>
                 </section>
+                <section className="update-section">
+                    <textarea placeholder="Reply"></textarea>
+                    <div className="update-list">
+                    <div className="update-reply">
+                    <p className="user">Space Needle</p>
+                    <span>10/12/2019 13:00</span>
+                    <p className="reply">Já solucionamos o erro relatado!</p>
+                    </div>
+                    </div>
+                    </section>
             </section>
+            
 
         )
     }

@@ -169,5 +169,30 @@ body{
     display: flex;
     height: 10%;
     width: 10%;
-
+}
+.update-section{
+    height: auto;
+    width: 60%;
+}
+.update-list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.update-reply{
+    height: auto;
+    width: 90%;
+}
+.update-reply span{
+    font-size: 0.8em;
+    color: #aaa;
+}
+.reply{
+    font-size: 1em;
+    font-weight: 100;
+}
+.user{
+    font-size: 1.2em;
+    font-weight: 700;
 }

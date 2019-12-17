@@ -5,7 +5,16 @@
     height: auto !important;
   }
   .section-page-list{
-    height: auto;
+    height: 91%;
+    width: 94%;
+  }
+  .section-page{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    justify-content: flex-end;
   }
   .list-listview{
     display: flex;
@@ -47,7 +56,6 @@
   
   .searchTerm:focus{
     height: auto !important;
-    color: #242C91;
   }
   
   .searchButton {
@@ -61,13 +69,46 @@
     cursor: pointer;
     font-size: 20px;
   }
-  
+  .document-page input{
+    width: 100%;
+    padding: 5px;
+    border: 1px #aaa solid;
+    height: auto !important;
+    border-radius: 5px;
+    outline: none;
+    color: #000;
+  }
+  .document-page{
+    width: 10%;
+    position: relative;
+    display: flex;
+    height: auto !important;
+  }
+  .searchButton-icon{
+    background-image: url("../images/icons/search.svg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    height: 3vh;
+    cursor: pointer;
+  }
+  .searchButton:hover {
+    width: 40px;
+    height: 36px;
+    border: 1px rgb(52, 61, 185) solid;
+    background: rgb(52, 61, 185);
+    text-align: center;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 20px;
+  }
   /*Resize the wrap to see the search bar change!*/
   .wrap{
     width: 30%;
     position: absolute;
     height: auto !important;
     top: 50%;
+    justify-content: space-evenly;
     left: 50%;
-    transform: translate(-50%, -50%);
+    display: flex;
   } 

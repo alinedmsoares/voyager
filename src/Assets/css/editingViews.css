@@ -265,12 +265,17 @@ div{
     width: 100%;
     flex-wrap: wrap;
     display: flex;
+    height: auto;
+}
+.allCheckbox div{
+    height: auto;
 }
 
 ul.ks-cboxtags {
     list-style: none;
     align-content: center;
     display: flex;
+    height: auto;
 }
 
 ul.ks-cboxtags li label{
@@ -290,8 +295,7 @@ ul.ks-cboxtags li label{
     cursor: pointer;
     display: flex;
     align-items: center;
-
-    
+    height: auto;
 }
 
 ul.ks-cboxtags li input[type="checkbox"]:checked + label{
@@ -333,7 +337,7 @@ form{
     position: fixed;
     background: #F6F6F6;
     box-shadow: 1px 0px 9px rgba(0, 0, 0, 0.39);
-    padding: 40px 0;
+    margin-top: 4%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -349,6 +353,9 @@ form{
 }
 .listView ul li {
     list-style-type: none;
+}
+.listView ul{
+    margin-top: 7%;
 }
 .listView-item {
     width: 225px;
@@ -375,7 +382,6 @@ form{
     display: inline-block;
 }
 .dropdown-content {
-    display: flex;
     display: none;
     position: absolute;
     background-color: #f9f9f9;
@@ -383,6 +389,7 @@ form{
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     padding: 12px 16px;
     z-index: 1;
+    height: auto;
     transform: translateX(-132px);
 }
 .dropdown:hover .dropdown-content {

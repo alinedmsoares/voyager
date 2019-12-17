@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import '../../Assets/css/listDocuments.css';
-import DataTable from 'react-data-table-component';
 import Menu from '../../components/menu/menu';
 import Header from '../../components/header/header';
-import ReactDataTablePagination from 'react-datatable-pagination'
-import { Button, Input, Footer, Card, CardBody, CardImage, CardTitle, CardText } from "mdbreact";
-import { tsThisType } from '@babel/types';
-
 
 export default class listViews extends Component {
     constructor() {
@@ -20,6 +15,7 @@ export default class listViews extends Component {
             order: { name: '', type: '' },
             columns: [],
             views: [],
+            user: {},
             listaView: [],
             inputDocs: '5',
             arrayOfObjects: [{ title: 'Problemas no login', version: '0.9.1' }, { title: 'Erro no pagamento', version: '1.1.2' }, { title: 'Erro ao salvar', version: '1.1.1' }, { title: 'Problemas no aplicativo', version: '0.9.8' }, { title: 'Não consigo me logar', version: '1.5.3' }, { title: 'Problema no cadastro', version: '1.8.2' }, { title: 'Erro no login', version: '0.9.1' }, { title: 'Problemas no aplicativo', version: '1.0.0' }, { title: 'Erro no cadastro', version: '1.1.0' }, { title: 'Não consigo me cadastrar', version: '1.2.3' }],
@@ -31,17 +27,16 @@ export default class listViews extends Component {
     componentDidMount() {
         this.searchFields();
         this.searchAnswers();
-        this.searchViews();
+        this.searchUser();
     }
-
-    searchViews() {
-        fetch('https://5d8289a9c9e3410014070b11.mockapi.io/view', {
+    searchUser() {
+        fetch('http://192.168.4.49:5000/api/view/26d1947d-377d-453b-8729-bd8967227439    ', {
             headers: {
                 'Content-Type': 'application/json'
             }
         })
             .then(response => response.json())
-            .then(data => this.setState({ views: data }))
+            .then(data => this.setState({ user: data }))
             .catch(error => console.log(error))
     }
 
@@ -127,75 +122,49 @@ export default class listViews extends Component {
             <div>
                 <Header />
                 <Menu />
-<div className="section-page-list">
-<div className="listView-container">
-            <div className="listdoc-listView">
+                <div className="section-page">
+                <div className="section-page-list">
+                    <div className="listView-container">
+                        <div className="listdoc-listView">
+                            {
+                                Object.entries(this.state.user).map(([key, value1]) => {
+                                    return (
+                                        // console.log(value[0])
+                                        Object.entries(value1).map(([key1, view]) => {
+                                            if (view.title !== undefined) {
+                                                return (
+                                                    <ul className="list-listview">
+                                                        <button>
+                                                            <div className="listView-item">
+                                                                <p>{view.title}</p>
+                                                            </div>
+                                                        </button>
 
-                          <ul className="list-listview">
-                            <button>
-                              <div className="listView-item">
-                                <p>View 1</p>
-                              </div>
-                            </button>
-                            <button>
-                              <div className="listView-item">
-                                <p>View 2</p>
-                              </div>
-                            </button>
-                            <button>
-                              <div className="listView-item">
-                                <p>View 3</p>
-                              </div>
-                            </button>
-                            <button>
-                              <div className="listView-item">
-                                <p>View 4</p>
-                              </div>
-                            </button>
-                            <button>
-                              <div className="listView-item">
-                                <p>View 5</p>
-                              </div>
-                            </button>
-                            <button>
-                              <div className="listView-item">
-                                <p>View 6</p>
-                              </div>
-                            </button>
-                            <button>
-                              <div className="listView-item">
-                                <p>View 7</p>
-                              </div>
-                            </button>
-                          </ul>
-            </div>
-          </div>
-</div>
+                                                    </ul>
+                                                )
+                                            }
+                                        })
+                                    )
+                                })
+                            }
 
-                <div class="wrap">
-                    <div>
-                        <div class="search">
-                            <input type="text" class="searchTerm" placeholder="Pesquise sua View" onChange={this.handleValue} />
-                            <button type="submit" class="searchButton">
-                                <i class="fa fa-search"></i>
-                            </button>
+                        </div>
+                    </div>
+                    <div className="wrap">
+                        <div>
+                            <div className="search">
+                                <input type="text" className="searchTerm" placeholder="Search Documents" onChange={this.handleValue} />
+                                <button type="submit" className="searchButton">
+                                    <div className="searchButton-icon"></div>
+                                </button>
+                            </div>
+                        </div>
+                        <div className="document-page">
+                            <input onChange={this.onChangeInput.bind(this)} value={this.state.inputDocs} placeholder="Documents" />
                         </div>
                     </div>
                 </div>
-                <div class="wrap">
-                    <div>
-                        <div class="search">
-                            <input type="text" class="searchTerm" placeholder="Pesquise sua View" onChange={this.handleValue} />
-                            <button type="submit" class="searchButton">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
                 </div>
-                
-                <ReactDataTablePagination arrayOfObjects={this.state.arrayFilter} dataInOnePage={this.state.inputDocs} style="height:auto !important" />
-                <input onChange={this.onChangeInput.bind(this)} value={this.state.inputDocs} placeholder="Documents por página" />
-
             </div>
         )
     }

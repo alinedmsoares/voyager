@@ -12,7 +12,7 @@ body{
     width: 6%;
     height: 100%;
     position: fixed;
-    top: 440px; 
+    margin-top: 28%;
     transform: translate(0%,-50%);
     background-color: #120055;
     overflow: hidden;
@@ -68,7 +68,7 @@ body{
     height: 100%;
     position: fixed;
     flex-direction: column;
-    top: 440px; 
+    margin-top: 28%;
     transform: translate(0%,-50%);
     box-shadow: 0 1px 4px rgba(0,0,0,0.2);
 }
@@ -86,7 +86,7 @@ body{
   }
   .sidebar-li{
     opacity:0;
-    background-color:#120055 !important;
+    background-color:#120055;
     border: none !important;
   }
   .sidebar-close li a{

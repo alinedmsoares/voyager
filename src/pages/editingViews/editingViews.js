@@ -51,7 +51,7 @@ export default class editingFields extends Component {
   }
 
   searchUser() {
-    fetch('http://192.168.4.49:5000/api/view/26d1947d-377d-453b-8729-bd8967227439    ', {
+    fetch('http://192.168.4.49:5000/api/view/64a58f8f-e0f0-442f-a866-5f9fae8e9383', {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -190,7 +190,7 @@ export default class editingFields extends Component {
   deleteView(event) {
     event.preventDefault();
     let data = {
-      idUser: '26d1947d-377d-453b-8729-bd8967227439',
+      idUser: '64a58f8f-e0f0-442f-a866-5f9fae8e9383',
       idView: event.target.getAttribute('id')
     }
 
@@ -234,7 +234,7 @@ export default class editingFields extends Component {
       ordination: this.state.ordination
     };
 
-    let url = "http://192.168.4.49:5000/api/user/view/26d1947d-377d-453b-8729-bd8967227439";
+    let url = "http://192.168.4.49:5000/api/user/view/64a58f8f-e0f0-442f-a866-5f9fae8e9383";
     let method = "POST";
 
     if (this.state.id !== "") {
